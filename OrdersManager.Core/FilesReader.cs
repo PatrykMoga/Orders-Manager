@@ -22,8 +22,15 @@ namespace OrdersManager.Core
 
         public void ReadFiles(string dirPath, SearchOption option)
         {
-           Files = Directory.GetFiles(dirPath, "*.*", option)
+            try
+            {
+                Files = Directory.GetFiles(dirPath, "*.*", option)
                 .Where(file => _supportedTypes.Any(x => file.EndsWith($".{x}", StringComparison.OrdinalIgnoreCase)));
+            }
+            catch (Exception)
+            {
+                throw;
+            }  
         }        
     }
 }

@@ -24,25 +24,29 @@ namespace OrdersManager.Core.Importers
 
             foreach (var file in _reader.Files.Where(f => f.EndsWith(".csv")))
             {
+                var message = $@"Plik: {file} został załadowany pomyślnie.";
+
                 using (var streamReader = File.OpenText(file))
                 using (var csvReader = new CsvReader(streamReader))
                 {
+
                     csvReader.Configuration.RegisterClassMap<RequestCsvMap>();
                     while (csvReader.Read())
                     {
                         try
                         {
                             requests.Add(csvReader.GetRecord<Request>());
-                        }
-                        catch (Exception)
-                        {
-                            var message = $@"Plik: {file} zawiera błędne dane i zostały one zignorowane.\n
-                                          Wiersz:{csvReader.Context.RawRow} Dane: {csvReader.Context.RawRecord}";
 
-                            _logger.AddException(message);
+                        }
+                        catch (Exception ex)
+                        {                          
+                            message = $"Plik: {file} zawiera błędne dane i zostały one zignorowane.\n";
+                            message += $"Wiersz:{csvReader.Context.RawRow} Dane: {csvReader.Context.RawRecord}";
                         }
                     }
-                }    
+                }
+
+                _logger.AddException(message);
             }
             return requests;
         }

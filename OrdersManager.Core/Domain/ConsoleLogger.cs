@@ -9,6 +9,6 @@ namespace OrdersManager.Core.Domain
 
         public void AddException(string message) => _exceptions.Add(new Exception(message));
 
-        public void LogExcepltions() => _exceptions.ForEach(ex => Console.Write(ex.Message));
+        public void LogExcepltions() => _exceptions.ForEach(ex => Console.WriteLine(ex.Message));
     }
 }
