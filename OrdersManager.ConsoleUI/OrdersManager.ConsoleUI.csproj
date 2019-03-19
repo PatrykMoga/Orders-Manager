@@ -7,6 +7,11 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.9.1" />
+    <PackageReference Include="CsvHelper" Version="12.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OrdersManager.Core\OrdersManager.Core.csproj" />
   </ItemGroup>
 
 </Project>
