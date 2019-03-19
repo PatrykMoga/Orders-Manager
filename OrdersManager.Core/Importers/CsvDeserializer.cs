@@ -1,28 +1,26 @@
 ﻿using CsvHelper;
+using OrdersManager.Core.Domain;
 using OrdersManager.Core.Orders;
-using OrdersManager.Core.Repository;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using CsvHelper.Configuration;
 
 namespace OrdersManager.Core.Importers
 {
     public class CsvDeserializer : IDeserializer
     {
-        private readonly MemoryRepository _repository;
-        private readonly FilesReader _reader;
+        private readonly IFilesReader _reader;
+        private readonly ILogger _logger;
 
-        public CsvDeserializer(MemoryRepository repository, FilesReader reader)
+        public CsvDeserializer(IFilesReader reader, ILogger logger)
         {
-            _repository = repository;
             _reader = reader;
+            _logger = logger;
         }
-        public void Deserialize()
+        public IList<Request> Deserialize()
         {
-            var exceptions = new List<Exception>();
+            var requests = new List<Request>();
 
             foreach (var file in _reader.Files.Where(f => f.EndsWith(".csv")))
             {
@@ -34,22 +32,19 @@ namespace OrdersManager.Core.Importers
                     {
                         try
                         {
-                            var record = csvReader.GetRecord<Request>();
-                            _repository.Insert(record);
+                            requests.Add(csvReader.GetRecord<Request>());
                         }
                         catch (Exception)
                         {
-                            var message = $"Plik: {file} zawiera błędne dane i zostały one zignorowane.\nWiersz:{csvReader.Context.RawRow} {csvReader.Context.RawRecord}";
-                            exceptions.Add(new InvalidDataException(message));
+                            var message = $@"Plik: {file} zawiera błędne dane i zostały one zignorowane.\n
+                                          Wiersz:{csvReader.Context.RawRow} {csvReader.Context.RawRecord}";
+
+                            _logger.AddException(message);
                         }
                     }
-                }
+                }    
             }
-
-            foreach (var ex in exceptions)
-            {
-                Console.Write(ex.Message);
-            }
+            return requests;
         }
     }
 }

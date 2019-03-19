@@ -7,7 +7,7 @@ using System.Linq;
 namespace OrdersManager.Core
 {
 
-    public class FilesReader
+    public class FilesReader : IFilesReader
     {
         public IEnumerable<string> Files { get; protected set; }
         private readonly IEnumerable<string> _supportedTypes;
