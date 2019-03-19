@@ -4,7 +4,11 @@ using System.Text;
 
 namespace OrdersManager.ConsoleUI
 {
-    public class Starter
+    public class Application
     {
+        public void Run()
+        {
+            Console.WriteLine("running");
+        }
     }
 }

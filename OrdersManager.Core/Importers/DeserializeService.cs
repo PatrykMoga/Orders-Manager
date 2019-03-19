@@ -1,29 +1,27 @@
-﻿using OrdersManager.Core.Repository;
-using System;
+﻿using OrdersManager.Core.Orders;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
 
 namespace OrdersManager.Core.Importers
 {
-    public class DeserializeService
+    public class DeserializeService : IDeserializeService
     {
         private readonly IEnumerable<IDeserializer> _deserializers;
-        private readonly MemoryRepository _repository;
 
-        public DeserializeService(IEnumerable<IDeserializer> deserializers, MemoryRepository repository)
+        public DeserializeService(IEnumerable<IDeserializer> deserializers)
         {
             _deserializers = deserializers;
-            _repository = repository;
         }
 
-        public void DeserializeAllFiles()
+        public IList<Request> DeserializeAllFiles()
         {
+            var list = new List<Request>();
             foreach (var deserializer in _deserializers)
             {
                 deserializer.Deserialize().ToList()
-                    .ForEach(r => _repository.Insert(r));
+                    .ForEach(r => list.Add(r));
             }
+            return list;
         }
     }
 }
