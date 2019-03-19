@@ -22,24 +22,33 @@ namespace OrdersManager.Core.Importers
         }
         public void Deserialize()
         {
+            var exceptions = new List<Exception>();
+
             foreach (var file in _reader.Files.Where(f => f.EndsWith(".csv")))
             {
                 using (var streamReader = File.OpenText(file))
-                using (var reader = new CsvReader(streamReader))
+                using (var csvReader = new CsvReader(streamReader))
                 {
-                    reader.Configuration.BadDataFound = context =>
+                    csvReader.Configuration.RegisterClassMap<RequestCsvMap>();
+                    while (csvReader.Read())
                     {
-
-                        Console.WriteLine($"Row:{context.RawRow},{context.RawRecord}");
-                    };
-
-                    reader.Configuration.RegisterClassMap<RequestMap>();
-                    while (reader.Read() && !reader.Context.IsFieldBad)
-                    {
-                        var record = reader.GetRecord<Request>();
-                        _repository.Insert(record);
+                        try
+                        {
+                            var record = csvReader.GetRecord<Request>();
+                            _repository.Insert(record);
+                        }
+                        catch (Exception)
+                        {
+                            var message = $"Plik: {file} zawiera błędne dane i zostały one zignorowane.\nWiersz:{csvReader.Context.RawRow} {csvReader.Context.RawRecord}";
+                            exceptions.Add(new InvalidDataException(message));
+                        }
                     }
                 }
+            }
+
+            foreach (var ex in exceptions)
+            {
+                Console.Write(ex.Message);
             }
         }
     }

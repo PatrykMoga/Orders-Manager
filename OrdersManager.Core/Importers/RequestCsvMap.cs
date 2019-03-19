@@ -4,9 +4,9 @@ using CsvHelper;
 
 namespace OrdersManager.Core.Importers
 {
-    sealed class RequestMap : ClassMap<Request>
+    sealed class RequestCsvMap : ClassMap<Request>
     {
-        public RequestMap()
+        public RequestCsvMap()
         {
             Map(m => m.ClientId).Name("Client_Id");
             Map(m => m.RequestId).Name("Request_id");

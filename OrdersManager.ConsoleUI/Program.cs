@@ -22,11 +22,19 @@ namespace OrdersManager.ConsoleUI
             }
             var repo = new MemoryRepository();
             var csv = new CsvDeserializer(repo, reader);
-            csv.Deserialize();
+            try
+            {
+                csv.Deserialize();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
 
             foreach (var item in repo.GetAll())
             {
-                Console.WriteLine(item.Name);
+                Console.WriteLine($"{item.Name} {item.ClientId} {item.Price} {item.Quantity} {item.RequestId}");
             }
 
         }
