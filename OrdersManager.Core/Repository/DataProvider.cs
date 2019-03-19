@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OrdersManager.Core.Importers;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,11 +7,13 @@ namespace OrdersManager.Core.Repository
 {
     public class DataProvider
     {
-        private readonly MemoryRepository _repository;
+        private readonly IRepository _repository;
+        private readonly IDeserializeService _service;
 
-        public DataProvider(MemoryRepository repository)
+        public DataProvider(IRepository repository, IDeserializeService service)
         {
             _repository = repository;
+            _service = service;
         }
     }
 }

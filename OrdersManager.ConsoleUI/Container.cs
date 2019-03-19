@@ -12,10 +12,10 @@ namespace OrdersManager.ConsoleUI
         {
             var builder = new ContainerBuilder();
             builder.RegisterType<Application>();
-            builder.RegisterType<MemoryRepository>();
+            builder.RegisterType<MemoryRepository>().As<IRepository>().SingleInstance();
             builder.RegisterType<ConsoleLogger>().As<ILogger>();
             builder.RegisterType<CsvDeserializer>().As<IDeserializer>();
-            builder.RegisterType<FilesReader>().As<IFilesReader>().SingleInstance();
+            builder.RegisterType<FilesReader>().As<IFilesReader>().InstancePerLifetimeScope();
             builder.RegisterType<DeserializeService>().As<IDeserializeService>();
 
 

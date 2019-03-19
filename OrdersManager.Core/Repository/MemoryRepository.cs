@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace OrdersManager.Core.Repository
 {
-    public class MemoryRepository
+    public class MemoryRepository : IRepository
     {
         private readonly IList<Request> _requests;
 

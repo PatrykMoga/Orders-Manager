@@ -37,7 +37,7 @@ namespace OrdersManager.Core.Importers
                         catch (Exception)
                         {
                             var message = $@"Plik: {file} zawiera błędne dane i zostały one zignorowane.\n
-                                          Wiersz:{csvReader.Context.RawRow} {csvReader.Context.RawRecord}";
+                                          Wiersz:{csvReader.Context.RawRow} Dane: {csvReader.Context.RawRecord}";
 
                             _logger.AddException(message);
                         }
