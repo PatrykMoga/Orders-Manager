@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using static System.Console;
 
-namespace OrdersManager.ConsoleUI.UIServiceComponents
+namespace OrdersManager.ConsoleUI.MenuServiceComponents
 {
     public class MenuService : IMenuService
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OrdersManager.ConsoleUI.UIServiceComponents
+namespace OrdersManager.ConsoleUI.MenuServiceComponents
 {
     public class MenuComponent
     {

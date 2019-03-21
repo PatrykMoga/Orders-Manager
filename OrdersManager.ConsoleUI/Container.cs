@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using OrdersManager.ConsoleUI.UIServiceComponents;
+using OrdersManager.ConsoleUI.MenuServiceComponents;
 using OrdersManager.Core;
 using OrdersManager.Core.Domain;
 using OrdersManager.Core.Importers;

@@ -1,4 +1,4 @@
-﻿namespace OrdersManager.ConsoleUI.UIServiceComponents
+﻿namespace OrdersManager.ConsoleUI.MenuServiceComponents
 {
     public interface IMenuComponent
     {

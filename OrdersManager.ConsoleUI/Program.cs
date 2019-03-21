@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using OrdersManager.ConsoleUI.UIServiceComponents;
+using OrdersManager.ConsoleUI.MenuServiceComponents;
 
 namespace OrdersManager.ConsoleUI
 {
