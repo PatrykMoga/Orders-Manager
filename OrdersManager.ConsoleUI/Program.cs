@@ -10,8 +10,8 @@ namespace OrdersManager.ConsoleUI
             var container = Container.Configure();
             using (var scope = container.BeginLifetimeScope())
             {
-                var app = scope.Resolve<IUIService>();
-                app.Run();
+                var app = scope.Resolve<LoadFiles>();
+                app.Start();
             }
         }
     }

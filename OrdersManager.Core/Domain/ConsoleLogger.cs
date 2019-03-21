@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using static System.Console;
 
 namespace OrdersManager.Core.Domain
 {
     public class ConsoleLogger : ILogger
     {
-        private List<Exception> _exceptions = new List<Exception>();
+        private List<string> _logs = new List<string>();
+        public bool IsLogged { get; set; }
 
-        public void AddException(string message) => _exceptions.Add(new Exception(message));
+        public void Log(string message)
+        {
+            _logs.Add(message);
+        }
 
-        public void LogExcepltions() => _exceptions.ForEach(ex => Console.WriteLine(ex.Message));
+        public void PrintLogs() => _logs.ForEach(m => WriteLine(m));
     }
 }

@@ -46,7 +46,7 @@ namespace OrdersManager.Core.Importers
                     }
                 }
 
-                _logger.AddException(message);
+                _logger.Log(message);
             }
             return requests;
         }

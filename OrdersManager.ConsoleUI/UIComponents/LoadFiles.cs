@@ -9,38 +9,37 @@ using System.IO;
 using System.Text;
 using static System.Console;
 
-namespace OrdersManager.ConsoleUI.UIComponents
+namespace OrdersManager.ConsoleUI
 {
-    public class LoadFiles : IUIComponent
+    public class LoadFiles
     {
         private readonly IFilesReader _filesReader;
         private readonly IDeserializeService _deserializeService;
         private readonly IRepository _repository;
         private readonly ILogger _logger;
-        public UIComponent Component { get; }
+        private readonly IMenuService _menuService;
         
         public LoadFiles(IFilesReader filesReader, IDeserializeService deserializeService,
-            IRepository repository, ILogger logger)
+            IRepository repository, ILogger logger, IMenuService menuService)
         {
             _filesReader = filesReader;
             _deserializeService = deserializeService;
             _repository = repository;
             _logger = logger;
-
-            Component = new UIComponent(Start);
+            _menuService = menuService;
         }
         
         public void Start()
         {
-            DirectoryLoading();
+            LoadDirectory();
 
             Clear();
             var a = _deserializeService.DeserializeAllFiles();
-            _logger.LogExcepltions();
+            _logger.PrintLogs();
             WriteLine("Czy załadować pliki do pamięci i kontynuować?");
         }
 
-        private void DirectoryLoading()
+        private void LoadDirectory()
         {
             while (true)
             {
@@ -49,7 +48,7 @@ namespace OrdersManager.ConsoleUI.UIComponents
                     Clear();
                     WriteLine("Podaj pełną ścieżkę do folderu z plikami");
                     var dirPath = ReadLine();
-                    _filesReader.ReadFiles(dirPath, System.IO.SearchOption.AllDirectories);
+                    _filesReader.ReadFiles(dirPath, SearchOption.AllDirectories);
                     break;
                 }
                 catch (UnauthorizedAccessException ex)

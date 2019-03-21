@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using OrdersManager.ConsoleUI.UIComponents;
 using OrdersManager.ConsoleUI.UIServiceComponents;
 using OrdersManager.Core;
 using OrdersManager.Core.Domain;
@@ -20,8 +19,8 @@ namespace OrdersManager.ConsoleUI
             builder.RegisterType<DeserializeService>().As<IDeserializeService>();
 
 
-            builder.RegisterType<UIService>().As<IUIService>();
-            builder.RegisterType<LoadFiles>().As<IUIComponent>();
+            builder.RegisterType<MenuService>().As<IMenuService>();
+            builder.RegisterType<LoadFiles>();
 
 
 

@@ -1,7 +1,7 @@
 ﻿namespace OrdersManager.ConsoleUI.UIServiceComponents
 {
-    public interface IUIService
+    public interface IMenuService
     {
-        void Run();
+        void PrintMenu();
     }
 }

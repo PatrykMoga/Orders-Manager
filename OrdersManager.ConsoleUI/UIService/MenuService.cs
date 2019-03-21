@@ -3,42 +3,29 @@ using static System.Console;
 
 namespace OrdersManager.ConsoleUI.UIServiceComponents
 {
-    public class UIService : IUIService
+    public class MenuService : IMenuService
     {
         private int _index = 1;
-        private readonly IEnumerable<IUIComponent> _uiComponents;
-        private readonly Dictionary<int, UIComponent> _executable;
-        private readonly List<UIComponent> _actions;
+        private readonly IEnumerable<IMenuComponent> _menuComponents;
+        private readonly Dictionary<int, MenuComponent> _executable;
 
-        public UIService(IEnumerable<IUIComponent> uiComponents)
+        public MenuService(IEnumerable<IMenuComponent> menuComponents)
         {
-            _uiComponents = uiComponents;
-            _executable = new Dictionary<int, UIComponent>();
-            _actions = new List<UIComponent>();
+            _menuComponents = menuComponents;
+            _executable = new Dictionary<int, MenuComponent>();
             LoadComponents();
         }
 
         private void LoadComponents()
         {
-            foreach (var component in _uiComponents)
+            foreach (var component in _menuComponents)
             {
-                if (!component.Component.Executable)
-                {
-                    _actions.Add(component.Component);
-                }
-                if (component.Component.Executable)
-                {
-                    _executable.Add(_index++, component.Component);
-                }
+                _executable.Add(_index++, component.Component);               
             }
         }
 
-        public void Run()
-        {
-            foreach (var item in _actions)
-            {
-                item.Action();
-            }
+        public void PrintMenu()
+        {          
             foreach (var item in _executable)
             {
                 WriteLine($"{item.Key}: {item.Value.Name}");

@@ -2,7 +2,8 @@
 {
     public interface ILogger
     {
-        void AddException(string message);
-        void LogExcepltions();
+        bool IsLogged { get; set; }
+        void Log(string message);
+        void PrintLogs();
     }
 }
