@@ -2,7 +2,7 @@
 using CsvHelper.Configuration;
 using CsvHelper;
 
-namespace OrdersManager.Core.Importers
+namespace OrdersManager.Core.Deserializers
 {
     sealed class RequestCsvMap : ClassMap<Request>
     {

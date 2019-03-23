@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Xml.Serialization;
-
-namespace OrdersManager.Core.Requests
+﻿namespace OrdersManager.Core.Requests
 {
     public class Request : IRequest
     {

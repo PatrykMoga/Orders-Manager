@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace OrdersManager.Core.Importers
+namespace OrdersManager.Core.Deserializers
 {
     public class DeserializeService : IDeserializeService
     {
@@ -15,12 +15,12 @@ namespace OrdersManager.Core.Importers
             _deserializers = deserializers;          
         }
 
-        public IList<Request> DeserializeAllFiles()
+        public IList<IRequest> DeserializeAllFiles()
         {
-            var requests = new List<Request>();
+            var requests = new List<IRequest>();
             foreach (var deserializer in _deserializers)
             {
-                deserializer.Deserialize(_filesReader.Files).ToList()
+                deserializer.DeserializeFiles(_filesReader.Files).ToList()
                     .ForEach(r => requests.Add(r));
             }
             return requests;

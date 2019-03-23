@@ -10,29 +10,25 @@ namespace OrdersManager.Core.Repository
 {
     public class MemoryRepository : IRepository
     {
-        private readonly IList<Request> _requests;
+        private readonly IList<IRequest> _requests;
 
         public MemoryRepository()
         {
-            _requests = new List<Request>
-            {
-                new Request{ ClientId = "1", Name = "Name1", Price = 5M, Quantity = 3, RequestId = 1},
-                new Request{ ClientId = "2", Name = "Name2", Price = 355M, Quantity = 3, RequestId = 2},
-                new Request{ ClientId = "2", Name = "Name3", Price = 15M, Quantity = 3, RequestId = 3}
-            };
+            _requests = new List<IRequest>();
+           
         }
 
-        public void Insert(Request order)
+        public void Insert(IRequest order)
         {
             _requests.Add(order);
         }
 
-        public IList<Request> GetWhere(Func<Request,bool> filter)
+        public IList<IRequest> GetWhere(Func<IRequest,bool> filter)
         {
             return _requests.Where(filter).ToList();
         }
 
-        public IList<Request> GetAll() => _requests;
+        public IList<IRequest> GetAll() => _requests;
 
         private bool Validate(Request request)
         {

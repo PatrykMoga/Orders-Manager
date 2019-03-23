@@ -2,7 +2,7 @@
 using OrdersManager.ConsoleUI.MenuServiceComponents;
 using OrdersManager.Core;
 using OrdersManager.Core.Domain;
-using OrdersManager.Core.Importers;
+using OrdersManager.Core.Deserializers;
 using OrdersManager.Core.Repository;
 
 namespace OrdersManager.ConsoleUI
@@ -15,6 +15,7 @@ namespace OrdersManager.ConsoleUI
             builder.RegisterType<MemoryRepository>().As<IRepository>().SingleInstance();
             builder.RegisterType<ConsoleLogger>().As<ILogger>().SingleInstance();
             builder.RegisterType<CsvDeserializer>().As<IDeserializer>();
+            builder.RegisterType<XmlDeserializer>().As<IDeserializer>();
             builder.RegisterType<FilesReader>().As<IFilesReader>().InstancePerLifetimeScope();
             builder.RegisterType<DeserializeService>().As<IDeserializeService>();
 

@@ -6,8 +6,8 @@ namespace OrdersManager.Core.Repository
 {
     public interface IRepository
     {
-        IList<Request> GetAll();
-        IList<Request> GetWhere(Func<Request, bool> filter);
-        void Insert(Request order);
+        IList<IRequest> GetAll();
+        IList<IRequest> GetWhere(Func<IRequest, bool> filter);
+        void Insert(IRequest order);
     }
 }
