@@ -1,4 +1,4 @@
-﻿using OrdersManager.Core.Orders;
+﻿using OrdersManager.Core.Requests;
 using System;
 using System.Collections.Generic;
 using System.Linq;

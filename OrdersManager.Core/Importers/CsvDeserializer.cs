@@ -1,6 +1,6 @@
 ﻿using CsvHelper;
 using OrdersManager.Core.Domain;
-using OrdersManager.Core.Orders;
+using OrdersManager.Core.Requests;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,6 +12,7 @@ namespace OrdersManager.Core.Importers
     {
         private readonly IFilesReader _reader;
         private readonly ILogger _logger;
+        public string FileExtension => ".csv";
 
         public CsvDeserializer(IFilesReader reader, ILogger logger)
         {

@@ -1,4 +1,4 @@
-﻿using OrdersManager.Core.Orders;
+﻿using OrdersManager.Core.Requests;
 using CsvHelper.Configuration;
 using CsvHelper;
 

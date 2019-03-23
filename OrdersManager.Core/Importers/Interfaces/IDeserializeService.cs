@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using OrdersManager.Core.Orders;
+using OrdersManager.Core.Requests;
 
 namespace OrdersManager.Core.Importers
 {
