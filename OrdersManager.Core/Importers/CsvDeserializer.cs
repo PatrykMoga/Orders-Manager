@@ -10,20 +10,18 @@ namespace OrdersManager.Core.Importers
 {
     public class CsvDeserializer : IDeserializer
     {
-        private readonly IFilesReader _reader;
         private readonly ILogger _logger;
-        public string FileExtension => ".csv";
 
-        public CsvDeserializer(IFilesReader reader, ILogger logger)
+        public CsvDeserializer(ILogger logger)
         {
-            _reader = reader;
             _logger = logger;
         }
-        public IList<Request> Deserialize()
+
+        public IList<Request> Deserialize(IEnumerable<string> files)
         {
             var requests = new List<Request>();
 
-            foreach (var file in _reader.Files.Where(f => f.EndsWith(".csv")))
+            foreach (var file in files.Where(f => f.EndsWith(".csv")))
             {
                 var message = $@"Plik: {file} został załadowany pomyślnie.";
 
@@ -40,7 +38,7 @@ namespace OrdersManager.Core.Importers
 
                         }
                         catch (Exception ex)
-                        {                          
+                        {
                             message = $"Plik: {file} zawiera błędne dane i zostały one zignorowane.\n";
                             message += $"Wiersz:{csvReader.Context.RawRow} Dane: {csvReader.Context.RawRecord}";
                         }

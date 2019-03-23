@@ -5,6 +5,6 @@ namespace OrdersManager.Core.Importers
 {
     public interface IDeserializer
     {
-        IList<Request> Deserialize();
+        IList<Request> Deserialize(IEnumerable<string> files);
     }
 }

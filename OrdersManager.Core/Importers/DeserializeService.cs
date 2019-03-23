@@ -6,22 +6,24 @@ namespace OrdersManager.Core.Importers
 {
     public class DeserializeService : IDeserializeService
     {
+        private readonly IFilesReader _filesReader;
         private readonly IEnumerable<IDeserializer> _deserializers;
 
-        public DeserializeService(IEnumerable<IDeserializer> deserializers)
+        public DeserializeService(IFilesReader filesReader, IEnumerable<IDeserializer> deserializers)
         {
-            _deserializers = deserializers;
+            _filesReader = filesReader;
+            _deserializers = deserializers;          
         }
 
         public IList<Request> DeserializeAllFiles()
         {
-            var list = new List<Request>();
+            var requests = new List<Request>();
             foreach (var deserializer in _deserializers)
             {
-                deserializer.Deserialize().ToList()
-                    .ForEach(r => list.Add(r));
+                deserializer.Deserialize(_filesReader.Files).ToList()
+                    .ForEach(r => requests.Add(r));
             }
-            return list;
+            return requests;
         }
     }
 }

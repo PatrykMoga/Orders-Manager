@@ -37,6 +37,10 @@ namespace OrdersManager.ConsoleUI
             var a = _deserializeService.DeserializeAllFiles();
             _logger.PrintLogs();
             WriteLine("Czy załadować pliki do pamięci i kontynuować?");
+            foreach (var item in a)
+            {
+                Console.WriteLine(item.Name);
+            }
         }
 
         private void LoadDirectory()
@@ -48,7 +52,7 @@ namespace OrdersManager.ConsoleUI
                     Clear();
                     WriteLine("Podaj pełną ścieżkę do folderu z plikami");
                     var dirPath = ReadLine();
-                    _filesReader.ReadFiles(dirPath, SearchOption.AllDirectories);
+                    _filesReader.ReadFiles(@"D:\TestFolder\Inner", SearchOption.AllDirectories);
                     break;
                 }
                 catch (UnauthorizedAccessException ex)
