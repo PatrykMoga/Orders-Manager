@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using OrdersManager.Core.Mapping;
 using OrdersManager.Core.Requests;
 
@@ -23,7 +25,14 @@ namespace OrdersManager.Core.Deserializers
 
         public IList<IRequest> DeserializeFile(string file)
         {
-            return (IList<IRequest>)JsonConvert.DeserializeObject<List<RequestJson>>(file);
+            var requests = new List<IRequest>();
+            using (var streamReader = File.OpenText(file))
+            {
+                var serializer = new JsonSerializer();
+                var obj = (ListOfRequestsJson)serializer.Deserialize(streamReader, typeof(ListOfRequestsJson));
+                requests.AddRange(obj.Requests);
+            }
+            return requests;
         }
     }
 }

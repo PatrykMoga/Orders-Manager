@@ -2,8 +2,8 @@
 {
     public enum SupportedTypes
     {
-        csv,
-        xml,
+        //csv,
+        //xml,
         json
     }
 }
