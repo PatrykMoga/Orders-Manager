@@ -4,6 +4,7 @@ using OrdersManager.Core;
 using OrdersManager.Core.Domain;
 using OrdersManager.Core.Deserializers;
 using OrdersManager.Core.Repository;
+using OrdersManager.ConsoleUI.UIComponents;
 
 namespace OrdersManager.ConsoleUI
 {
@@ -22,6 +23,8 @@ namespace OrdersManager.ConsoleUI
 
 
             builder.RegisterType<MenuService>().As<IMenuService>();
+            builder.RegisterType<OrdersAmount>().As<IMenuComponent>();
+            builder.RegisterType<AllOrdersList>().As<IMenuComponent>();
             builder.RegisterType<LoadFiles>();
 
 

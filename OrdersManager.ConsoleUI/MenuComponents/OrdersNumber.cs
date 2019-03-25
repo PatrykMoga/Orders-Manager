@@ -8,5 +8,15 @@ namespace OrdersManager.ConsoleUI.UIComponents
     public class OrdersNumber : IMenuComponent
     {
         public MenuComponent Component { get; }
+
+        public OrdersNumber()
+        {
+            Component = new MenuComponent("Lista wszystkich zamówień", Show);
+        }
+
+        private void Show()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

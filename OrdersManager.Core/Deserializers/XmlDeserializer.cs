@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
+using OrdersManager.Core.Domain;
 using OrdersManager.Core.Mapping;
 using OrdersManager.Core.Requests;
 
@@ -11,13 +12,18 @@ namespace OrdersManager.Core.Deserializers
 {
     public class XmlDeserializer : IDeserializer
     {
-        public string FileExtension => ".xml";
+        private readonly ILogger _logger;
+
+        public XmlDeserializer(ILogger logger)
+        {
+            _logger = logger;
+        }
 
         public IList<IRequest> DeserializeFiles(IEnumerable<string> files)
         {
             var requests = new List<IRequest>();
 
-            foreach (var file in files.Where(f => f.EndsWith(FileExtension)))
+            foreach (var file in files.Where(f => f.EndsWith(".xml")))
             {
               requests.AddRange(DeserializeFile(file));               
             }
@@ -32,6 +38,15 @@ namespace OrdersManager.Core.Deserializers
                 var serializer = new XmlSerializer(typeof(ListOfRequestsXml));
                 var r = (ListOfRequestsXml)serializer.Deserialize(streamReader);
                requests.AddRange(r.Requests);
+            }
+
+            if (requests.Count > 0)
+            {
+                _logger.LogSuccess($"Plik: {file} został załadowany.");
+            }
+            else
+            {
+                _logger.LogError($"Plik: {file} nie zawierał żadnych dancyh do załadowania.");
             }
             return requests;
         }       

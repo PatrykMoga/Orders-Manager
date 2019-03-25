@@ -1,12 +1,11 @@
 ﻿using OrdersManager.ConsoleUI.MenuServiceComponents;
 using OrdersManager.Core;
-using OrdersManager.Core.Domain;
 using OrdersManager.Core.Deserializers;
+using OrdersManager.Core.Domain;
 using OrdersManager.Core.Repository;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
+using System.Linq;
 using static System.Console;
 
 namespace OrdersManager.ConsoleUI
@@ -34,13 +33,18 @@ namespace OrdersManager.ConsoleUI
             LoadDirectory();
 
             Clear();
-            var a = _deserializeService.DeserializeAllFiles();
+            var requests = _deserializeService.DeserializeAllFiles();
             _logger.PrintLogs();
+            ReadLine();
             WriteLine("Czy załadować pliki do pamięci i kontynuować?");
-            foreach (var item in a)
+            requests.ToList().ForEach(r => _repository.Insert(r));
+
+            while (true)
             {
-                Console.WriteLine(item.Name);
+                _menuService.PrintMenu();
             }
+            
+           
         }
 
         private void LoadDirectory()

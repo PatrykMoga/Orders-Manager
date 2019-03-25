@@ -21,8 +21,9 @@ namespace OrdersManager.ConsoleUI.UIComponents
         {
             foreach (var item in _repository.GetWhere(c => true))
             {
-                Console.WriteLine(item.ToString());
+                Console.WriteLine($"{item.Name} {item.ClientId} {item.RequestId} {item.Price}");               
             }
+            Console.ReadLine();
         }
     }
 }

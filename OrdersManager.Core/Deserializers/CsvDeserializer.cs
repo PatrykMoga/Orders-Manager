@@ -31,7 +31,6 @@ namespace OrdersManager.Core.Deserializers
         public IList<IRequest> DeserializeFile(string file)
         {
             var requests = new List<IRequest>();
-            var message = $@"Plik: {file} został załadowany pomyślnie.";
 
             using (var streamReader = File.OpenText(file))
             using (var csvReader = new CsvReader(streamReader))
@@ -41,16 +40,27 @@ namespace OrdersManager.Core.Deserializers
                 {
                     try
                     {
-                     requests.Add(csvReader.GetRecord<Request>());
+                        var request = csvReader.GetRecord<Request>();
+                        if (request != null)
+                        {
+                            requests.Add(request);
+                        }    
                     }
                     catch (Exception)
                     {
-                        message = $"Plik: {file} zawiera błędne dane i zostały one zignorowane.\n";
-                        message += $"Wiersz:{csvReader.Context.RawRow} Dane: {csvReader.Context.RawRecord}";
+                        _logger.LogError($"Plik: {file} zawiera uszkodzone dane w wierszu {csvReader.Context.RawRow}: \"{csvReader.Context.RawRecord.TrimEnd()}\"");
                     }
                 }
             }
-            _logger.Log(message);
+            if (requests.Count > 0)
+            {
+                _logger.LogSuccess($"Plik: {file} został załadowany.");
+            }
+            else
+            {
+                _logger.LogError($"Plik: {file} nie zawierał żadnych dancyh do załadowania.");
+            }
+
             return requests;
         }
     }

@@ -2,8 +2,8 @@
 {
     public interface ILogger
     {
-        bool IsLogged { get; set; }
-        void Log(string message);
+        void LogSuccess(string message);
+        void LogError(string message);
         void PrintLogs();
     }
 }

@@ -8,15 +8,15 @@ namespace OrdersManager.Core.Mapping
 {
     public class RequestJson : IRequest
     {
-        //[JsonProperty("clientId")]
+        [JsonProperty("clientId")]
         public string ClientId { get; set; }
-        //[JsonProperty("requestId")]
+        [JsonProperty("requestId")]
         public long RequestId { get; set; }
-        //[JsonProperty("name")]
+        [JsonProperty("name")]
         public string Name { get; set; }
-        //[JsonProperty("quantity")]
+        [JsonProperty("quantity")]
         public int Quantity { get; set; }
-        //[JsonProperty("price")]
+        [JsonProperty("price")]
         public decimal Price { get; set; }
     }
 }
