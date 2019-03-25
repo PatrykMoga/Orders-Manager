@@ -9,11 +9,11 @@ namespace OrdersManager.Core
     public class FilesReader : IFilesReader
     {
         public IEnumerable<string> Files { get; protected set; }
-        private readonly IEnumerable<string> _supportedTypes;
+        public IEnumerable<string> SupportedTypes { get; }
 
         public FilesReader()
         {
-            _supportedTypes = Enum
+            SupportedTypes = Enum
                 .GetValues(typeof(SupportedTypes))
                 .Cast<SupportedTypes>()
                 .Select(x => x.ToString());
@@ -24,7 +24,7 @@ namespace OrdersManager.Core
             try
             {
                 Files = Directory.GetFiles(dirPath, "*.*", option)
-                .Where(file => _supportedTypes.Any(x => file.EndsWith($".{x}", StringComparison.OrdinalIgnoreCase)));
+                .Where(file => SupportedTypes.Any(x => file.EndsWith($".{x}", StringComparison.OrdinalIgnoreCase)));
             }
             catch (Exception)
             {

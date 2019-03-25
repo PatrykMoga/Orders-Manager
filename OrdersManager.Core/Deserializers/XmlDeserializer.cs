@@ -1,12 +1,10 @@
-﻿using System;
+﻿using OrdersManager.Core.Domain;
+using OrdersManager.Core.Mapping;
+using OrdersManager.Core.Requests;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Xml.Serialization;
-using OrdersManager.Core.Domain;
-using OrdersManager.Core.Mapping;
-using OrdersManager.Core.Requests;
 
 namespace OrdersManager.Core.Deserializers
 {

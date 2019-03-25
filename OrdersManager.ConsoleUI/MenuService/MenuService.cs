@@ -25,7 +25,7 @@ namespace OrdersManager.ConsoleUI.MenuServiceComponents
         }
 
         public void PrintMenu()
-        {          
+        {
             foreach (var item in _executable)
             {
                 WriteLine($"{item.Key}: {item.Value.Name}");
@@ -37,8 +37,7 @@ namespace OrdersManager.ConsoleUI.MenuServiceComponents
                 var input = ReadLine();
                 ExecuteComponent(input);
                 break;
-            }
-            Clear();
+            }        
         }
 
         private void ExecuteComponent(string actionKey)

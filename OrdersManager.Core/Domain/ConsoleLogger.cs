@@ -6,34 +6,28 @@ namespace OrdersManager.Core.Domain
 {
     public class ConsoleLogger : ILogger
     {
-        private List<(string errorType,string message)> _logs = new List<(string, string)>();
+        private readonly IList<(string logType, string message)> _logs;
 
-        //public void Log(string message)
-        //{
-        //    _logs.Add("",message);
-        //}
-
-        public void LogError(string message)
+        public ConsoleLogger()
         {
-            _logs.Add(("error",message));
+            _logs = new List<(string, string)>();
         }
 
-        public void LogSuccess(string message)
-        {
-            _logs.Add(("success",message));
-        }
+        public void LogError(string message) => _logs.Add(("error", message));
+
+        public void LogSuccess(string message) => _logs.Add(("success", message));
 
         public void PrintLogs()
         {
             foreach (var log in _logs)
             {
-                if (log.errorType == "error")
+                if (log.logType == "error")
                 {
                     ForegroundColor = ConsoleColor.Red;
                     WriteLine(log.message);                   
                 }
 
-                if (log.errorType == "success")
+                if (log.logType == "success")
                 {
                     ForegroundColor = ConsoleColor.Green;
                     WriteLine(log.message);

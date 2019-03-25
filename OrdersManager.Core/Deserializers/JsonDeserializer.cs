@@ -41,11 +41,10 @@ namespace OrdersManager.Core.Deserializers
                 }
                 catch (System.Exception)
                 {
-
                     _logger.LogError($"Plik: {file} jest uszkodzony.");
-                }
-               
+                }               
             }
+
             if (requests.Count > 0)
             {
                 _logger.LogSuccess($"Plik: {file} został załadowany.");

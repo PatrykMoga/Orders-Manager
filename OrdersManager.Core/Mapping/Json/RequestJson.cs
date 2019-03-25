@@ -11,12 +11,12 @@ namespace OrdersManager.Core.Mapping
         [JsonProperty("clientId")]
         public string ClientId { get; set; }
         [JsonProperty("requestId")]
-        public long RequestId { get; set; }
+        public long? RequestId { get; set; }
         [JsonProperty("name")]
         public string Name { get; set; }
         [JsonProperty("quantity")]
-        public int Quantity { get; set; }
+        public int? Quantity { get; set; }
         [JsonProperty("price")]
-        public decimal Price { get; set; }
+        public decimal? Price { get; set; }
     }
 }

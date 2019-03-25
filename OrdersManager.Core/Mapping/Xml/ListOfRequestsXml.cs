@@ -9,6 +9,6 @@ namespace OrdersManager.Core.Mapping
     public class ListOfRequestsXml
     {
         [XmlElement("request")]
-        public RequestXmlMap[] Requests { get; set; }
+        public RequestXml[] Requests { get; set; }
     }
 }

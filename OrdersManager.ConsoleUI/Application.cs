@@ -10,7 +10,7 @@ using static System.Console;
 
 namespace OrdersManager.ConsoleUI
 {
-    public class LoadFiles
+    public class Application
     {
         private readonly IFilesReader _filesReader;
         private readonly IDeserializeService _deserializeService;
@@ -18,7 +18,7 @@ namespace OrdersManager.ConsoleUI
         private readonly ILogger _logger;
         private readonly IMenuService _menuService;
         
-        public LoadFiles(IFilesReader filesReader, IDeserializeService deserializeService,
+        public Application(IFilesReader filesReader, IDeserializeService deserializeService,
             IRepository repository, ILogger logger, IMenuService menuService)
         {
             _filesReader = filesReader;
@@ -31,20 +31,31 @@ namespace OrdersManager.ConsoleUI
         public void Start()
         {
             LoadDirectory();
+            Deserialize();
+            Menu();
+        }
 
+        private void Menu()
+        {
+            while (true)
+            {
+                Clear();
+                var title = "Wybierz z listy raport do wygenerowania:";
+                title.PrintInLines();
+                WriteLine();
+                _menuService.PrintMenu();
+            }
+        }
+
+        private void Deserialize()
+        {
             Clear();
             var requests = _deserializeService.DeserializeAllFiles();
             _logger.PrintLogs();
-            ReadLine();
-            WriteLine("Czy załadować pliki do pamięci i kontynuować?");
-            requests.ToList().ForEach(r => _repository.Insert(r));
 
-            while (true)
-            {
-                _menuService.PrintMenu();
-            }
-            
-           
+            WriteLine("Czy załadować pliki do pamięci i kontynuować?");
+            ReadLine();
+            requests.ToList().ForEach(r => _repository.Insert(r));
         }
 
         private void LoadDirectory()
@@ -54,7 +65,8 @@ namespace OrdersManager.ConsoleUI
                 try
                 {
                     Clear();
-                    WriteLine("Podaj pełną ścieżkę do folderu z plikami");
+                    WriteLine("Aby rozpocząć podaj pełną ścieżkę do folderu z plikami.");
+                    WriteLine($"Program obsługuje pliki z rozszerzeniami: {string.Join(", ",_filesReader.SupportedTypes)}");
                     var dirPath = ReadLine();
                     _filesReader.ReadFiles(@"D:\TestFolder\Inner", SearchOption.AllDirectories);
                     break;
