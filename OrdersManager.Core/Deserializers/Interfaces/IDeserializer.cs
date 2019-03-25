@@ -1,4 +1,4 @@
-﻿using OrdersManager.Core.Requests;
+﻿using OrdersManager.Core.Data;
 using System.Collections.Generic;
 
 namespace OrdersManager.Core.Deserializers

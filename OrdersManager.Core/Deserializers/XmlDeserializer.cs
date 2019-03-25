@@ -1,6 +1,6 @@
-﻿using OrdersManager.Core.Domain;
-using OrdersManager.Core.Mapping;
-using OrdersManager.Core.Requests;
+﻿using OrdersManager.Core.Logs;
+using OrdersManager.Core.MappingData.Xml;
+using OrdersManager.Core.Data;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -23,7 +23,7 @@ namespace OrdersManager.Core.Deserializers
 
             foreach (var file in files.Where(f => f.EndsWith(".xml")))
             {
-              requests.AddRange(DeserializeFile(file));               
+              requests.AddRange(DeserializeFile(file));           
             }
             return requests;
         }

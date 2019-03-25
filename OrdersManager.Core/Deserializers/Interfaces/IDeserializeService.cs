@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using OrdersManager.Core.Requests;
+using OrdersManager.Core.Data;
 
 namespace OrdersManager.Core.Deserializers
 {

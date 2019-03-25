@@ -1,10 +1,7 @@
-﻿using OrdersManager.Core.Requests;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using OrdersManager.Core.Data;
 using System.Xml.Serialization;
 
-namespace OrdersManager.Core.Mapping
+namespace OrdersManager.Core.MappingData.Xml
 {
     [XmlRoot(ElementName = "request")]
     public class RequestXml : IRequest

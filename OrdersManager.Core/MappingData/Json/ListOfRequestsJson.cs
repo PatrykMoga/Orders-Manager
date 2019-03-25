@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace OrdersManager.Core.Mapping
+namespace OrdersManager.Core.MappingData.Json
 {
     public class ListOfRequestsJson
     {

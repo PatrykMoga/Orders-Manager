@@ -1,10 +1,11 @@
 ﻿using Autofac;
 using OrdersManager.ConsoleUI.MenuServiceComponents;
 using OrdersManager.Core;
-using OrdersManager.Core.Domain;
+using OrdersManager.Core.Logs;
 using OrdersManager.Core.Deserializers;
 using OrdersManager.Core.Repository;
 using OrdersManager.ConsoleUI.UIComponents;
+using OrdersManager.ConsoleUI.ApplicationComponents;
 
 namespace OrdersManager.ConsoleUI
 {
@@ -25,6 +26,7 @@ namespace OrdersManager.ConsoleUI
 
 
             builder.RegisterType<MenuService>().As<IMenuService>();
+            builder.RegisterType<DataManager>().As<IDataManager>();
             builder.RegisterType<OrdersAmount>().As<IMenuComponent>();
             builder.RegisterType<AllOrdersList>().As<IMenuComponent>();
             builder.RegisterType<Application>();

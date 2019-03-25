@@ -1,4 +1,4 @@
-﻿namespace OrdersManager.Core.Requests
+﻿namespace OrdersManager.Core.Data
 {
     public interface IRequest
     {

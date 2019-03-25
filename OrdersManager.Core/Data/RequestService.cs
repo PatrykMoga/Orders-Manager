@@ -1,10 +1,17 @@
-﻿using OrdersManager.Core.Requests;
+﻿using OrdersManager.Core.Repository;
 
-namespace OrdersManager.Core.Deserializers
+namespace OrdersManager.Core.Data
 {
-    public static class RequestValidator
+    public class RequestService
     {
-        public static bool ValidateRequest(IRequest request)
+        private readonly IRepository _repository;
+
+        public RequestService(IRepository repository)
+        {
+            _repository = repository;
+        }
+
+        private bool Validate(IRequest request)
         {
             if (string.IsNullOrWhiteSpace(request.ClientId) || request.ClientId.Length > 6 || request.ClientId.Contains(" "))
                 return false;
@@ -21,6 +28,14 @@ namespace OrdersManager.Core.Deserializers
                 return false;
 
             return true;
+        }
+
+        public void Add(IRequest request)
+        {
+            if (Validate(request))
+            {
+                _repository.Insert(request);
+            }
         }
     }
 }

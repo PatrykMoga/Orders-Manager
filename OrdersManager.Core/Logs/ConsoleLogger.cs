@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using static System.Console;
 
-namespace OrdersManager.Core.Domain
+namespace OrdersManager.Core.Logs
 {
     public class ConsoleLogger : ILogger
     {

@@ -1,6 +1,7 @@
 ﻿using CsvHelper;
-using OrdersManager.Core.Domain;
-using OrdersManager.Core.Requests;
+using OrdersManager.Core.Data;
+using OrdersManager.Core.Logs;
+using OrdersManager.Core.MappingData.Csv;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -48,7 +49,8 @@ namespace OrdersManager.Core.Deserializers
                     }
                     catch (Exception)
                     {
-                        _logger.LogError($"Plik: {file} zawiera uszkodzone dane w wierszu {csvReader.Context.RawRow}: \"{csvReader.Context.RawRecord.TrimEnd()}\"");
+                        _logger.LogError($"Plik: {file} zawiera uszkodzone dane w wierszu " +
+                            $"{csvReader.Context.RawRow}: \"{csvReader.Context.RawRecord.TrimEnd()}\"");
                     }
                 }
             }

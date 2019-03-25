@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
-using OrdersManager.Core.Domain;
-using OrdersManager.Core.Mapping;
-using OrdersManager.Core.Requests;
+using OrdersManager.Core.Logs;
+using OrdersManager.Core.MappingData.Json;
+using OrdersManager.Core.Data;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;

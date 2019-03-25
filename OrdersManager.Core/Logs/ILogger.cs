@@ -1,4 +1,4 @@
-﻿namespace OrdersManager.Core.Domain
+﻿namespace OrdersManager.Core.Logs
 {
     public interface ILogger
     {

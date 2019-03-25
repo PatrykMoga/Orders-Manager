@@ -1,10 +1,10 @@
 ﻿using Newtonsoft.Json;
-using OrdersManager.Core.Requests;
+using OrdersManager.Core.Data;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace OrdersManager.Core.Mapping
+namespace OrdersManager.Core.MappingData.Json
 {
     public class RequestJson : IRequest
     {

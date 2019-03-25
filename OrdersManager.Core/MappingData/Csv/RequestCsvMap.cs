@@ -1,8 +1,7 @@
-﻿using OrdersManager.Core.Requests;
-using CsvHelper.Configuration;
-using CsvHelper;
+﻿using CsvHelper.Configuration;
+using OrdersManager.Core.Data;
 
-namespace OrdersManager.Core.Deserializers
+namespace OrdersManager.Core.MappingData.Csv
 {
     sealed class RequestCsvMap : ClassMap<Request>
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Xml.Serialization;
 
-namespace OrdersManager.Core.Mapping
+namespace OrdersManager.Core.MappingData.Xml
 {
     [XmlRoot("requests")]
     public class ListOfRequestsXml
