@@ -1,15 +1,27 @@
 ﻿using OrdersManager.Core.Repository;
+using System;
+using System.Collections.Generic;
 
 namespace OrdersManager.Core.Data
 {
-    public class RequestService
+    public class RequestProvider : IRequestProvider
     {
         private readonly IRepository _repository;
 
-        public RequestService(IRepository repository)
+        public RequestProvider(IRepository repository)
         {
             _repository = repository;
+        }      
+
+        public void Add(IRequest request)
+        {
+            if (Validate(request))
+            {
+                _repository.Insert(request);
+            }
         }
+
+        public IList<IRequest> Get(Func<IRequest,bool> filter) => _repository.GetWhere(filter);
 
         private bool Validate(IRequest request)
         {
@@ -28,14 +40,6 @@ namespace OrdersManager.Core.Data
                 return false;
 
             return true;
-        }
-
-        public void Add(IRequest request)
-        {
-            if (Validate(request))
-            {
-                _repository.Insert(request);
-            }
         }
     }
 }

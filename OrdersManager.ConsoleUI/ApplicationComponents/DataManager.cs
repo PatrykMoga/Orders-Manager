@@ -1,7 +1,8 @@
-﻿using OrdersManager.Core;
+﻿using OrdersManager.ConsoleUI.Extensions;
+using OrdersManager.Core;
+using OrdersManager.Core.Data;
 using OrdersManager.Core.Deserializers;
 using OrdersManager.Core.Logs;
-using OrdersManager.Core.Repository;
 using System;
 using System.IO;
 using System.Linq;
@@ -13,15 +14,15 @@ namespace OrdersManager.ConsoleUI.ApplicationComponents
     {
         private readonly IFilesReader _filesReader;
         private readonly IDeserializeService _deserializeService;
-        private readonly IRepository _repository;
+        private readonly IRequestProvider _provider;
         private readonly ILogger _logger;
 
-        public DataManager(IFilesReader filesReader, IDeserializeService deserializeService, 
-            IRepository repository, ILogger logger)
+        public DataManager(IFilesReader filesReader, IDeserializeService deserializeService,
+            IRequestProvider provider, ILogger logger)
         {
             _filesReader = filesReader;
             _deserializeService = deserializeService;
-            _repository = repository;
+            _provider = provider;
             _logger = logger;
         }
 
@@ -40,7 +41,7 @@ namespace OrdersManager.ConsoleUI.ApplicationComponents
 
             WriteLine("Czy załadować pliki do pamięci i kontynuować?");
             ReadLine();
-            requests.ToList().ForEach(r => _repository.Insert(r));
+            requests.ToList().ForEach(r => _provider.Add(r));
         }
 
         private void LoadDirectory()
@@ -50,8 +51,7 @@ namespace OrdersManager.ConsoleUI.ApplicationComponents
                 try
                 {
                     Clear();
-                    WriteLine($"Aby rozpocząć podaj pełną ścieżkę do folderu z plikami " +
-                        $"(Obsługiwane rozszerzenia: {string.Join(", ", _filesReader.SupportedTypes)})");
+                    WriteLine($"Aby rozpocząć podaj pełną ścieżkę do folderu z plikami (Obsługiwane rozszerzenia: {string.Join(", ", _filesReader.SupportedTypes)})".PrintInLines());
                     Write("Ścieżka: ");
                     var dirPath = ReadLine();
                     _filesReader.ReadFiles(@"D:\TestFolder\Inner", SearchOption.AllDirectories);

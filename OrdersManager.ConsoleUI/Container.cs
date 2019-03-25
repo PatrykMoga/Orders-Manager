@@ -6,6 +6,7 @@ using OrdersManager.Core.Deserializers;
 using OrdersManager.Core.Repository;
 using OrdersManager.ConsoleUI.UIComponents;
 using OrdersManager.ConsoleUI.ApplicationComponents;
+using OrdersManager.Core.Data;
 
 namespace OrdersManager.ConsoleUI
 {
@@ -23,6 +24,7 @@ namespace OrdersManager.ConsoleUI
 
             builder.RegisterType<FilesReader>().As<IFilesReader>().InstancePerLifetimeScope();
             builder.RegisterType<DeserializeService>().As<IDeserializeService>();
+            builder.RegisterType<RequestProvider>().As<IRequestProvider>();
 
 
             builder.RegisterType<MenuService>().As<IMenuService>();

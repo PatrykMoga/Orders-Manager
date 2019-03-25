@@ -1,4 +1,5 @@
 ﻿using OrdersManager.ConsoleUI.MenuServiceComponents;
+using OrdersManager.Core.Data;
 using OrdersManager.Core.Repository;
 using System;
 using System.Collections.Generic;
@@ -8,18 +9,18 @@ namespace OrdersManager.ConsoleUI.UIComponents
 {
     public class OrdersAmount : IMenuComponent
     {
-        private readonly IRepository _repository;
+        private readonly IRequestProvider _provider;
         public MenuComponent Component { get; }
 
-        public OrdersAmount(IRepository repository)
+        public OrdersAmount(IRequestProvider provider)
         {
-            _repository = repository;
-            Component = new MenuComponent("Wypisz ilość zamówieć", bla);
+            _provider = provider;
+            Component = new MenuComponent("Ilość zamówień", bla);
         }
 
         private void bla()
         {
-            Console.WriteLine(_repository.GetAll().Count);
+            //Console.WriteLine(_repository.GetAll().Count);
             Console.ReadLine();
         }
     }
