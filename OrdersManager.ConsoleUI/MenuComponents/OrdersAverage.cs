@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace OrdersManager.ConsoleUI.UIComponents
+namespace OrdersManager.ConsoleUI.MenuComponents
 {
     public class OrdersAverage : IMenuComponent
     {

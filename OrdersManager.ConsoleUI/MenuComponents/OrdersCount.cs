@@ -1,18 +1,19 @@
 ﻿using OrdersManager.ConsoleUI.MenuServiceComponents;
 using OrdersManager.Core.Data;
+using OrdersManager.Core.Filtering;
 using OrdersManager.Core.Repository;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace OrdersManager.ConsoleUI.UIComponents
+namespace OrdersManager.ConsoleUI.MenuComponents
 {
-    public class OrdersAmount : IMenuComponent
+    public class OrdersCount : IMenuComponent
     {
         private readonly IRequestProvider _provider;
         public MenuComponent Component { get; }
 
-        public OrdersAmount(IRequestProvider provider)
+        public OrdersCount(IRequestProvider provider)
         {
             _provider = provider;
             Component = new MenuComponent("Ilość zamówień", bla);
@@ -20,7 +21,8 @@ namespace OrdersManager.ConsoleUI.UIComponents
 
         private void bla()
         {
-            //Console.WriteLine(_repository.GetAll().Count);
+            var filter = RequestFilters.GetAll();
+            Console.WriteLine(_provider.CountWhere(filter));
             Console.ReadLine();
         }
     }
