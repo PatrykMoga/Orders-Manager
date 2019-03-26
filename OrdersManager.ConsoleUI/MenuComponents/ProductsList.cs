@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using static System.Console;
+using OrdersManager.Core.Serializers;
 
 namespace OrdersManager.ConsoleUI.MenuComponents
 {
@@ -15,10 +16,13 @@ namespace OrdersManager.ConsoleUI.MenuComponents
         private readonly IFilteringService _filtersService;
         public MenuItem Component { get; }
 
+        private readonly CsvSerializer serializer;
+
         public ProductsList(IRequestProvider requestProvider, IFilteringService filtersService)
         {
             _requestProvider = requestProvider;
             _filtersService = filtersService;
+            serializer = new CsvSerializer();
             Component = new MenuItem("Products list", ShowOrders);
         }
 
@@ -47,6 +51,13 @@ namespace OrdersManager.ConsoleUI.MenuComponents
             }
             WriteLine(titleRow.Length.PrintLines('-'));
 
+            var records = new List<object>();
+            foreach (var item in requests)
+            {
+                records.Add(new { Name = item.Key, Quantity = item.Value });
+            }
+           
+            serializer.Serialize("a", "b", records);
             ReadLine();
         }
     }

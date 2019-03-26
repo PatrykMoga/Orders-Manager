@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace OrdersManager.Core
+namespace OrdersManager.Core.FilesProcessing
 {
 
     public class FilesReader : IFilesReader
     {
         public IEnumerable<string> Files { get; protected set; }
-        public IEnumerable<string> SupportedTypes { get; }
+        public IEnumerable<string> SupportedExtensions { get; }
 
         public FilesReader()
         {
-            SupportedTypes = Enum
-                .GetValues(typeof(SupportedTypes))
-                .Cast<SupportedTypes>()
+            SupportedExtensions = Enum
+                .GetValues(typeof(SupportedExtensions))
+                .Cast<SupportedExtensions>()
                 .Select(x => x.ToString());
         }
 
@@ -24,7 +24,7 @@ namespace OrdersManager.Core
             try
             {
                 Files = Directory.GetFiles(dirPath, "*.*", option)
-                .Where(file => SupportedTypes.Any(x => file.EndsWith($".{x}", StringComparison.OrdinalIgnoreCase)));
+                .Where(file => SupportedExtensions.Any(x => file.EndsWith($".{x}", StringComparison.OrdinalIgnoreCase)));
             }
             catch (Exception)
             {

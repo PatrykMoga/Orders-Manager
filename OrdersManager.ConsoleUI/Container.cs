@@ -8,6 +8,7 @@ using OrdersManager.ConsoleUI.MenuComponents;
 using OrdersManager.ConsoleUI.ApplicationComponents;
 using OrdersManager.Core.Data;
 using OrdersManager.Core.Filtering;
+using OrdersManager.Core.FilesProcessing;
 
 namespace OrdersManager.ConsoleUI
 {

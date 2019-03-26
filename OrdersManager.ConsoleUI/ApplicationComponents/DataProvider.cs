@@ -1,6 +1,6 @@
-﻿using OrdersManager.Core;
-using OrdersManager.Core.Data;
+﻿using OrdersManager.Core.Data;
 using OrdersManager.Core.Deserializers;
+using OrdersManager.Core.FilesProcessing;
 using OrdersManager.Core.Logs;
 using System;
 using System.IO;
@@ -51,7 +51,7 @@ namespace OrdersManager.ConsoleUI.ApplicationComponents
                 {
                     Clear();
                     WriteLine($"To begin, enter the directory path that contains the files to be processed.\n" +
-                        $"Supported file extensions: \"{string.Join(", ", _filesReader.SupportedTypes)}\"\n");
+                        $"Supported file extensions: \"{string.Join(", ", _filesReader.SupportedExtensions)}\"\n");
 
                     Write("Path: ");
                     var dirPath = ReadLine();                   
