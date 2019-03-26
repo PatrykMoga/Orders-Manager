@@ -16,13 +16,10 @@ namespace OrdersManager.ConsoleUI.MenuComponents
         private readonly IFilteringService _filtersService;
         public MenuItem Component { get; }
 
-        private readonly CsvSerializer serializer;
-
         public ProductsList(IRequestProvider requestProvider, IFilteringService filtersService)
         {
             _requestProvider = requestProvider;
             _filtersService = filtersService;
-            serializer = new CsvSerializer();
             Component = new MenuItem("Products list", ShowOrders);
         }
 
@@ -57,7 +54,7 @@ namespace OrdersManager.ConsoleUI.MenuComponents
                 records.Add(new { Name = item.Key, Quantity = item.Value });
             }
            
-            serializer.Serialize("a", "b", records);
+            CsvSerializer.Serialize("a", "b", records);
             ReadLine();
         }
     }

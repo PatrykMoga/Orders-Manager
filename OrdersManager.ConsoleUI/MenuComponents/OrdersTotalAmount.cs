@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using static System.Console;
+using OrdersManager.Core.Serializers;
 
 namespace OrdersManager.ConsoleUI.MenuComponents
 {
@@ -33,6 +34,11 @@ namespace OrdersManager.ConsoleUI.MenuComponents
             Clear();
             var searchPattern = filter.ContainsPattern ? _filtersService.SearchPattern : "";
             WriteLine($"Total orders amount for \"{filter.Name}{searchPattern}\": {amount:C2}");
+
+            var records = new List<object>();
+            records.Add(new { Amount = $"{amount:C2}", Filter = $"{filter.Name}{searchPattern}" });
+
+            CsvSerializer.Serialize("a", "b", records);
 
             ReadLine();
         }
