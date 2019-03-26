@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using static System.Console;
 
 namespace OrdersManager.ConsoleUI.MenuServiceComponents
@@ -20,8 +21,14 @@ namespace OrdersManager.ConsoleUI.MenuServiceComponents
         {
             foreach (var component in _menuComponents)
             {
-                _executable.Add(_index++, component.Component);               
+                _executable.Add(_index++, component.Component);
             }
+            _executable.Add(_index++, new MenuItem("Exit", ExitApp));
+        }
+
+        private void ExitApp()
+        {
+            Environment.Exit(0);
         }
 
         public void PrintMenu()
@@ -39,7 +46,7 @@ namespace OrdersManager.ConsoleUI.MenuServiceComponents
                 var input = ReadLine();
                 ExecuteComponent(input);
                 break;
-            }        
+            }
         }
 
         private void ExecuteComponent(string actionKey)

@@ -16,7 +16,7 @@ namespace OrdersManager.ConsoleUI.MenuComponents
 
         private void Show()
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

@@ -31,10 +31,13 @@ namespace OrdersManager.ConsoleUI
 
             builder.RegisterType<MenuService>().As<IMenuService>();
             builder.RegisterType<DataManager>().As<IDataManager>();
+
             builder.RegisterType<OrdersCount>().As<IMenuComponent>();
-            builder.RegisterType<OrdersList>().As<IMenuComponent>();
             builder.RegisterType<OrdersTotalAmount>().As<IMenuComponent>();
+            builder.RegisterType<OrdersList>().As<IMenuComponent>();
+            builder.RegisterType<OrdersAverageValue>().As<IMenuComponent>();            
             builder.RegisterType<ProductsList>().As<IMenuComponent>();
+            builder.RegisterType<OrdersInPriceRange>().As<IMenuComponent>();
             builder.RegisterType<Application>();
 
 
