@@ -2,6 +2,7 @@
 using OrdersManager.Core.Data;
 using OrdersManager.Core.Extensions;
 using OrdersManager.Core.Filtering;
+using System.Linq;
 using static System.Console;
 
 namespace OrdersManager.ConsoleUI.MenuComponents
@@ -26,9 +27,11 @@ namespace OrdersManager.ConsoleUI.MenuComponents
             WriteLine("Orders List\n");
             
             var filter = _filtersService.GetFilter();
-            var requests = _requestProvider.GetWhere(filter.Filter);
+            var requests = _requestProvider.GetWhere(filter.Filter).OrderBy(r => r.ClientId).ThenBy(r => r.RequestId);
 
             Clear();
+            var searchPattern = filter.ContainsPattern ? _filtersService.SearchPattern : "";
+            WriteLine($"Orders List for \"{filter.Name}{searchPattern}\"\n");
             var titleRow = string.Format("{0,0} {1,0} {2,5} {3,8} {4,10}",
                 "RequestId", "ClientId", "Name", "Price", "Quantity");
             WriteLine(titleRow);

@@ -31,6 +31,8 @@ namespace OrdersManager.ConsoleUI.MenuComponents
             var requests = _requestProvider.ProductRequestWhere(filter.Filter);
 
             Clear();
+            var searchPattern = filter.ContainsPattern ? _filtersService.SearchPattern : "";
+            WriteLine($"Products list for \"{filter.Name}{searchPattern}\"\n");
             var titleRow = string.Format("{0,0} {1,12}",
                 "Name", "Quantity");
             WriteLine(titleRow);

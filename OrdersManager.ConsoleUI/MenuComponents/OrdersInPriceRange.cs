@@ -28,24 +28,26 @@ namespace OrdersManager.ConsoleUI.MenuComponents
             var filter = _filtersService.GetFilter();
             //Console.WriteLine("Min");
             //var input = ReadLine();
-            //var min = Helpers.ParseToInt(input);
+            var min = 12;
             //Console.WriteLine("Max");
             //input = ReadLine();
-            //var max = Helpers.ParseToInt(input);
-            var requests = _requestProvider.RequestsInRangeWhere(filter.Filter,10,40);
+            var max = 20;
+            var requests = _requestProvider.RequestsInRangeWhere(filter.Filter, min, max);
 
             Clear();
-            var titleRow = string.Format("{0,0} {1,0} {2,5} {3,8} {4,10} {5,15}",
-                "RequestId", "ClientId", "Name", "Price", "Quantity", "Total Price");
-            WriteLine(titleRow);
-
+            var searchPattern = filter.ContainsPattern ? _filtersService.SearchPattern : "";
+            WriteLine($"Orders in price range \"{min}-{max}\" for \"{filter.Name}{searchPattern}\"\n");
+            
             if (requests.Count > 0)
             {
+                var titleRow = string.Format("{0,0} {1,0} {2,5} {3,8} {4,10} {5,15}",
+                "RequestId", "ClientId", "Name", "Price", "Quantity", "Total Price");
+                WriteLine(titleRow);
                 WriteLine(titleRow.Length.PrintLines('-'));
                 foreach (var request in requests)
                 {
                     var row = string.Format("{0,5} {1,8} {2,10} {3,8:C2} {4,5} {5,15:C2}",
-                        request.RequestId, request.ClientId, request.Name, 
+                        request.RequestId, request.ClientId, request.Name,
                         request.Price, request.Quantity, request.Price * request.Quantity);
                     WriteLine(row);
                 }
@@ -53,9 +55,9 @@ namespace OrdersManager.ConsoleUI.MenuComponents
             }
             else
             {
-                WriteLine("No of orders for the customer in this price range");
+                WriteLine("No orders for the customer in this price range");
             }
-            
+
 
             ReadLine();
         }
