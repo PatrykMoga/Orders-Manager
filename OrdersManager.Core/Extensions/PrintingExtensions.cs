@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace OrdersManager.ConsoleUI.Extensions
+namespace OrdersManager.Core.Extensions
 {
     public static class PrintingExtensions
     {

@@ -1,5 +1,4 @@
 ﻿using OrdersManager.ConsoleUI.ApplicationComponents;
-using OrdersManager.ConsoleUI.Extensions;
 using OrdersManager.ConsoleUI.MenuServiceComponents;
 using OrdersManager.Core;
 using OrdersManager.Core.Deserializers;

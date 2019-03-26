@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using static System.Console;
 using System.Linq;
+using OrdersManager.Core.Extensions;
 
 namespace OrdersManager.Core.Filtering
 {
@@ -19,7 +20,7 @@ namespace OrdersManager.Core.Filtering
 
             _filters = new Dictionary<int, RequestFilter>();
             _filters.Add(1, new RequestFilter("All", r => true));
-            _filters.Add(2, new RequestFilter("Cliend Id", r => r.ClientId == _searchPattern, ValidateClientId));
+            _filters.Add(2, new RequestFilter("Client Id", r => r.ClientId == _searchPattern, ValidateClientId));
         }
 
         public Dictionary<int, RequestFilter> GetFilters() => _filters;
@@ -30,8 +31,10 @@ namespace OrdersManager.Core.Filtering
         {
             while (true)
             {
-                Console.WriteLine("Available client Ids:");
-                WriteLine(string.Join(", ",ClientIds));
+                Clear();
+                WriteLine("Available client Ids:");
+                var ids = string.Join(", ", ClientIds);
+                WriteLine(ids.PrintInLines('-'));
                 Write("Enter Client Id: ");
                 var clientId = ReadLine();
                 if (_repository.Contains(r => r.ClientId == clientId))
@@ -43,6 +46,7 @@ namespace OrdersManager.Core.Filtering
                 {
                     WriteLine("Client doesn't exist");
                 }
+                ReadKey();
             }
         }       
     }

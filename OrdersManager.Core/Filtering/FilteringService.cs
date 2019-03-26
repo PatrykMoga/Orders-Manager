@@ -21,12 +21,15 @@ namespace OrdersManager.Core.Filtering
             {
                 WriteLine($"{filter.Key}: {filter.Value.Name}");
             }
+            WriteLine();
         }
 
         public Func<IRequest, bool> GetFilter()
         {
+            PrintFilters();
             while (true)
-            {
+            {               
+                Write("Enter command key: ");
                 var filterKey = ReadLine();
 
                 if (int.TryParse(filterKey, out int key))
@@ -48,7 +51,7 @@ namespace OrdersManager.Core.Filtering
                 else
                 {
                     WriteLine("Command error, try again!");
-                }
+                }               
             }
         }
     }

@@ -7,10 +7,10 @@ namespace OrdersManager.Core.Filtering
 {
     public class RequestFilter
     {      
-        public string Name { get; set; }
-        public Func<IRequest,bool> Filter { get; set; }
-        public bool ContainsPattern { get; set; }
-        public Action ValidatePattern { get; set; }
+        public string Name { get; }
+        public Func<IRequest,bool> Filter { get; }
+        public bool ContainsPattern { get; }
+        public Action ValidatePattern { get; }
 
         public RequestFilter(string name, Func<IRequest, bool> filter)
         {

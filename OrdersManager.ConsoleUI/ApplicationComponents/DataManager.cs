@@ -1,5 +1,4 @@
-﻿using OrdersManager.ConsoleUI.Extensions;
-using OrdersManager.Core;
+﻿using OrdersManager.Core;
 using OrdersManager.Core.Data;
 using OrdersManager.Core.Deserializers;
 using OrdersManager.Core.Logs;

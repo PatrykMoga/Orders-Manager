@@ -1,4 +1,4 @@
-﻿using OrdersManager.ConsoleUI.Extensions;
+﻿using OrdersManager.Core.Extensions;
 using OrdersManager.ConsoleUI.MenuServiceComponents;
 using OrdersManager.Core.Data;
 using OrdersManager.Core.Filtering;
@@ -24,16 +24,16 @@ namespace OrdersManager.ConsoleUI.MenuComponents
         {
             Clear();
             WriteLine("Orders List\n");
-
-            _filtersService.PrintFilters();
+            
             var filter = _filtersService.GetFilter();
             var requests = _requestProvider.GetWhere(filter);
 
-
+            Clear();
             var titleRow = string.Format("{0,0} {1,0} {2,5} {3,8} {4,10}",
                 "RequestId", "ClientId", "Name", "Price", "Quantity");
             WriteLine(titleRow);
 
+            
             WriteLine(titleRow.Length.PrintLines('-'));
             foreach (var request in requests)
             {
