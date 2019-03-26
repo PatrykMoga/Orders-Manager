@@ -13,6 +13,6 @@ namespace OrdersManager.Core.Data
         IList<IRequest> RequestsInRangeWhere(Func<IRequest, bool> filter, int min, int max);
         Dictionary<string, int> ProductRequestWhere(Func<IRequest, bool> filter);
         //Test
-        Dictionary<string, (IEnumerable<string> products, IEnumerable<int?> quantity, IEnumerable<decimal?> price)> OrdersWhere(Func<IRequest, bool> filter);
+        Dictionary<string, IEnumerable<(string name, int? quantity, decimal? price)>> OrdersWhere(Func<IRequest, bool> filter);
     }
 }

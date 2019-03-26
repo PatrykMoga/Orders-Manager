@@ -21,19 +21,12 @@ namespace OrdersManager.ConsoleUI.MenuComponents
         {
             foreach (var item in _requestProvider.OrdersWhere(r => true))
             {
-                Console.WriteLine(item.Key);
-                foreach (var item2 in item.Value.products)
+                Console.WriteLine(item.Key + item.Value);
+                foreach (var f in item.Value)
                 {
-                    Console.WriteLine(item2);
+                    Console.WriteLine(f.price);
                 }
-                foreach (var item2 in item.Value.quantity)
-                {
-                    Console.WriteLine(item2);
-                }
-                foreach (var item2 in item.Value.price)
-                {
-                    Console.WriteLine(item2);
-                }
+                
             }
             Console.ReadLine();
         }

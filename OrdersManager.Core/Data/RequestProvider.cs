@@ -43,19 +43,22 @@ namespace OrdersManager.Core.Data
 
         public IList<IRequest> GetWhere(Func<IRequest, bool> filter) => _repository.GetWhere(filter);
 
-        public Dictionary<string, (IEnumerable<string> products, IEnumerable<int?> quantity, IEnumerable<decimal?> price)> OrdersWhere(Func<IRequest, bool> filter)
+        public Dictionary<string, IEnumerable<(string name, int? quantity, decimal? price)>> OrdersWhere(Func<IRequest, bool> filter)
         {
-            return _repository.GetWhere(filter)
+            return _repository.GetWhere(filter) 
                 .GroupBy(r => $"{r.ClientId}-{r.RequestId}")
                 .Select(r => new
                 {
                     clientId = r.Key,
-                    products = r.Select(s => s.Name),
-                    quantity = r.Select(q => q.Quantity),
-                    price = r.Select(p => p.Price)
+                    products = r.Select(p => new
+                    {
+                        name = p.Name,
+                        quantity = p.Quantity,
+                        price = p.Price
+                    })
                 })
                 .OrderBy(r => r.clientId)
-                .ToDictionary(r => r.clientId, r => (r.products, r.quantity,r.price));
+                .ToDictionary(r => r.clientId, r => r.products as IEnumerable<(string name, int? quantity, decimal? price)>);
         }
 
         public int CountWhere(Func<IRequest, bool> filter) =>
