@@ -9,14 +9,14 @@ using static System.Console;
 
 namespace OrdersManager.ConsoleUI.ApplicationComponents
 {
-    public class DataManager : IDataManager
+    public class DataProvider : IDataProvider
     {
         private readonly IFilesReader _filesReader;
         private readonly IDeserializeService _deserializeService;
         private readonly IRequestProvider _provider;
         private readonly ILogger _logger;
 
-        public DataManager(IFilesReader filesReader, IDeserializeService deserializeService,
+        public DataProvider(IFilesReader filesReader, IDeserializeService deserializeService,
             IRequestProvider provider, ILogger logger)
         {
             _filesReader = filesReader;

@@ -33,9 +33,16 @@ namespace OrdersManager.Core.Deserializers
             var requests = new List<IRequest>();
             using (var streamReader = File.OpenText(file))
             {
-                var serializer = new XmlSerializer(typeof(ListOfRequestsXml));
-                var r = (ListOfRequestsXml)serializer.Deserialize(streamReader);
-               requests.AddRange(r.Requests);
+                try
+                {
+                    var serializer = new XmlSerializer(typeof(ListOfRequestsXml));
+                    var r = (ListOfRequestsXml)serializer.Deserialize(streamReader);
+                    requests.AddRange(r.Requests);
+                }
+                catch (System.Exception ex)
+                {
+                    _logger.LogError(ex.Message);
+                }             
             }
 
             if (requests.Count > 0)

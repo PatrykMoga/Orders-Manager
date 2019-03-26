@@ -39,9 +39,9 @@ namespace OrdersManager.Core.Deserializers
                     var obj = (ListOfRequestsJson)serializer.Deserialize(streamReader, typeof(ListOfRequestsJson));
                     requests.AddRange(obj.Requests);
                 }
-                catch (System.Exception)
+                catch (System.Exception ex)
                 {
-                    _logger.LogError($"Plik: {file} jest uszkodzony.");
+                    _logger.LogError($"{ex.Message}");
                 }               
             }
 

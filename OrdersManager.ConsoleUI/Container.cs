@@ -31,7 +31,7 @@ namespace OrdersManager.ConsoleUI
 
 
             builder.RegisterType<MenuService>().As<IMenuService>();
-            builder.RegisterType<DataManager>().As<IDataManager>();
+            builder.RegisterType<DataProvider>().As<IDataProvider>();
 
             builder.RegisterType<OrdersCount>().As<IMenuComponent>();
             builder.RegisterType<OrdersTotalAmount>().As<IMenuComponent>();

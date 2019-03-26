@@ -1,39 +1,26 @@
 ﻿using OrdersManager.ConsoleUI.ApplicationComponents;
 using OrdersManager.ConsoleUI.MenuServiceComponents;
-using OrdersManager.Core;
-using OrdersManager.Core.Deserializers;
-using OrdersManager.Core.Logs;
-using OrdersManager.Core.Repository;
-using System;
-using System.IO;
-using System.Linq;
-using static System.Console;
 
 namespace OrdersManager.ConsoleUI
 {
     public class Application
     {
-        private readonly IDataManager _manager;
+        private readonly IDataProvider _dataProvider;
         private readonly IMenuService _menuService;
 
-        public Application(IMenuService menuService, IDataManager manager)
-        {         
+        public Application(IMenuService menuService, IDataProvider dataProvider)
+        {
             _menuService = menuService;
-            _manager = manager;
+            _dataProvider = dataProvider;
         }
 
         public void Start()
         {
-            _manager.Initialize();
-            Menu();
-        }
-
-        private void Menu()
-        {
+            _dataProvider.Initialize();
             while (true)
-            {             
+            {
                 _menuService.PrintMenu();
             }
-        }      
+        }
     }
 }

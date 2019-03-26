@@ -1,6 +1,6 @@
 ﻿namespace OrdersManager.ConsoleUI.ApplicationComponents
 {
-    public interface IDataManager
+    public interface IDataProvider
     {
         void Initialize();
     }
