@@ -7,15 +7,15 @@ using System.Text;
 
 namespace OrdersManager.ConsoleUI.MenuComponents
 {
-    public class NonameYet : IMenuComponent
+    public class ProductsList : IMenuComponent
     {
         private readonly IRequestProvider _provider;
         public MenuItem Component { get; }
 
-        public NonameYet(IRequestProvider provider)
+        public ProductsList(IRequestProvider provider)
         {
             _provider = provider;
-            Component = new MenuItem("Lista zamówień", ShowOrders);
+            Component = new MenuItem("Products list", ShowOrders);
         }
 
         private void ShowOrders()

@@ -14,17 +14,15 @@ namespace OrdersManager.Core.Data
             _repository = repository;
         }
 
-        public bool ContainsClientId(string clientId) => _repository.Contains(r => r.ClientId == clientId);
-
         public void Add(IRequest request)
         {
-            if (Validate(request))
+            if (Valid(request))
             {
                 _repository.Insert(request);
             }
         }
 
-        private bool Validate(IRequest request)
+        private bool Valid(IRequest request)
         {
             if (string.IsNullOrWhiteSpace(request.ClientId) || request.ClientId.Length > 6 || request.ClientId.Contains(" "))
                 return false;
@@ -45,23 +43,16 @@ namespace OrdersManager.Core.Data
 
         public IList<IRequest> GetWhere(Func<IRequest, bool> filter) => _repository.GetWhere(filter);
 
-        public int CountWhere(Func<IRequest, bool> filter) => 
+        public int CountWhere(Func<IRequest, bool> filter) =>
             _repository.GetWhere(filter)
-                .Select(r => $"{r.ClientId}-{r.RequestId}")
-                    .Distinct()
-                        .Count();
+            .Select(r => $"{r.ClientId}-{r.RequestId}")
+            .Distinct()
+            .Count();
 
-        public decimal TotalAmountWhere(Func<IRequest, bool> filter) => 
+        public decimal TotalAmountWhere(Func<IRequest, bool> filter) =>
             (decimal)_repository.GetWhere(filter).Sum(r => r.Price * r.Quantity);
 
-        public decimal AverageAmountWhere(Func<IRequest, bool> filter)
-        {
-            //var a = _repository.GetWhere(filter)
-            //   .Select(r => new { order = $"{r.ClientId}-{r.RequestId}".Distinct(), sum = (r.Price * r.Quantity) })
-            //   .Select(r => (decimal)r.sum / r.order.Count());
-
-            return TotalAmountWhere(filter) / CountWhere(filter);
-        }
+        public decimal AverageAmountWhere(Func<IRequest, bool> filter) => TotalAmountWhere(filter) / CountWhere(filter);
 
         public IList<IRequest> GetRequestsInRangeWhere(Func<IRequest, bool> filter, int min, int max) =>
             _repository.GetWhere(filter)

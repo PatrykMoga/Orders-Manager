@@ -7,6 +7,7 @@ using OrdersManager.Core.Repository;
 using OrdersManager.ConsoleUI.MenuComponents;
 using OrdersManager.ConsoleUI.ApplicationComponents;
 using OrdersManager.Core.Data;
+using OrdersManager.Core.Filtering;
 
 namespace OrdersManager.ConsoleUI
 {
@@ -25,6 +26,7 @@ namespace OrdersManager.ConsoleUI
             builder.RegisterType<FilesReader>().As<IFilesReader>().InstancePerLifetimeScope();
             builder.RegisterType<DeserializeService>().As<IDeserializeService>();
             builder.RegisterType<RequestProvider>().As<IRequestProvider>();
+            builder.RegisterType<FilteringProvider>().As<IFilteringProvider>();
 
 
             builder.RegisterType<MenuService>().As<IMenuService>();
@@ -32,7 +34,7 @@ namespace OrdersManager.ConsoleUI
             builder.RegisterType<OrdersCount>().As<IMenuComponent>();
             builder.RegisterType<OrdersList>().As<IMenuComponent>();
             builder.RegisterType<OrdersTotalAmount>().As<IMenuComponent>();
-            builder.RegisterType<NonameYet>().As<IMenuComponent>();
+            builder.RegisterType<ProductsList>().As<IMenuComponent>();
             builder.RegisterType<Application>();
 
 

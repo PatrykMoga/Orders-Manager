@@ -5,13 +5,13 @@ using System.Text;
 
 namespace OrdersManager.ConsoleUI.MenuComponents
 {
-    public class OrdersAverage : IMenuComponent
+    public class OrdersAverageValue : IMenuComponent
     {
         public MenuItem Component { get; }
 
-        public OrdersAverage()
+        public OrdersAverageValue()
         {
-            Component = new MenuItem("Lista wszystkich zamówień", Show);
+            Component = new MenuItem("Orders average value", Show);
         }
 
         private void Show()

@@ -6,7 +6,6 @@ namespace OrdersManager.Core.Data
     public interface IRequestProvider
     {
         void Add(IRequest request);
-        bool ContainsClientId(string clientId);
         IList<IRequest> GetWhere(Func<IRequest, bool> filter);
         int CountWhere(Func<IRequest, bool> filter);
         decimal TotalAmountWhere(Func<IRequest, bool> filter);

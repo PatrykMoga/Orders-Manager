@@ -5,13 +5,13 @@ using System.Text;
 
 namespace OrdersManager.ConsoleUI.MenuComponents
 {
-    public class OrdersInRange : IMenuComponent
+    public class OrdersInPriceRange : IMenuComponent
     {
         public MenuItem Component { get; }
 
-        public OrdersInRange()
+        public OrdersInPriceRange()
         {
-            Component = new MenuItem("Lista wszystkich zamówień", Show);
+            Component = new MenuItem("Orders in price range", Show);
         }
 
         private void Show()

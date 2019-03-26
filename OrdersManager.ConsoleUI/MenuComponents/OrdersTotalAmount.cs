@@ -14,7 +14,7 @@ namespace OrdersManager.ConsoleUI.MenuComponents
 
         public OrdersTotalAmount(IRequestProvider provider)
         {
-            Component = new MenuItem("Średnia wartość zamówienia", Show);
+            Component = new MenuItem("Total Orders Amount", Show);
             _provider = provider;
         }
 
