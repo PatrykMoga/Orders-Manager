@@ -1,10 +1,7 @@
 ﻿using OrdersManager.ConsoleUI.MenuServiceComponents;
 using OrdersManager.Core.Data;
-using OrdersManager.Core.Filtering;
 using OrdersManager.Core.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using OrdersManager.Core.Filtering;
 using static System.Console;
 
 
@@ -35,7 +32,7 @@ namespace OrdersManager.ConsoleUI.MenuComponents
             //Console.WriteLine("Max");
             //input = ReadLine();
             //var max = Helpers.ParseToInt(input);
-            var requests = _requestProvider.GetRequestsInRangeWhere(filter.Filter,10,40);
+            var requests = _requestProvider.RequestsInRangeWhere(filter.Filter,10,40);
 
             Clear();
             var titleRow = string.Format("{0,0} {1,0} {2,5} {3,8} {4,10} {5,15}",

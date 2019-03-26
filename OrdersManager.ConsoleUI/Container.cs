@@ -39,6 +39,7 @@ namespace OrdersManager.ConsoleUI
             builder.RegisterType<OrdersAverageValue>().As<IMenuComponent>();            
             builder.RegisterType<ProductsList>().As<IMenuComponent>();
             builder.RegisterType<OrdersInPriceRange>().As<IMenuComponent>();
+            builder.RegisterType<TEST>().As<IMenuComponent>();
             builder.RegisterType<Application>();
 
 

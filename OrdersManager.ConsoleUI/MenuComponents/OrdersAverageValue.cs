@@ -1,10 +1,6 @@
 ﻿using OrdersManager.ConsoleUI.MenuServiceComponents;
 using OrdersManager.Core.Data;
 using OrdersManager.Core.Filtering;
-using OrdersManager.Core.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using static System.Console;
 
 namespace OrdersManager.ConsoleUI.MenuComponents

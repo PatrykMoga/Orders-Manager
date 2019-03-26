@@ -1,6 +1,6 @@
-﻿using OrdersManager.Core.Extensions;
-using OrdersManager.ConsoleUI.MenuServiceComponents;
+﻿using OrdersManager.ConsoleUI.MenuServiceComponents;
 using OrdersManager.Core.Data;
+using OrdersManager.Core.Extensions;
 using OrdersManager.Core.Filtering;
 using static System.Console;
 
