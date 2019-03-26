@@ -6,19 +6,19 @@ namespace OrdersManager.ConsoleUI.Extensions
 {
     public static class PrintingExtensions
     {
-        public static string PrintLines(this int length)
+        public static string PrintLines(this int length, char c)
         {
             var sb = new StringBuilder();
-            sb.Append('=', length);
+            sb.Append(c, length);
             return sb.ToString();
         }
 
-        public static string PrintInLines(this string str)
+        public static string PrintInLines(this string str, char c)
         {
             var sb = new StringBuilder();
-            sb.Append('=', str.Length);
+            sb.Append(c, str.Length);
             sb.Append($"\n{str}\n");
-            sb.Append('=', str.Length);
+            sb.Append(c, str.Length);
             return sb.ToString();
         }
 

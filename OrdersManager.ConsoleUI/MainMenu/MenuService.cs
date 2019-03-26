@@ -7,12 +7,12 @@ namespace OrdersManager.ConsoleUI.MenuServiceComponents
     {
         private int _index = 1;
         private readonly IEnumerable<IMenuComponent> _menuComponents;
-        private readonly Dictionary<int, MenuComponent> _executable;
+        private readonly Dictionary<int, MenuItem> _executable;
 
         public MenuService(IEnumerable<IMenuComponent> menuComponents)
         {
             _menuComponents = menuComponents;
-            _executable = new Dictionary<int, MenuComponent>();
+            _executable = new Dictionary<int, MenuItem>();
             LoadComponents();
         }
 
@@ -26,6 +26,8 @@ namespace OrdersManager.ConsoleUI.MenuServiceComponents
 
         public void PrintMenu()
         {
+            Clear();
+            WriteLine("Select the report to generate:\n");
             foreach (var item in _executable)
             {
                 WriteLine($"{item.Key}: {item.Value.Name}");
@@ -50,10 +52,16 @@ namespace OrdersManager.ConsoleUI.MenuServiceComponents
                 }
                 else
                 {
-                    WriteLine("Zła komenda, spróbuj pownownie!");
+                    WriteLine("Unknown command, try again!");
                     ReadKey();
                     Clear();
                 }
+            }
+            else
+            {
+                WriteLine("Command error, try again!");
+                ReadKey();
+                Clear();
             }
         }
     }

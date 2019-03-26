@@ -7,11 +7,11 @@ namespace OrdersManager.ConsoleUI.MenuComponents
 {
     public class OrdersInRange : IMenuComponent
     {
-        public MenuComponent Component { get; }
+        public MenuItem Component { get; }
 
         public OrdersInRange()
         {
-            Component = new MenuComponent("Lista wszystkich zamówień", Show);
+            Component = new MenuItem("Lista wszystkich zamówień", Show);
         }
 
         private void Show()

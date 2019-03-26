@@ -10,25 +10,25 @@ namespace OrdersManager.ConsoleUI.MenuComponents
     public class NonameYet : IMenuComponent
     {
         private readonly IRequestProvider _provider;
-        public MenuComponent Component { get; }
+        public MenuItem Component { get; }
 
         public NonameYet(IRequestProvider provider)
         {
             _provider = provider;
-            Component = new MenuComponent("Lista zamówień", ShowOrders);
+            Component = new MenuItem("Lista zamówień", ShowOrders);
         }
 
         private void ShowOrders()
         {
-            Console.Clear();
-            Console.WriteLine("Lista produktów");
-            var filter = RequestFilters.GetAll();
-            foreach (var item in _provider.ProductRequestWhere(filter))
-            {
-                //Console.WriteLine($"{item.Name} {item.ClientId} {item.RequestId} {item.Price} {item.Quantity}");
-                Console.WriteLine(item.Key + " " + item.Value);
-            }
-            Console.ReadLine();
+            //Console.Clear();
+            //Console.WriteLine("Lista produktów");
+            //var filter = RequestFilters.GetAll();
+            //foreach (var item in _provider.ProductRequestWhere(filter))
+            //{
+            //    //Console.WriteLine($"{item.Name} {item.ClientId} {item.RequestId} {item.Price} {item.Quantity}");
+            //    Console.WriteLine(item.Key + " " + item.Value);
+            //}
+            //Console.ReadLine();
         }
     }
 }

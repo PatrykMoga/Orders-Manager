@@ -32,9 +32,7 @@ namespace OrdersManager.ConsoleUI
         private void Menu()
         {
             while (true)
-            {
-                Clear();
-                WriteLine("Wybierz z listy raport do wygenerowania:".PrintInLines());
+            {             
                 _menuService.PrintMenu();
             }
         }      

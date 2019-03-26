@@ -8,5 +8,6 @@ namespace OrdersManager.Core.Repository
     {
         IList<IRequest> GetWhere(Func<IRequest, bool> filter);
         void Insert(IRequest order);
+        bool Contains(Func<IRequest, bool> filter);
     }
 }

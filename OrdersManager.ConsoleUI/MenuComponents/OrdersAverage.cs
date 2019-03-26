@@ -7,11 +7,11 @@ namespace OrdersManager.ConsoleUI.MenuComponents
 {
     public class OrdersAverage : IMenuComponent
     {
-        public MenuComponent Component { get; }
+        public MenuItem Component { get; }
 
         public OrdersAverage()
         {
-            Component = new MenuComponent("Lista wszystkich zamówień", Show);
+            Component = new MenuItem("Lista wszystkich zamówień", Show);
         }
 
         private void Show()

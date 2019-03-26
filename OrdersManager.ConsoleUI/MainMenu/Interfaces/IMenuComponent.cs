@@ -2,6 +2,6 @@
 {
     public interface IMenuComponent
     {
-        MenuComponent Component { get; }
+        MenuItem Component { get; }
     }
 }

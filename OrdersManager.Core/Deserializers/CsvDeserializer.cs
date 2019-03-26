@@ -49,18 +49,18 @@ namespace OrdersManager.Core.Deserializers
                     }
                     catch (Exception)
                     {
-                        _logger.LogError($"Plik: {file} zawiera uszkodzone dane w wierszu " +
+                        _logger.LogError($"File: {file} contains corrupted data in a row " +
                             $"{csvReader.Context.RawRow}: \"{csvReader.Context.RawRecord.TrimEnd()}\"");
                     }
                 }
             }
             if (requests.Count > 0)
             {
-                _logger.LogSuccess($"Plik: {file} został załadowany.");
+                _logger.LogSuccess($"File: {file} has been loaded.");
             }
             else
             {
-                _logger.LogError($"Plik: {file} nie zawierał żadnych dancyh do załadowania.");
+                _logger.LogError($"File: {file} did not contain any data to be loaded.");
             }
 
             return requests;

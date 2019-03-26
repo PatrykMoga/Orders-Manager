@@ -39,7 +39,7 @@ namespace OrdersManager.ConsoleUI.ApplicationComponents
             var requests = _deserializeService.DeserializeAllFiles();
             _logger.PrintLogs();
 
-            WriteLine("Czy załadować pliki do pamięci i kontynuować?");
+            WriteLine("Do you want to load files into memory and start processing?");
             ReadLine();
             requests.ToList().ForEach(r => _provider.Add(r));
         }
@@ -51,27 +51,16 @@ namespace OrdersManager.ConsoleUI.ApplicationComponents
                 try
                 {
                     Clear();
-                    WriteLine($"Aby rozpocząć podaj pełną ścieżkę do folderu z plikami (Obsługiwane rozszerzenia: {string.Join(", ", _filesReader.SupportedTypes)})".PrintInLines());
-                    Write("Ścieżka: ");
-                    var dirPath = ReadLine();
-                    _filesReader.ReadFiles(@"D:\TestFolder\Inner", SearchOption.AllDirectories);
+                    WriteLine($"To begin, enter the directory path that contains the files to be processed.\n" +
+                        $"Supported file extensions: \"{string.Join(", ", _filesReader.SupportedTypes)}\"\n");
+
+                    Write("Path: ");
+                    var dirPath = ReadLine();                   
+                    _filesReader.ReadFiles(@"d:\testfolder\inner", SearchOption.AllDirectories);
                     break;
-                }
-                catch (UnauthorizedAccessException ex)
-                {
-                    WriteLine("Błąd dostępu");
-                    WriteLine(ex.Message);
-                    ReadKey();
-                }
-                catch (DirectoryNotFoundException ex)
-                {
-                    WriteLine("Podana złą ścieżkę do folderu");
-                    WriteLine(ex.Message);
-                    ReadKey();
                 }
                 catch (Exception ex)
                 {
-                    WriteLine("Błąd");
                     WriteLine(ex.Message);
                     ReadKey();
                 }

@@ -2,12 +2,12 @@
 
 namespace OrdersManager.ConsoleUI.MenuServiceComponents
 {
-    public class MenuComponent
+    public class MenuItem
     {
         public string Name { get; set; }
         public Action Action { get; set; }
         
-        public MenuComponent(string name, Action action )
+        public MenuItem(string name, Action action )
         {
             Name = name;
             Action = action;

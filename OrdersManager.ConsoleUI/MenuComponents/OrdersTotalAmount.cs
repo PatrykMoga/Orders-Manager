@@ -10,20 +10,21 @@ namespace OrdersManager.ConsoleUI.MenuComponents
     public class OrdersTotalAmount : IMenuComponent
     {
         private readonly IRequestProvider _provider;
-        public MenuComponent Component { get; }
+        public MenuItem Component { get; }
 
         public OrdersTotalAmount(IRequestProvider provider)
         {
-            Component = new MenuComponent("Średnia wartość zamówienia", Show);
+            Component = new MenuItem("Średnia wartość zamówienia", Show);
             _provider = provider;
         }
 
         private void Show()
         {
-            //var filter = RequestFilters.GetAll();
-            var filter = RequestFilters.GetByClientId("4");
-            Console.WriteLine($"{_provider.TotalAmountWhere(filter):C2}");
-            Console.ReadLine();
+            ////var filter = RequestFilters.GetAll();
+            //var filter = ;
+            //Console.WriteLine($"{_provider.TotalAmountWhere(filter):C2}");
+            //Console.WriteLine($"{_provider.AverageAmountWhere(filter):C2}");
+            //Console.ReadLine();
         }
     }
 }

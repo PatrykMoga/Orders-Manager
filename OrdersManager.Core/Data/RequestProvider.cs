@@ -14,6 +14,8 @@ namespace OrdersManager.Core.Data
             _repository = repository;
         }
 
+        public bool ContainsClientId(string clientId) => _repository.Contains(r => r.ClientId == clientId);
+
         public void Add(IRequest request)
         {
             if (Validate(request))
@@ -43,22 +45,33 @@ namespace OrdersManager.Core.Data
 
         public IList<IRequest> GetWhere(Func<IRequest, bool> filter) => _repository.GetWhere(filter);
 
-        public int CountWhere(Func<IRequest, bool> filter) 
-            => _repository.GetWhere(filter).Select(r => $"{r.ClientId}-{r.RequestId}").Distinct().Count();
+        public int CountWhere(Func<IRequest, bool> filter) => 
+            _repository.GetWhere(filter)
+                .Select(r => $"{r.ClientId}-{r.RequestId}")
+                    .Distinct()
+                        .Count();
 
-        public decimal TotalAmountWhere(Func<IRequest, bool> filter) 
-            => (decimal)_repository.GetWhere(filter).Select(r => r.Price * r.Quantity).Sum();
+        public decimal TotalAmountWhere(Func<IRequest, bool> filter) => 
+            (decimal)_repository.GetWhere(filter).Sum(r => r.Price * r.Quantity);
 
-        public decimal AverageAmountWhere(Func<IRequest, bool> filter) 
-            => (decimal)_repository.GetWhere(filter).Select(r => r.Price * r.Quantity).Average();
+        public decimal AverageAmountWhere(Func<IRequest, bool> filter)
+        {
+            //var a = _repository.GetWhere(filter)
+            //   .Select(r => new { order = $"{r.ClientId}-{r.RequestId}".Distinct(), sum = (r.Price * r.Quantity) })
+            //   .Select(r => (decimal)r.sum / r.order.Count());
 
-        public IList<IRequest> GetRequestsInRangeWhere(Func<IRequest, bool> filter, int min, int max) 
-            => _repository.GetWhere(filter).Where(r => (r.Price * r.Quantity) > min && (r.Price * r.Quantity) < max).ToList();
+            return TotalAmountWhere(filter) / CountWhere(filter);
+        }
 
-        public Dictionary<string, int> ProductRequestWhere(Func<IRequest, bool> filter) 
-            => _repository.GetWhere(filter)
-                .GroupBy(r => r.Name)
-                .Select(r => new { name = r.Key, count = r.Sum(q => q.Quantity) })
-                .ToDictionary(r => r.name, r => (int)r.count);
+        public IList<IRequest> GetRequestsInRangeWhere(Func<IRequest, bool> filter, int min, int max) =>
+            _repository.GetWhere(filter)
+            .Where(r => (r.Price * r.Quantity) > min && (r.Price * r.Quantity) < max)
+            .ToList();
+
+        public Dictionary<string, int> ProductRequestWhere(Func<IRequest, bool> filter) =>
+            _repository.GetWhere(filter)
+            .GroupBy(r => r.Name)
+            .Select(r => new { name = r.Key, count = r.Sum(q => q.Quantity) })
+            .ToDictionary(r => r.name, r => (int)r.count);
     }
 }

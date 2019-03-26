@@ -11,19 +11,20 @@ namespace OrdersManager.ConsoleUI.MenuComponents
     public class OrdersCount : IMenuComponent
     {
         private readonly IRequestProvider _provider;
-        public MenuComponent Component { get; }
+        public MenuItem Component { get; }
+        private readonly MenuService menuService;
 
         public OrdersCount(IRequestProvider provider)
         {
             _provider = provider;
-            Component = new MenuComponent("Ilość zamówień", bla);
+            Component = new MenuItem("Orders count", Show);
         }
 
-        private void bla()
+        private void Show()
         {
-            var filter = RequestFilters.GetAll();
-            Console.WriteLine(_provider.CountWhere(filter));
-            Console.ReadLine();
+            //var filter = RequestFilters.GetAll();
+            //Console.WriteLine(_provider.CountWhere(filter));
+            //Console.ReadLine();
         }
     }
 }

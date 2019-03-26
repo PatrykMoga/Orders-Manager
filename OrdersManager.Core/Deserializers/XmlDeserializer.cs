@@ -40,11 +40,11 @@ namespace OrdersManager.Core.Deserializers
 
             if (requests.Count > 0)
             {
-                _logger.LogSuccess($"Plik: {file} został załadowany.");
+                _logger.LogSuccess($"File: {file} has been loaded.");
             }
             else
             {
-                _logger.LogError($"Plik: {file} nie zawierał żadnych dancyh do załadowania.");
+                _logger.LogError($"File: {file} did not contain any data to be loaded.");
             }
             return requests;
         }       
