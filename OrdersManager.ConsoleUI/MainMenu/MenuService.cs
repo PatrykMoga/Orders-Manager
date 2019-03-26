@@ -23,7 +23,6 @@ namespace OrdersManager.ConsoleUI.MenuServiceComponents
             {
                 _executable.Add(_index++, component.Component);
             }
-            _executable.Add(_index++, new MenuItem("Exit", ExitApp));
         }
 
         private void ExitApp()

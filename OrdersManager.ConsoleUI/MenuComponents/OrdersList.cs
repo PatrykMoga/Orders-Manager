@@ -26,7 +26,7 @@ namespace OrdersManager.ConsoleUI.MenuComponents
             WriteLine("Orders List\n");
             
             var filter = _filtersService.GetFilter();
-            var requests = _requestProvider.GetWhere(filter);
+            var requests = _requestProvider.GetWhere(filter.Filter);
 
             Clear();
             var titleRow = string.Format("{0,0} {1,0} {2,5} {3,8} {4,10}",

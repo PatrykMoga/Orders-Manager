@@ -5,7 +5,7 @@ namespace OrdersManager.Core.Filtering
 {
     public interface IFilteringService
     {
-        Func<IRequest, bool> GetFilter();
-        void PrintFilters();
+        string SearchPattern { get; }
+        RequestFilter GetFilter();
     }
 }

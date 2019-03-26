@@ -25,10 +25,10 @@ namespace OrdersManager.ConsoleUI.MenuComponents
         private void ShowOrders()
         {
             Clear();
-            WriteLine("Orders List\n");
+            WriteLine("Products list\n");
 
             var filter = _filtersService.GetFilter();
-            var requests = _requestProvider.ProductRequestWhere(filter);
+            var requests = _requestProvider.ProductRequestWhere(filter.Filter);
 
             Clear();
             var titleRow = string.Format("{0,0} {1,12}",

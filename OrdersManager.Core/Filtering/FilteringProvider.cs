@@ -10,7 +10,7 @@ namespace OrdersManager.Core.Filtering
 {
     public class FilteringProvider : IFilteringProvider
     {
-        private string _searchPattern;
+        public string SerachPattern { get; private set; }
         private readonly IRepository _repository;
         private readonly Dictionary<int, RequestFilter> _filters;
 
@@ -20,8 +20,8 @@ namespace OrdersManager.Core.Filtering
 
             _filters = new Dictionary<int, RequestFilter>();
             _filters.Add(1, new RequestFilter("All", r => true));
-            _filters.Add(2, new RequestFilter("Client Id", r => r.ClientId == _searchPattern, ValidateClientId));
-        }
+            _filters.Add(2, new RequestFilter("Client-Id:", r => r.ClientId == SerachPattern, ValidateClientId));
+        }      
 
         public Dictionary<int, RequestFilter> GetFilters() => _filters;
 
@@ -39,7 +39,7 @@ namespace OrdersManager.Core.Filtering
                 var clientId = ReadLine();
                 if (_repository.Contains(r => r.ClientId == clientId))
                 {
-                    _searchPattern = clientId;
+                    SerachPattern = clientId;
                     break;
                 }
                 else

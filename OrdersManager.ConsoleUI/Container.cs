@@ -26,7 +26,7 @@ namespace OrdersManager.ConsoleUI
             builder.RegisterType<FilesReader>().As<IFilesReader>().InstancePerLifetimeScope();
             builder.RegisterType<DeserializeService>().As<IDeserializeService>();
             builder.RegisterType<RequestProvider>().As<IRequestProvider>();
-            builder.RegisterType<FilteringProvider>().As<IFilteringProvider>();
+            builder.RegisterType<FilteringProvider>().As<IFilteringProvider>().InstancePerDependency();
             builder.RegisterType<FilteringService>().As<IFilteringService>();
 
 

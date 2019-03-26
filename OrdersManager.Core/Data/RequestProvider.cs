@@ -56,7 +56,7 @@ namespace OrdersManager.Core.Data
 
         public IList<IRequest> GetRequestsInRangeWhere(Func<IRequest, bool> filter, int min, int max) =>
             _repository.GetWhere(filter)
-            .Where(r => (r.Price * r.Quantity) > min && (r.Price * r.Quantity) < max)
+            .Where(r => (r.Price * r.Quantity) >= min && (r.Price * r.Quantity) <= max)
             .ToList();
 
         public Dictionary<string, int> ProductRequestWhere(Func<IRequest, bool> filter) =>

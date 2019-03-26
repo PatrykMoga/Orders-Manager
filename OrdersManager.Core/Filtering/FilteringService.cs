@@ -15,7 +15,9 @@ namespace OrdersManager.Core.Filtering
             _filteringProvider = filteringProvider;
         }
 
-        public void PrintFilters()
+        public string SearchPattern => _filteringProvider.SerachPattern;
+
+        private void PrintFilters()
         {
             foreach (var filter in _filteringProvider.GetFilters())
             {
@@ -24,7 +26,7 @@ namespace OrdersManager.Core.Filtering
             WriteLine();
         }
 
-        public Func<IRequest, bool> GetFilter()
+        public RequestFilter GetFilter()
         {
             PrintFilters();
             while (true)
@@ -39,9 +41,9 @@ namespace OrdersManager.Core.Filtering
                         if (_filteringProvider.GetFilters()[key].ContainsPattern)
                         {
                             _filteringProvider.GetFilters()[key].ValidatePattern();
-                            return _filteringProvider.GetFilters()[key].Filter;
+                            return _filteringProvider.GetFilters()[key];
                         }
-                        return _filteringProvider.GetFilters()[key].Filter;
+                        return _filteringProvider.GetFilters()[key];
                     }
                     else
                     {
