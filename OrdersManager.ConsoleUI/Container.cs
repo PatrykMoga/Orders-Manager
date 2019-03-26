@@ -27,6 +27,7 @@ namespace OrdersManager.ConsoleUI
             builder.RegisterType<DeserializeService>().As<IDeserializeService>();
             builder.RegisterType<RequestProvider>().As<IRequestProvider>();
             builder.RegisterType<FilteringProvider>().As<IFilteringProvider>();
+            builder.RegisterType<FilteringService>().As<IFilteringService>();
 
 
             builder.RegisterType<MenuService>().As<IMenuService>();

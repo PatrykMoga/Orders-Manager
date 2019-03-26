@@ -22,11 +22,16 @@ namespace OrdersManager.Core.Filtering
             _filters.Add(2, new RequestFilter("Cliend Id", r => r.ClientId == _searchPattern, ValidateClientId));
         }
 
+        public Dictionary<int, RequestFilter> GetFilters() => _filters;
+
+        private IEnumerable<string> ClientIds => _repository.GetAll().Select(r => r.ClientId).Distinct();
+
         private void ValidateClientId()
         {
             while (true)
             {
-                WriteLine(string.Join(" ",_repository.GetWhere(r => true).Select(r => r.Name)));
+                Console.WriteLine("Available client Ids:");
+                WriteLine(string.Join(", ",ClientIds));
                 Write("Enter Client Id: ");
                 var clientId = ReadLine();
                 if (_repository.Contains(r => r.ClientId == clientId))
@@ -39,42 +44,6 @@ namespace OrdersManager.Core.Filtering
                     WriteLine("Client doesn't exist");
                 }
             }
-        }
-
-        public void PrintFilters()
-        {
-            foreach (var filter in _filters)
-            {
-                WriteLine($"{filter.Key}: {filter.Value.Name}");
-            }
-        }
-
-        public Func<IRequest, bool> GetFilter()
-        {
-            while (true)
-            {
-                var filterKey = ReadLine();
-                if (int.TryParse(filterKey, out int key))
-                {
-                    if (_filters.ContainsKey(key))
-                    {
-                        if (_filters[key].ContainsPattern)
-                        {
-                            _filters[key].ValidatePattern();
-                            return _filters[key].Filter;
-                        }
-                        return _filters[key].Filter;
-                    }
-                    else
-                    {
-                        WriteLine("Unknown command, try again!");
-                    }
-                }
-                else
-                {
-                    WriteLine("Command error, try again!");
-                }
-            }
-        }
+        }       
     }
 }

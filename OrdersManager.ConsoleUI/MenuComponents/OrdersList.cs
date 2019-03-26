@@ -9,13 +9,14 @@ namespace OrdersManager.ConsoleUI.MenuComponents
     public class OrdersList : IMenuComponent
     {
         private readonly IRequestProvider _requestProvider;
-        private readonly IFilteringProvider _filtersProvider;
+        private readonly IFilteringService _filtersService;
         public MenuItem Component { get; }
 
-        public OrdersList(IRequestProvider requestProvider, IFilteringProvider filteringProvider)
+        public OrdersList(IRequestProvider requestProvider, IFilteringService filteringService)
         {
             _requestProvider = requestProvider;
-            _filtersProvider = filteringProvider;
+            _filtersService = filteringService;
+
             Component = new MenuItem("Orders List", ShowOrders);
         }
        
@@ -24,8 +25,8 @@ namespace OrdersManager.ConsoleUI.MenuComponents
             Clear();
             WriteLine("Orders List\n");
 
-            _filtersProvider.PrintFilters();
-            var filter = _filtersProvider.GetFilter();
+            _filtersService.PrintFilters();
+            var filter = _filtersService.GetFilter();
             var requests = _requestProvider.GetWhere(filter);
 
 

@@ -3,7 +3,7 @@ using OrdersManager.Core.Data;
 
 namespace OrdersManager.Core.Filtering
 {
-    public interface IFilteringProvider
+    public interface IFilteringService
     {
         Func<IRequest, bool> GetFilter();
         void PrintFilters();
