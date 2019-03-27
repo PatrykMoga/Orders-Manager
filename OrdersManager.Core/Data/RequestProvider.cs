@@ -65,6 +65,7 @@ namespace OrdersManager.Core.Data
         {
             return _repository.GetWhere(filter)
                     .Select(r => $"{r.ClientId}-{r.RequestId}")
+                    .Distinct()
                     .Count();
         }
 
