@@ -35,8 +35,7 @@ namespace OrdersManager.ConsoleUI.MenuComponents
         private void GenerateReport()
         {
             SetUp(out _min, out _max, out _requests, out _filterName);
-            Print(_min, _max, _requests, _filterName);
-            _optionsMenu.PrintMenu();
+            Print(_min, _max, _requests, _filterName);           
         }
 
         private void SetUp(out decimal min, out decimal max, out IList<IRequest> requests, out string filterName)
@@ -71,12 +70,13 @@ namespace OrdersManager.ConsoleUI.MenuComponents
                     WriteLine(row);
                 }
                 WriteLine(titleRow.Length.PrintLines('-'));
+                _optionsMenu.PrintMenu();
             }
             else
             {
                 WriteLine("No orders for the customer in this price range");
+                ReadKey();
             }
-            ReadLine();
         }
 
         private void Serialize(decimal min, decimal max, IList<IRequest> requests, string filterName)
@@ -86,11 +86,11 @@ namespace OrdersManager.ConsoleUI.MenuComponents
             {
                 records.Add(new
                 {
-                    RequestId = request.RequestId,
-                    ClientId = request.ClientId,
-                    Name = request.Name,
-                    Price = request.Price,
-                    Quantity = request.Quantity,
+                    request.RequestId,
+                    request.ClientId,
+                    request.Name,
+                    request.Price,
+                    request.Quantity,
                     TotalPrice = request.Price * request.Quantity,
                     Filter = filterName,
                     Range = $"{min}-{max}"

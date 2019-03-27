@@ -45,7 +45,7 @@ namespace OrdersManager.Core.Data
 
         public Dictionary<string, IEnumerable<(string name, int? quantity, decimal? price)>> OrdersWhere(Func<IRequest, bool> filter)
         {
-            return _repository.GetWhere(filter) 
+            return _repository.GetWhere(filter)
                 .GroupBy(r => $"{r.ClientId}-{r.RequestId}")
                 .Select(r => new
                 {

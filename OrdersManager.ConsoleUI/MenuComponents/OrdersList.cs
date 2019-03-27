@@ -29,12 +29,11 @@ namespace OrdersManager.ConsoleUI.MenuComponents
             _optionsMenu.AddItem(new MenuItem("Serialize report", () => Serialize(_requests, _filterName)));
             Component = new MenuItem("Orders List", GenerateReport);
         }
-       
+
         private void GenerateReport()
-        {          
+        {
             SetUp(out _requests, out _filterName);
             Print(_requests, _filterName);
-            _optionsMenu.PrintMenu();
         }
 
         private void SetUp(out IOrderedEnumerable<IRequest> requests, out string filterName)
@@ -47,7 +46,7 @@ namespace OrdersManager.ConsoleUI.MenuComponents
             filterName = filterPattern.Name + searchPattern;
         }
 
-        private static void Print(IOrderedEnumerable<IRequest> requests, string filterName)
+        private void Print(IOrderedEnumerable<IRequest> requests, string filterName)
         {
             Clear();
             WriteLine($"Orders List for \"{filterName}\"\n");
@@ -64,20 +63,21 @@ namespace OrdersManager.ConsoleUI.MenuComponents
                 WriteLine(row);
             }
             WriteLine(titleRow.Length.PrintLines('-'));
+            _optionsMenu.PrintMenu();
         }
 
-        private static void Serialize(IOrderedEnumerable<IRequest> requests, string filterName)
+        private void Serialize(IOrderedEnumerable<IRequest> requests, string filterName)
         {
             var records = new List<object>();
             foreach (var request in requests)
             {
                 records.Add(new
                 {
-                    RequestId = request.RequestId,
-                    ClientId = request.ClientId,
-                    Name = request.Name,
-                    Price = request.Price,
-                    Quantity = request.Quantity,
+                    request.RequestId,
+                    request.ClientId,
+                    request.Name,
+                    request.Price,
+                    request.Quantity,
                     Filter = filterName
                 });
             }

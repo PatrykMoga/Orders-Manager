@@ -35,7 +35,6 @@ namespace OrdersManager.ConsoleUI.MenuComponents
         {
             SetUp(out _amount, out _filterName);
             Print(_amount, _filterName);
-            _optionsMenu.PrintMenu();
         }
 
         private void SetUp(out decimal amount, out string filterName)
@@ -48,17 +47,19 @@ namespace OrdersManager.ConsoleUI.MenuComponents
             filterName = filterPattern.Name + searchPattern;
         }
 
-        private static void Print(decimal amount, string filterName)
+        private void Print(decimal amount, string filterName)
         {
             Clear();
             WriteLine($"Total orders amount for \"{filterName}\": {amount:C2}");
-            Serialize(amount, filterName);
+            _optionsMenu.PrintMenu();
         }
 
-        private static void Serialize(decimal amount, string filterName)
+        private void Serialize(decimal amount, string filterName)
         {
-            var records = new List<object>();
-            records.Add(new { TotalAmount = $"{amount:C2}", Filter = filterName });
+            var records = new List<object>
+            {
+                new { TotalAmount = $"{amount:C2}", Filter = filterName }
+            };
 
             CsvSerializer.Serialize(records);
         }

@@ -30,8 +30,7 @@ namespace OrdersManager.ConsoleUI.MenuComponents
         private void GenerateReport()
         {
             SetUp(out _average, out _filterName);
-            Print(_average, _filterName);
-            _optionsMenu.PrintMenu();
+            Print(_average, _filterName);           
         }
 
         private void SetUp(out decimal average, out string filterName)
@@ -44,16 +43,19 @@ namespace OrdersManager.ConsoleUI.MenuComponents
             filterName = filterPattern.Name + searchPattern;
         }
 
-        private static void Print(decimal average, string filterName)
+        private void Print(decimal average, string filterName)
         {
             Clear();
             WriteLine($"Average orders value for \"{filterName}\": {average:C2}");
+            _optionsMenu.PrintMenu();
         }
 
-        private static void Serialize(decimal average, string filterName)
+        private void Serialize(decimal average, string filterName)
         {
-            var records = new List<object>();
-            records.Add(new { Average = $"{average:C2}", Filter = $"{filterName}" });
+            var records = new List<object>
+            {
+                new { Average = $"{average:C2}", Filter = $"{filterName}" }
+            };
 
             CsvSerializer.Serialize(records);
         }        

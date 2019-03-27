@@ -33,7 +33,6 @@ namespace OrdersManager.ConsoleUI.MenuComponents
         {           
             SetUp(out _products, out _filterName);
             Print(_products, _filterName);
-            _optionsMenu.PrintMenu();
         }
 
         private void SetUp(out Dictionary<string, int> products, out string filterName)
@@ -46,7 +45,7 @@ namespace OrdersManager.ConsoleUI.MenuComponents
             filterName = filterPattern.Name + searchPattern;
         }
 
-        private static void Print(Dictionary<string, int> products, string filterName)
+        private void Print(Dictionary<string, int> products, string filterName)
         {
             Clear();
             WriteLine($"Products list for \"{filterName}\"\n");
@@ -63,9 +62,10 @@ namespace OrdersManager.ConsoleUI.MenuComponents
                 WriteLine(row);
             }
             WriteLine(titleRow.Length.PrintLines('-'));
+            _optionsMenu.PrintMenu();
         }
 
-        private static void Serialize(Dictionary<string, int> products, string filterName)
+        private void Serialize(Dictionary<string, int> products, string filterName)
         {
             var records = new List<object>();
             foreach (var product in products)

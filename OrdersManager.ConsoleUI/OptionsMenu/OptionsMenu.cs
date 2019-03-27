@@ -33,21 +33,21 @@ namespace OrdersManager.ConsoleUI.OptionsMenuComponents
 
                 while (true)
                 {
+                    Write("Enter command key: ");
                     var input = ReadLine();
                     if (input == "0")
                     {
                         return;
                     }
                     ExecuteComponent(input);
-                    break;
                 }
-            }            
+            }
         }
 
         public void ExecuteComponent(string actionKey)
         {
             if (int.TryParse(actionKey, out int key))
-            {               
+            {
                 if (_items.ContainsKey(key))
                 {
                     _items[key].Action();
@@ -55,15 +55,11 @@ namespace OrdersManager.ConsoleUI.OptionsMenuComponents
                 else
                 {
                     WriteLine("Unknown command, try again!");
-                    ReadKey();
-                    Clear();
                 }
             }
             else
             {
                 WriteLine("Command error, try again!");
-                ReadKey();
-                Clear();
             }
         }
     }

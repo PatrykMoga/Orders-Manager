@@ -25,11 +25,6 @@ namespace OrdersManager.ConsoleUI.MenuServiceComponents
             }
         }
 
-        private void ExitApp()
-        {
-            Environment.Exit(0);
-        }
-
         public void PrintMenu()
         {
             Clear();

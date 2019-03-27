@@ -29,10 +29,9 @@ namespace OrdersManager.ConsoleUI.MenuComponents
         }
 
         private void GenerateReport()
-        {          
+        {
             SetUp(out _count, out _filterName);
             Print(_count, _filterName);
-             _optionsMenu.PrintMenu();
         }
 
         private void SetUp(out int count, out string filterName)
@@ -49,14 +48,17 @@ namespace OrdersManager.ConsoleUI.MenuComponents
         {
             Clear();
             WriteLine($"Orders count for \"{filterName}\": {count}");
+            _optionsMenu.PrintMenu();
         }
 
         private void Serialize(int count, string filterName)
         {
-            var records = new List<object>();
-            records.Add(new { Count = count, Filter = $"{filterName}" });
+            var records = new List<object>
+            {
+                new { Count = count, Filter = $"{filterName}" }
+            };
 
             CsvSerializer.Serialize(records);
-        }        
+        }
     }
 }

@@ -7,7 +7,7 @@ namespace OrdersManager.Core.Extensions
     public static class Helper
     {
         public static decimal ParseToDecimal(string description)
-        {           
+        {
             while (true)
             {
                 Console.Write(description);
@@ -20,7 +20,7 @@ namespace OrdersManager.Core.Extensions
                 {
                     Console.WriteLine("Invalid number!");
                 }
-            }         
+            }
         }
     }
 }
