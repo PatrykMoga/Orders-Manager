@@ -15,32 +15,46 @@ namespace OrdersManager.ConsoleUI.MenuComponents
         private readonly IFilteringService _filtersService;
         public MenuItem Component { get; }
 
+        private IOrderedEnumerable<IRequest> _requests;
+        private string _filterName;
+
         public OrdersList(IRequestProvider requestProvider, IFilteringService filteringService)
         {
             _requestProvider = requestProvider;
             _filtersService = filteringService;
 
-            Component = new MenuItem("Orders List", ShowOrders);
+            Component = new MenuItem("Orders List", GenerateReport);
         }
        
-        private void ShowOrders()
+        private void GenerateReport()
+        {
+            
+            SetUp(out _requests, out _filterName);
+            Print(_requests, _filterName);
+            Serialize(_requests, _filterName);
+
+            ReadLine();
+        }
+
+        private void SetUp(out IOrderedEnumerable<IRequest> requests, out string filterName)
         {
             Clear();
             WriteLine("Select filter for orders list\n");
-            
             var filterPattern = _filtersService.GetFilter();
-            var requests = _requestProvider.GetWhere(filterPattern.Filter).OrderBy(r => r.ClientId).ThenBy(r => r.RequestId);
-
-            Clear();
+            requests = _requestProvider.GetWhere(filterPattern.Filter).OrderBy(r => r.ClientId).ThenBy(r => r.RequestId);
             var searchPattern = filterPattern.ContainsPattern ? _filtersService.SearchPattern : "";
-            var filterName = filterPattern.Name + searchPattern;
+            filterName = filterPattern.Name + searchPattern;
+        }
 
+        private static void Print(IOrderedEnumerable<IRequest> requests, string filterName)
+        {
+            Clear();
             WriteLine($"Orders List for \"{filterName}\"\n");
             var titleRow = string.Format("{0,0} {1,0} {2,5} {3,8} {4,10}",
                 "RequestId", "ClientId", "Name", "Price", "Quantity");
             WriteLine(titleRow);
 
-            
+
             WriteLine(titleRow.Length.PrintLines('-'));
             foreach (var request in requests)
             {
@@ -49,7 +63,10 @@ namespace OrdersManager.ConsoleUI.MenuComponents
                 WriteLine(row);
             }
             WriteLine(titleRow.Length.PrintLines('-'));
+        }
 
+        private static void Serialize(IOrderedEnumerable<IRequest> requests, string filterName)
+        {
             var records = new List<object>();
             foreach (var request in requests)
             {
@@ -59,12 +76,11 @@ namespace OrdersManager.ConsoleUI.MenuComponents
                     ClientId = request.ClientId,
                     Name = request.Name,
                     Price = request.Price,
-                    Quantity = request.Quantity,                    
+                    Quantity = request.Quantity,
+                    Filter = filterName
                 });
             }
             CsvSerializer.Serialize(records);
-
-            ReadLine();
         }
     }
 }

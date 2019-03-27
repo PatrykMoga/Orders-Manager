@@ -2,16 +2,17 @@
 using System.Collections.Generic;
 using static System.Console;
 
-namespace OrdersManager.ConsoleUI.InsideMenu
+namespace OrdersManager.ConsoleUI.OptionsMenuComponents
 {
-    public class InsideMenuService
+    public class OptionsMenu
     {
         private int _index = 1;
         private readonly Dictionary<int, MenuItem> _items;
 
-        public InsideMenuService()
+        public OptionsMenu()
         {
             _items = new Dictionary<int, MenuItem>();
+            //_items.Add(0,new MenuItem("Go back",() => ));
         }
 
         public void AddItem(MenuItem item)
@@ -41,7 +42,7 @@ namespace OrdersManager.ConsoleUI.InsideMenu
             {
                 if (_items.ContainsKey(key))
                 {
-                    
+                    _items[key].Action();
                 }
                 else
                 {

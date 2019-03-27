@@ -1,4 +1,5 @@
 ﻿using OrdersManager.ConsoleUI.MenuServiceComponents;
+using OrdersManager.ConsoleUI.OptionsMenuComponents;
 using OrdersManager.Core.Data;
 using OrdersManager.Core.Extensions;
 using OrdersManager.Core.Filtering;
@@ -13,29 +14,50 @@ namespace OrdersManager.ConsoleUI.MenuComponents
     {
         private readonly IRequestProvider _requestProvider;
         private readonly IFilteringService _filtersService;
+        private readonly OptionsMenu _optionsMenu;
         public MenuItem Component { get; }
+
+        private decimal _min;
+        private decimal _max;
+        private IList<IRequest> _requests;
+        private string _filterName;
 
         public OrdersInPriceRange(IRequestProvider requestProvider, IFilteringService filtersService)
         {
             _requestProvider = requestProvider;
             _filtersService = filtersService;
-            Component = new MenuItem("Orders in price range", Show);
+            _optionsMenu = new OptionsMenu();
+            _optionsMenu.AddItem(new MenuItem("Serialize report", () => Serialize(_min, _max, _requests, _filterName)));
+            Component = new MenuItem("Orders in price range", GenerateReport);
         }
 
-        private void Show()
+        private void GenerateReport()
+        {
+            SetUp(out _min, out _max, out _requests, out _filterName);
+            Print(_min, _max, _requests, _filterName);
+            while (true)
+            {
+                _optionsMenu.PrintMenu();
+            }
+            
+        }
+
+        private void SetUp(out decimal min, out decimal max, out IList<IRequest> requests, out string filterName)
         {
             Clear();
             WriteLine("Select filter for orders in price range\n");
 
             var filterPattern = _filtersService.GetFilter();
-            var min = Helper.ParseToDecimal("Enter minimum price: ");
-            var max = Helper.ParseToDecimal("Enter maximum price: ");
-            var requests = _requestProvider.RequestsInRangeWhere(filterPattern.Filter, min, max);
-
-            Clear();
+            min = Helper.ParseToDecimal("Enter minimum price: ");
+            max = Helper.ParseToDecimal("Enter maximum price: ");
+            requests = _requestProvider.RequestsInRangeWhere(filterPattern.Filter, min, max);
             var searchPattern = filterPattern.ContainsPattern ? _filtersService.SearchPattern : "";
-            var filterName = filterPattern.Name + searchPattern;
+            filterName = filterPattern.Name + searchPattern;
+        }
 
+        private void Print(decimal min, decimal max, IList<IRequest> requests, string filterName)
+        {
+            Clear();
             WriteLine($"Orders in price range \"{min:C2}-{max:C2}\" for \"{filterName}\"\n");
 
             if (requests.Count > 0)
@@ -57,12 +79,10 @@ namespace OrdersManager.ConsoleUI.MenuComponents
             {
                 WriteLine("No orders for the customer in this price range");
             }
-            Serialize(min, max, requests);
-
             ReadLine();
         }
 
-        private static void Serialize(decimal min, decimal max, IList<IRequest> requests)
+        private void Serialize(decimal min, decimal max, IList<IRequest> requests, string filterName)
         {
             var records = new List<object>();
             foreach (var request in requests)
@@ -75,6 +95,7 @@ namespace OrdersManager.ConsoleUI.MenuComponents
                     Price = request.Price,
                     Quantity = request.Quantity,
                     TotalPrice = request.Price * request.Quantity,
+                    Filter = filterName,
                     Range = $"{min}-{max}"
                 });
             }

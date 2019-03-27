@@ -13,33 +13,45 @@ namespace OrdersManager.ConsoleUI.MenuComponents
         private readonly IFilteringService _filtersService;
         public MenuItem Component { get; }
 
+        private int _count;
+        private string _filterName;
+
         public OrdersCount(IRequestProvider requestProvider, IFilteringService filtersService)
         {
             _requestProvider = requestProvider;
             _filtersService = filtersService;
-            Component = new MenuItem("Orders count", Show);
+            Component = new MenuItem("Orders count", GenerateReport);
         }
 
-        private void Show()
+        private void GenerateReport()
+        {          
+            SetUp(out _count, out _filterName);
+            Print(_count, _filterName);
+            Serialize(_count, _filterName);
+        }
+
+        private void SetUp(out int count, out string filterName)
         {
             Clear();
             WriteLine("Select filter for orders count\n");
-
             var filterPattern = _filtersService.GetFilter();
-            var count = _requestProvider.CountWhere(filterPattern.Filter);
-
-            Clear();
+            count = _requestProvider.CountWhere(filterPattern.Filter);
             var searchPattern = filterPattern.ContainsPattern ? _filtersService.SearchPattern : "";
-            var filterName = filterPattern.Name + searchPattern;
+            filterName = filterPattern.Name + searchPattern;
+        }
 
+        private void Print(int count, string filterName)
+        {
+            Clear();
             WriteLine($"Orders count for \"{filterName}\": {count}");
+        }
 
+        private void Serialize(int count, string filterName)
+        {
             var records = new List<object>();
-            records.Add(new { Count = count, Filter = $"{filterPattern.Name}{searchPattern}" });
+            records.Add(new { Count = count, Filter = $"{filterName}" });
 
             CsvSerializer.Serialize(records);
-
-            ReadLine();
-        }
+        }        
     }
 }
