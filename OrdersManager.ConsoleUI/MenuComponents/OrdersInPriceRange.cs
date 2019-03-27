@@ -2,6 +2,8 @@
 using OrdersManager.Core.Data;
 using OrdersManager.Core.Extensions;
 using OrdersManager.Core.Filtering;
+using OrdersManager.Core.Serializers;
+using System.Collections.Generic;
 using static System.Console;
 
 
@@ -34,10 +36,11 @@ namespace OrdersManager.ConsoleUI.MenuComponents
             var max = 20;
             var requests = _requestProvider.RequestsInRangeWhere(filter.Filter, min, max);
 
+            var range = $"{min}-{max}";
             Clear();
             var searchPattern = filter.ContainsPattern ? _filtersService.SearchPattern : "";
-            WriteLine($"Orders in price range \"{min}-{max}\" for \"{filter.Name}{searchPattern}\"\n");
-            
+            WriteLine($"Orders in price range \"{range}\" for \"{filter.Name}{searchPattern}\"\n");
+
             if (requests.Count > 0)
             {
                 var titleRow = string.Format("{0,0} {1,0} {2,5} {3,8} {4,10} {5,15}",
@@ -57,6 +60,23 @@ namespace OrdersManager.ConsoleUI.MenuComponents
             {
                 WriteLine("No orders for the customer in this price range");
             }
+
+            var records = new List<object>();
+            foreach (var request in requests)
+            {
+                records.Add(new
+                {
+                    RequestId = request.RequestId,
+                    ClientId = request.ClientId,
+                    Name = request.Name,
+                    Price = request.Price,
+                    Quantity = request.Quantity,
+                    TotalPrice = request.Price * request.Quantity,
+                    Range = range
+                });
+            }
+
+            CsvSerializer.Serialize("a", "b", records);
 
 
             ReadLine();

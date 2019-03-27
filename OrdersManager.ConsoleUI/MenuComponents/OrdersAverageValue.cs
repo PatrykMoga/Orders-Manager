@@ -1,6 +1,8 @@
 ﻿using OrdersManager.ConsoleUI.MenuServiceComponents;
 using OrdersManager.Core.Data;
 using OrdersManager.Core.Filtering;
+using OrdersManager.Core.Serializers;
+using System.Collections.Generic;
 using static System.Console;
 
 namespace OrdersManager.ConsoleUI.MenuComponents
@@ -29,6 +31,11 @@ namespace OrdersManager.ConsoleUI.MenuComponents
             Clear();
             var searchPattern = filter.ContainsPattern ? _filtersService.SearchPattern : "";
             WriteLine($"Average orders value for \"{filter.Name}{searchPattern}\": {average:C2}");
+
+            var records = new List<object>();
+            records.Add(new { Average = $"{average:C2}", Filter = $"{filter.Name}{searchPattern}" });
+
+            CsvSerializer.Serialize("a", "b", records);
 
             ReadLine();
         }

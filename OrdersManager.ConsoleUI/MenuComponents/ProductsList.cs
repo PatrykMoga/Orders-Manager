@@ -29,7 +29,7 @@ namespace OrdersManager.ConsoleUI.MenuComponents
             WriteLine("Products list\n");
 
             var filter = _filtersService.GetFilter();
-            var requests = _requestProvider.ProductRequestWhere(filter.Filter);
+            var products = _requestProvider.ProductRequestWhere(filter.Filter);
 
             Clear();
             var searchPattern = filter.ContainsPattern ? _filtersService.SearchPattern : "";
@@ -40,18 +40,18 @@ namespace OrdersManager.ConsoleUI.MenuComponents
 
 
             WriteLine(titleRow.Length.PrintLines('-'));
-            foreach (var request in requests)
+            foreach (var product in products)
             {
                 var row = string.Format("{0,5} {1,8}",
-                    request.Key, request.Value);
+                    product.Key, product.Value);
                 WriteLine(row);
             }
             WriteLine(titleRow.Length.PrintLines('-'));
 
             var records = new List<object>();
-            foreach (var item in requests)
+            foreach (var product in products)
             {
-                records.Add(new { Name = item.Key, Quantity = item.Value });
+                records.Add(new { Name = product.Key, Quantity = product.Value });
             }
            
             CsvSerializer.Serialize("a", "b", records);

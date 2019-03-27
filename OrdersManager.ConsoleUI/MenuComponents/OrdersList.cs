@@ -2,6 +2,8 @@
 using OrdersManager.Core.Data;
 using OrdersManager.Core.Extensions;
 using OrdersManager.Core.Filtering;
+using OrdersManager.Core.Serializers;
+using System.Collections.Generic;
 using System.Linq;
 using static System.Console;
 
@@ -45,6 +47,20 @@ namespace OrdersManager.ConsoleUI.MenuComponents
                 WriteLine(row);
             }
             WriteLine(titleRow.Length.PrintLines('-'));
+
+            var records = new List<object>();
+            foreach (var request in requests)
+            {
+                records.Add(new
+                {
+                    RequestId = request.RequestId,
+                    ClientId = request.ClientId,
+                    Name = request.Name,
+                    Price = request.Price,
+                    Quantity = request.Quantity,                    
+                });
+            }
+            CsvSerializer.Serialize("a", "b", records);
 
             ReadLine();
         }

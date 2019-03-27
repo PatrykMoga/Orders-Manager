@@ -1,6 +1,8 @@
 ﻿using OrdersManager.ConsoleUI.MenuServiceComponents;
 using OrdersManager.Core.Data;
 using OrdersManager.Core.Filtering;
+using OrdersManager.Core.Serializers;
+using System.Collections.Generic;
 using static System.Console;
 
 namespace OrdersManager.ConsoleUI.MenuComponents
@@ -29,6 +31,11 @@ namespace OrdersManager.ConsoleUI.MenuComponents
             Clear();
             var searchPattern = filter.ContainsPattern ? _filtersService.SearchPattern : "";
             WriteLine($"Orders count for \"{filter.Name}{searchPattern}\": {count}");
+
+            var records = new List<object>();
+            records.Add(new { Count = count, Filter = $"{filter.Name}{searchPattern}" });
+
+            CsvSerializer.Serialize("a", "b", records);
 
             ReadLine();
         }
