@@ -15,7 +15,7 @@ namespace OrdersManager.ConsoleUI.MenuComponents
     {
         private readonly IRequestProvider _requestProvider;
         private readonly IFilteringService _filtersService;
-        private readonly OptionsMenu Service;
+        private readonly OptionsMenu _optionsMenu;
         public MenuItem Component { get; }
 
         private decimal _amount;
@@ -25,16 +25,21 @@ namespace OrdersManager.ConsoleUI.MenuComponents
         {
             _requestProvider = requestProvider;
             _filtersService = filtersService;
-            Component = new MenuItem("Total Orders Amount", GenerateReport);
-            Service = new OptionsMenu();
 
+            _optionsMenu = new OptionsMenu();
+            _optionsMenu.AddItem(new MenuItem("Serialize report", () => Serialize(_amount, _filterName)));
+            Component = new MenuItem("Total Orders Amount", GenerateReport);
         }
 
         private void GenerateReport()
         {
-            
+
             SetUp(out _amount, out _filterName);
             Print(_amount, _filterName);
+            while (true)
+            {
+                _optionsMenu.PrintMenu();
+            }
         }
 
         private void SetUp(out decimal amount, out string filterName)

@@ -22,6 +22,8 @@ namespace OrdersManager.ConsoleUI.MenuComponents
         {
             _requestProvider = requestProvider;
             _filtersService = filtersService;
+            _optionsMenu = new OptionsMenu();
+            _optionsMenu.AddItem(new MenuItem("Serialize report", () => Serialize(_average, _filterName)));
             Component = new MenuItem("Orders average value", GenerateReport);
         }
 
@@ -30,7 +32,10 @@ namespace OrdersManager.ConsoleUI.MenuComponents
 
             SetUp(out _average, out _filterName);
             Print(_average, _filterName);
-            Serialize(_average, _filterName);
+            while (true)
+            {
+                _optionsMenu.PrintMenu();
+            }
         }
 
         private void SetUp(out decimal average, out string filterName)

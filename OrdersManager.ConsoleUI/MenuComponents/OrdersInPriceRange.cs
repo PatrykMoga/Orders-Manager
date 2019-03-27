@@ -26,6 +26,7 @@ namespace OrdersManager.ConsoleUI.MenuComponents
         {
             _requestProvider = requestProvider;
             _filtersService = filtersService;
+
             _optionsMenu = new OptionsMenu();
             _optionsMenu.AddItem(new MenuItem("Serialize report", () => Serialize(_min, _max, _requests, _filterName)));
             Component = new MenuItem("Orders in price range", GenerateReport);

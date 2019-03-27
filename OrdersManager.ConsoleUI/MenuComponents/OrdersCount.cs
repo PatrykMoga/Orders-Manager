@@ -1,4 +1,5 @@
 ﻿using OrdersManager.ConsoleUI.MenuServiceComponents;
+using OrdersManager.ConsoleUI.OptionsMenuComponents;
 using OrdersManager.Core.Data;
 using OrdersManager.Core.Filtering;
 using OrdersManager.Core.Serializers;
@@ -11,6 +12,7 @@ namespace OrdersManager.ConsoleUI.MenuComponents
     {
         private readonly IRequestProvider _requestProvider;
         private readonly IFilteringService _filtersService;
+        private readonly OptionsMenu _optionsMenu;
         public MenuItem Component { get; }
 
         private int _count;
@@ -20,6 +22,9 @@ namespace OrdersManager.ConsoleUI.MenuComponents
         {
             _requestProvider = requestProvider;
             _filtersService = filtersService;
+
+            _optionsMenu = new OptionsMenu();
+            _optionsMenu.AddItem(new MenuItem("Serialize report", () => Serialize(_count, _filterName)));
             Component = new MenuItem("Orders count", GenerateReport);
         }
 
@@ -27,7 +32,10 @@ namespace OrdersManager.ConsoleUI.MenuComponents
         {          
             SetUp(out _count, out _filterName);
             Print(_count, _filterName);
-            Serialize(_count, _filterName);
+            while (true)
+            {
+                _optionsMenu.PrintMenu();
+            }
         }
 
         private void SetUp(out int count, out string filterName)

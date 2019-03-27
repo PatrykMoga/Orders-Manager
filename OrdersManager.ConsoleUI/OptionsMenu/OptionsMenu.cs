@@ -12,7 +12,6 @@ namespace OrdersManager.ConsoleUI.OptionsMenuComponents
         public OptionsMenu()
         {
             _items = new Dictionary<int, MenuItem>();
-            //_items.Add(0,new MenuItem("Go back",() => ));
         }
 
         public void AddItem(MenuItem item)
@@ -21,7 +20,7 @@ namespace OrdersManager.ConsoleUI.OptionsMenuComponents
         }
 
         public void PrintMenu()
-        {          
+        {
             foreach (var item in _items)
             {
                 WriteLine($"{item.Key}: {item.Value.Name}");
@@ -37,7 +36,7 @@ namespace OrdersManager.ConsoleUI.OptionsMenuComponents
         }
 
         public void ExecuteComponent(string actionKey)
-        {          
+        {
             if (int.TryParse(actionKey, out int key))
             {
                 if (_items.ContainsKey(key))

@@ -1,4 +1,5 @@
 ﻿using OrdersManager.ConsoleUI.MenuServiceComponents;
+using OrdersManager.ConsoleUI.OptionsMenuComponents;
 using OrdersManager.Core.Data;
 using OrdersManager.Core.Extensions;
 using OrdersManager.Core.Filtering;
@@ -12,6 +13,7 @@ namespace OrdersManager.ConsoleUI.MenuComponents
     {
         private readonly IFilteringService _filtersService;
         private readonly IRequestProvider _requestProvider;
+        private readonly OptionsMenu _optionsMenu;
         public MenuItem Component { get; }
 
         private Dictionary<string, int> _products;
@@ -21,6 +23,9 @@ namespace OrdersManager.ConsoleUI.MenuComponents
         {
             _requestProvider = requestProvider;
             _filtersService = filtersService;
+
+            _optionsMenu = new OptionsMenu();
+            _optionsMenu.AddItem(new MenuItem("Serialize report", () => Serialize(_products, _filterName)));
             Component = new MenuItem("Products list", GenerateReport);
         }
 
@@ -29,8 +34,10 @@ namespace OrdersManager.ConsoleUI.MenuComponents
             
             SetUp(out _products, out _filterName);
             Print(_products, _filterName);
-            Serialize(_products, _filterName);
-            ReadLine();
+            while (true)
+            {
+                _optionsMenu.PrintMenu();
+            }
         }
 
         private void SetUp(out Dictionary<string, int> products, out string filterName)
