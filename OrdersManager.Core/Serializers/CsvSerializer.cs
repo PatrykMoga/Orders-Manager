@@ -9,12 +9,12 @@ namespace OrdersManager.Core.Serializers
     public static class CsvSerializer
     {
         private static int index = 1;
-        public static void Serialize(string dirPath, string fileName, IEnumerable<object> records)
-        {
-            var shit = $@"{dirPath}\{fileName}.csv";
+        public static void Serialize(IEnumerable<object> records)
+        {           
             try
             {
-                using (var writer = new StreamWriter($@"d:\testfolder\ser\file{index++}.csv"))
+                var file = ReadFileDirectory();
+                using (var writer = new StreamWriter(file))
                 using (var csv = new CsvWriter(writer))
                 {
                     csv.WriteRecords(records);
@@ -24,6 +24,11 @@ namespace OrdersManager.Core.Serializers
             {
                 Console.WriteLine(ex.Message);
             }           
+        }
+
+        private static string ReadFileDirectory()
+        {
+            return $@"d:\testfolder\ser\file{index++}.csv";
         }
     }
 }

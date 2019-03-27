@@ -25,17 +25,19 @@ namespace OrdersManager.ConsoleUI.MenuComponents
             Clear();
             WriteLine("Select filter for orders average value\n");
 
-            var filter = _filtersService.GetFilter();
-            var average = _requestProvider.AverageAmountWhere(filter.Filter);
+            var filterPattern = _filtersService.GetFilter();
+            var average = _requestProvider.AverageAmountWhere(filterPattern.Filter);
 
             Clear();
-            var searchPattern = filter.ContainsPattern ? _filtersService.SearchPattern : "";
-            WriteLine($"Average orders value for \"{filter.Name}{searchPattern}\": {average:C2}");
+            var searchPattern = filterPattern.ContainsPattern ? _filtersService.SearchPattern : "";
+            var filterName = filterPattern.Name + searchPattern;
+
+            WriteLine($"Average orders value for \"{filterName}\": {average:C2}");
 
             var records = new List<object>();
-            records.Add(new { Average = $"{average:C2}", Filter = $"{filter.Name}{searchPattern}" });
+            records.Add(new { Average = $"{average:C2}", Filter = $"{filterPattern.Name}{searchPattern}" });
 
-            CsvSerializer.Serialize("a", "b", records);
+            CsvSerializer.Serialize(records);
 
             ReadLine();
         }

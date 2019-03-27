@@ -38,6 +38,7 @@ namespace OrdersManager.ConsoleUI.MenuComponents
             Clear();
             var searchPattern = filterPattern.ContainsPattern ? _filtersService.SearchPattern : "";
             var filterName = filterPattern.Name + searchPattern;
+
             WriteLine($"Total orders amount for \"{filterName}\": {amount:C2}");
             Serialize(amount, filterName);
 
@@ -49,7 +50,7 @@ namespace OrdersManager.ConsoleUI.MenuComponents
             var records = new List<object>();
             records.Add(new { TotalAmount = $"{amount:C2}", Filter = filterName });
 
-            CsvSerializer.Serialize("a", "b", records);
+            CsvSerializer.Serialize(records);
         }
     }
 }

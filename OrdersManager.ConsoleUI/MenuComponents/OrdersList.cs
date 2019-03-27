@@ -28,12 +28,14 @@ namespace OrdersManager.ConsoleUI.MenuComponents
             Clear();
             WriteLine("Select filter for orders list\n");
             
-            var filter = _filtersService.GetFilter();
-            var requests = _requestProvider.GetWhere(filter.Filter).OrderBy(r => r.ClientId).ThenBy(r => r.RequestId);
+            var filterPattern = _filtersService.GetFilter();
+            var requests = _requestProvider.GetWhere(filterPattern.Filter).OrderBy(r => r.ClientId).ThenBy(r => r.RequestId);
 
             Clear();
-            var searchPattern = filter.ContainsPattern ? _filtersService.SearchPattern : "";
-            WriteLine($"Orders List for \"{filter.Name}{searchPattern}\"\n");
+            var searchPattern = filterPattern.ContainsPattern ? _filtersService.SearchPattern : "";
+            var filterName = filterPattern.Name + searchPattern;
+
+            WriteLine($"Orders List for \"{filterName}\"\n");
             var titleRow = string.Format("{0,0} {1,0} {2,5} {3,8} {4,10}",
                 "RequestId", "ClientId", "Name", "Price", "Quantity");
             WriteLine(titleRow);
@@ -60,7 +62,7 @@ namespace OrdersManager.ConsoleUI.MenuComponents
                     Quantity = request.Quantity,                    
                 });
             }
-            CsvSerializer.Serialize("a", "b", records);
+            CsvSerializer.Serialize(records);
 
             ReadLine();
         }

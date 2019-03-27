@@ -27,14 +27,16 @@ namespace OrdersManager.ConsoleUI.MenuComponents
             Clear();
             WriteLine("Select filter for orders in price range\n");
 
-            var filter = _filtersService.GetFilter();
+            var filterPattern = _filtersService.GetFilter();
             var min = Helper.ParseToDecimal("Enter minimum price: ");
             var max = Helper.ParseToDecimal("Enter maximum price: ");
-            var requests = _requestProvider.RequestsInRangeWhere(filter.Filter, min, max);
+            var requests = _requestProvider.RequestsInRangeWhere(filterPattern.Filter, min, max);
 
             Clear();
-            var searchPattern = filter.ContainsPattern ? _filtersService.SearchPattern : "";
-            WriteLine($"Orders in price range \"{min:C2}-{max:C2}\" for \"{filter.Name}{searchPattern}\"\n");
+            var searchPattern = filterPattern.ContainsPattern ? _filtersService.SearchPattern : "";
+            var filterName = filterPattern.Name + searchPattern;
+
+            WriteLine($"Orders in price range \"{min:C2}-{max:C2}\" for \"{filterName}\"\n");
 
             if (requests.Count > 0)
             {
@@ -55,7 +57,13 @@ namespace OrdersManager.ConsoleUI.MenuComponents
             {
                 WriteLine("No orders for the customer in this price range");
             }
+            Serialize(min, max, requests);
 
+            ReadLine();
+        }
+
+        private static void Serialize(decimal min, decimal max, IList<IRequest> requests)
+        {
             var records = new List<object>();
             foreach (var request in requests)
             {
@@ -71,10 +79,7 @@ namespace OrdersManager.ConsoleUI.MenuComponents
                 });
             }
 
-            CsvSerializer.Serialize("a", "b", records);
-
-
-            ReadLine();
+            CsvSerializer.Serialize(records);
         }
     }
 }

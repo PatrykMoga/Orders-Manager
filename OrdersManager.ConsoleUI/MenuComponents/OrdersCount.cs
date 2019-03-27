@@ -25,17 +25,19 @@ namespace OrdersManager.ConsoleUI.MenuComponents
             Clear();
             WriteLine("Select filter for orders count\n");
 
-            var filter = _filtersService.GetFilter();
-            var count = _requestProvider.CountWhere(filter.Filter);
+            var filterPattern = _filtersService.GetFilter();
+            var count = _requestProvider.CountWhere(filterPattern.Filter);
 
             Clear();
-            var searchPattern = filter.ContainsPattern ? _filtersService.SearchPattern : "";
-            WriteLine($"Orders count for \"{filter.Name}{searchPattern}\": {count}");
+            var searchPattern = filterPattern.ContainsPattern ? _filtersService.SearchPattern : "";
+            var filterName = filterPattern.Name + searchPattern;
+
+            WriteLine($"Orders count for \"{filterName}\": {count}");
 
             var records = new List<object>();
-            records.Add(new { Count = count, Filter = $"{filter.Name}{searchPattern}" });
+            records.Add(new { Count = count, Filter = $"{filterPattern.Name}{searchPattern}" });
 
-            CsvSerializer.Serialize("a", "b", records);
+            CsvSerializer.Serialize(records);
 
             ReadLine();
         }
