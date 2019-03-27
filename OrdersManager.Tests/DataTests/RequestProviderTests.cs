@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Autofac.Extras.Moq;
 using NUnit.Framework;
-using Autofac.Extras.Moq;
-using OrdersManager.Core.Repository;
 using OrdersManager.Core.Data;
+using OrdersManager.Core.Repository;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace OrdersManager.Tests.DataTests
@@ -12,9 +11,9 @@ namespace OrdersManager.Tests.DataTests
     [TestFixture]
     public class RequestProviderTests
     {
-        private Func<IRequest, bool> _getAll = r => true;
-        private Func<IRequest, bool> _getClient1 = r => r.ClientId == "1";
-        private Func<IRequest, bool> _getClient2 = r => r.ClientId == "2";
+        private readonly Func<IRequest, bool> _getAll = r => true;
+        private readonly Func<IRequest, bool> _getClient1 = r => r.ClientId == "1";
+        private readonly Func<IRequest, bool> _getClient2 = r => r.ClientId == "2";
 
         [Test]
         public void Add_WhenCalled_AddRequestToRepository()
@@ -138,7 +137,6 @@ namespace OrdersManager.Tests.DataTests
                     Assert.That(expected.Values.ToList()[i] == actual.Values.ToList()[i]);
                 }
             }
-
         }
 
         private IList<IRequest> GetSampleRequests()

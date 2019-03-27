@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Autofac.Extras.Moq;
 using NUnit.Framework;
-using Autofac.Extras.Moq;
-using System.IO;
-using System.Reflection;
 using OrdersManager.Core.FilesProcessing;
+using System.IO;
 using System.Linq;
 
 namespace OrdersManager.Tests.FilesProcessingTests
@@ -13,16 +9,18 @@ namespace OrdersManager.Tests.FilesProcessingTests
     [TestFixture]
     public class FilesReaderTests
     {
-
         [Test]
-        public void Method_Scenario_ExpectedBehavior()
+        public void ReadFiles_WhenCalled_ReadFilesInDirectory()
         {
-            var path = @"..\..\..\TestingFiles";
-            var reader = new FilesReader();
-            reader.ReadFiles(path, SearchOption.AllDirectories);
-            
-            Assert.That(reader.Files.ToList().Count, Is.EqualTo(3));
+            using (var mock = AutoMock.GetLoose())
+            {
+                const string path = @"..\..\..\TestingFiles";
+                var sut = mock.Create<FilesReader>();
+                sut.ReadFiles(path, SearchOption.AllDirectories);
 
+                var actual = sut.Files.Count();
+                Assert.That(actual, Is.EqualTo(6));
+            }
         }
     }
 }
