@@ -19,11 +19,7 @@ namespace OrdersManager.Tests.DeserializersTests
         public void DeserializeFiles_Scenario_ExpectedBehavior()
         {
             using (var mock = AutoMock.GetLoose())
-            {
-                //mock.Mock<IFilesReader>()
-                //    .Setup(f => f.Files)
-                //    .Returns(files);
-
+            {               
                 var sut = mock.Create<CsvDeserializer>();
                 var acutal = sut.DeserializeFiles(files);
 
