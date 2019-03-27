@@ -4,6 +4,7 @@ using OrdersManager.Core.Data;
 using OrdersManager.Core.Extensions;
 using OrdersManager.Core.Filtering;
 using OrdersManager.Core.Serializers;
+using OrdersManager.Core.Sorting;
 using System.Collections.Generic;
 using static System.Console;
 
@@ -15,12 +16,13 @@ namespace OrdersManager.ConsoleUI.MenuComponents
         private readonly IRequestProvider _requestProvider;
         private readonly IFilteringService _filtersService;
         private readonly OptionsMenu _optionsMenu;
-        public MenuItem Component { get; }
 
         private decimal _min;
         private decimal _max;
         private IList<IRequest> _requests;
         private string _filterName;
+
+        public MenuItem Component { get; }
 
         public OrdersInPriceRange(IRequestProvider requestProvider, IFilteringService filtersService)
         {
@@ -28,14 +30,49 @@ namespace OrdersManager.ConsoleUI.MenuComponents
             _filtersService = filtersService;
 
             _optionsMenu = new OptionsMenu();
-            _optionsMenu.AddItem(new MenuItem("Serialize report", () => Serialize(_min, _max, _requests, _filterName)));
+            LoadOptionsMenuItems();
+
             Component = new MenuItem("Orders in price range", GenerateReport);
+        }
+
+        private void LoadOptionsMenuItems()
+        {
+            _optionsMenu.AddItem(new MenuItem("Serialize report", () => Serialize(_min, _max, _requests, _filterName)));
+
+            _optionsMenu.AddItem(new MenuItem("Sort by client id", () => SortingService.SortListByClientId(ref _requests)));
+            _optionsMenu.AddItem(new MenuItem("Sort by client id descending",
+                () => SortingService.SortListByClientIdDescending(ref _requests)));
+
+            _optionsMenu.AddItem(new MenuItem("Sort by request id", () => SortingService.SortListByRequestId(ref _requests)));
+            _optionsMenu.AddItem(new MenuItem("Sort by request id descending",
+                () => SortingService.SortListByRequestIdDescending(ref _requests)));
+
+            _optionsMenu.AddItem(new MenuItem("Sort by name", () => SortingService.SortListByName(ref _requests)));
+            _optionsMenu.AddItem(new MenuItem("Sort by name descending",
+                () => SortingService.SortListByNameDescending(ref _requests)));
+
+            _optionsMenu.AddItem(new MenuItem("Sort by price", () => SortingService.SortListByPrice(ref _requests)));
+            _optionsMenu.AddItem(new MenuItem("Sort by price descending",
+                () => SortingService.SortListByPriceDescending(ref _requests)));
+
+            _optionsMenu.AddItem(new MenuItem("Sort by quantity", () => SortingService.SortListByQuantity(ref _requests)));
+            _optionsMenu.AddItem(new MenuItem("Sort by quantity descending",
+                () => SortingService.SortListByQuantityDescending(ref _requests)));
+
+            _optionsMenu.AddItem(new MenuItem("Sort by total price", () => SortingService.SortListByTotalPrice(ref _requests)));
+            _optionsMenu.AddItem(new MenuItem("Sort by total price descending",
+                () => SortingService.SortListByTotalPriceDescending(ref _requests)));
+
         }
 
         private void GenerateReport()
         {
             SetUp(out _min, out _max, out _requests, out _filterName);
-            Print(_min, _max, _requests, _filterName);           
+            _optionsMenu.Return = false;
+            while (!_optionsMenu.Return)
+            {
+                Print(_min, _max, _requests, _filterName);
+            }
         }
 
         private void SetUp(out decimal min, out decimal max, out IList<IRequest> requests, out string filterName)
@@ -75,6 +112,7 @@ namespace OrdersManager.ConsoleUI.MenuComponents
             else
             {
                 WriteLine("No orders for the customer in this price range");
+                _optionsMenu.Return = true;
                 ReadKey();
             }
         }

@@ -31,7 +31,11 @@ namespace OrdersManager.ConsoleUI.MenuComponents
         private void GenerateReport()
         {
             SetUp(out _count, out _filterName);
-            Print(_count, _filterName);
+            _optionsMenu.Return = false;
+            while (!_optionsMenu.Return)
+            {
+                Print(_count, _filterName);
+            }
         }
 
         private void SetUp(out int count, out string filterName)

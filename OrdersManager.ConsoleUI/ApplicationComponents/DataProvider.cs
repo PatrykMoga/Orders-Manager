@@ -36,10 +36,11 @@ namespace OrdersManager.ConsoleUI.ApplicationComponents
         {
             Clear();
             var requests = _deserializeService.DeserializeAllFiles();
+            WriteLine("All found files:");
             _logger.PrintLogs();
 
-            WriteLine("Do you want to load files into memory and start processing?");
-            ReadLine();
+            WriteLine("Press any key to continue");
+            ReadKey();
             requests.ToList().ForEach(r => _provider.Add(r));
         }
 
@@ -55,7 +56,7 @@ namespace OrdersManager.ConsoleUI.ApplicationComponents
 
                     Write("Path: ");
                     var dirPath = ReadLine();                   
-                    _filesReader.ReadFiles(@"d:\testfolder\inner", SearchOption.AllDirectories);
+                    _filesReader.ReadFiles(dirPath, SearchOption.AllDirectories);
                     break;
                 }
                 catch (Exception ex)

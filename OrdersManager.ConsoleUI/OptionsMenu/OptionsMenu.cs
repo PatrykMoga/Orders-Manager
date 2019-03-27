@@ -8,6 +8,7 @@ namespace OrdersManager.ConsoleUI.OptionsMenuComponents
     {
         private int _index = 1;
         private readonly Dictionary<int, MenuItem> _items;
+        public bool Return { get; internal set; }
 
         public OptionsMenu()
         {
@@ -23,25 +24,28 @@ namespace OrdersManager.ConsoleUI.OptionsMenuComponents
         {
             WriteLine();
             WriteLine("0: Return");
+
+            foreach (var item in _items)
+            {
+                WriteLine($"{item.Key}: {item.Value.Name}");
+            }
+            WriteLine();
+
             while (true)
             {
-                foreach (var item in _items)
+                Write("Enter command key: ");
+                var input = ReadLine();
+                if (input == "0")
                 {
-                    WriteLine($"{item.Key}: {item.Value.Name}");
+                    Return = true;
+                    return;
                 }
-                WriteLine();
-
-                while (true)
+                else
                 {
-                    Write("Enter command key: ");
-                    var input = ReadLine();
-                    if (input == "0")
-                    {
-                        return;
-                    }
                     ExecuteComponent(input);
-                }
-            }
+                    break;
+                }              
+            }          
         }
 
         public void ExecuteComponent(string actionKey)
@@ -51,15 +55,18 @@ namespace OrdersManager.ConsoleUI.OptionsMenuComponents
                 if (_items.ContainsKey(key))
                 {
                     _items[key].Action();
+
                 }
                 else
                 {
                     WriteLine("Unknown command, try again!");
+                    ReadKey();
                 }
             }
             else
             {
                 WriteLine("Command error, try again!");
+                ReadKey();
             }
         }
     }

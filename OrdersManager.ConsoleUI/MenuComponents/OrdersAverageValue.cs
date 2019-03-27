@@ -30,7 +30,11 @@ namespace OrdersManager.ConsoleUI.MenuComponents
         private void GenerateReport()
         {
             SetUp(out _average, out _filterName);
-            Print(_average, _filterName);           
+            _optionsMenu.Return = false;
+            while (!_optionsMenu.Return)
+            {
+                Print(_average, _filterName);
+            }
         }
 
         private void SetUp(out decimal average, out string filterName)

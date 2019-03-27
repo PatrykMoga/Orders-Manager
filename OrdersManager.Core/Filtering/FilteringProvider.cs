@@ -21,7 +21,7 @@ namespace OrdersManager.Core.Filtering
             _filters = new Dictionary<int, RequestFilter>();
             _filters.Add(1, new RequestFilter("All", r => true));
             _filters.Add(2, new RequestFilter("Client-Id:", r => r.ClientId == SerachPattern, ValidateClientId));
-        }      
+        }
 
         public Dictionary<int, RequestFilter> GetFilters() => _filters;
 
@@ -48,6 +48,6 @@ namespace OrdersManager.Core.Filtering
                 }
                 ReadKey();
             }
-        }       
+        }
     }
 }

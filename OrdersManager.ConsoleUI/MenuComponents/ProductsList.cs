@@ -4,6 +4,7 @@ using OrdersManager.Core.Data;
 using OrdersManager.Core.Extensions;
 using OrdersManager.Core.Filtering;
 using OrdersManager.Core.Serializers;
+using OrdersManager.Core.Sorting;
 using System.Collections.Generic;
 using static System.Console;
 
@@ -25,14 +26,31 @@ namespace OrdersManager.ConsoleUI.MenuComponents
             _filtersService = filtersService;
 
             _optionsMenu = new OptionsMenu();
-            _optionsMenu.AddItem(new MenuItem("Serialize report", () => Serialize(_products, _filterName)));
+            LoadOptionsMenuItems();
             Component = new MenuItem("Products list", GenerateReport);
         }
 
+        private void LoadOptionsMenuItems()
+        {
+            _optionsMenu.AddItem(new MenuItem("Serialize report", () => Serialize(_products, _filterName)));
+
+            _optionsMenu.AddItem(new MenuItem("Sort by name", () => SortingService.SortDictionaryByKey(ref _products)));
+            _optionsMenu.AddItem(new MenuItem("Sort by name descending",
+                () => SortingService.SortDictionaryByKeyDescending(ref _products)));
+
+            _optionsMenu.AddItem(new MenuItem("Sort by quantity", () => SortingService.SortDictionaryByValue(ref _products)));
+            _optionsMenu.AddItem(new MenuItem("Sort by quantity descending",
+                () => SortingService.SortDictionaryByValueDescending(ref _products)));
+        }
+
         private void GenerateReport()
-        {           
+        {
             SetUp(out _products, out _filterName);
-            Print(_products, _filterName);
+            _optionsMenu.Return = false;
+            while (!_optionsMenu.Return)
+            {
+                Print(_products, _filterName);
+            }
         }
 
         private void SetUp(out Dictionary<string, int> products, out string filterName)

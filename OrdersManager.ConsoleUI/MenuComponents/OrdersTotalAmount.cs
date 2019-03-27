@@ -34,7 +34,11 @@ namespace OrdersManager.ConsoleUI.MenuComponents
         private void GenerateReport()
         {
             SetUp(out _amount, out _filterName);
-            Print(_amount, _filterName);
+            _optionsMenu.Return = false;
+            while (!_optionsMenu.Return)
+            {
+                Print(_amount, _filterName);
+            }
         }
 
         private void SetUp(out decimal amount, out string filterName)
