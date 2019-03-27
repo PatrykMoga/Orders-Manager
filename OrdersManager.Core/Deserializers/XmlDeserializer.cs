@@ -23,7 +23,7 @@ namespace OrdersManager.Core.Deserializers
 
             foreach (var file in files.Where(f => f.EndsWith(".xml")))
             {
-              requests.AddRange(DeserializeFile(file));           
+                requests.AddRange(DeserializeFile(file));
             }
             return requests;
         }
@@ -41,8 +41,8 @@ namespace OrdersManager.Core.Deserializers
                 }
                 catch (System.Exception ex)
                 {
-                    _logger.LogError(ex.Message);
-                }             
+                    _logger.LogError($"File: {file} {ex.Message}");
+                }
             }
 
             if (requests.Count > 0)
@@ -54,6 +54,6 @@ namespace OrdersManager.Core.Deserializers
                 _logger.LogError($"File: {file} did not contain any data to be loaded.");
             }
             return requests;
-        }       
+        }
     }
 }

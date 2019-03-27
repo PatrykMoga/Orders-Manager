@@ -1,8 +1,7 @@
-﻿using OrdersManager.ConsoleUI.MenuServiceComponents;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using static System.Console;
 
-namespace OrdersManager.ConsoleUI.OptionsMenuComponents
+namespace OrdersManager.ConsoleUI.MenuComponents
 {
     public class OptionsMenu
     {

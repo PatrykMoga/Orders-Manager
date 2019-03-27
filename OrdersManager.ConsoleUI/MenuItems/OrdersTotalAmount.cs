@@ -1,22 +1,18 @@
-﻿using OrdersManager.ConsoleUI.MenuServiceComponents;
+﻿using OrdersManager.ConsoleUI.MenuComponents;
 using OrdersManager.Core.Data;
 using OrdersManager.Core.Filtering;
-using OrdersManager.Core.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using static System.Console;
 using OrdersManager.Core.Serializers;
-using OrdersManager.ConsoleUI.OptionsMenuComponents;
+using System.Collections.Generic;
+using static System.Console;
 
-namespace OrdersManager.ConsoleUI.MenuComponents
+namespace OrdersManager.ConsoleUI.MenuItems
 {
-    public class OrdersTotalAmount : IMenuComponent
+    public class OrdersTotalAmount : IMenuItem
     {
         private readonly IRequestProvider _requestProvider;
         private readonly IFilteringService _filtersService;
         private readonly OptionsMenu _optionsMenu;
-        public MenuItem Component { get; }
+        public MenuItem Item { get; }
 
         private decimal _amount;
         private string _filterName;
@@ -28,7 +24,7 @@ namespace OrdersManager.ConsoleUI.MenuComponents
 
             _optionsMenu = new OptionsMenu();
             _optionsMenu.AddItem(new MenuItem("Serialize report", () => Serialize(_amount, _filterName)));
-            Component = new MenuItem("Total Orders Amount", GenerateReport);
+            Item = new MenuItem("Total Orders Amount", GenerateReport);
         }
 
         private void GenerateReport()

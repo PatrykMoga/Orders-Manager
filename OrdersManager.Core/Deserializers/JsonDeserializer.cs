@@ -41,8 +41,8 @@ namespace OrdersManager.Core.Deserializers
                 }
                 catch (System.Exception ex)
                 {
-                    _logger.LogError($"{ex.Message}");
-                }               
+                    _logger.LogError($"File: {file} {ex.Message}");
+                }
             }
 
             if (requests.Count > 0)

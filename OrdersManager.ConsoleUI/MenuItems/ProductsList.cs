@@ -1,5 +1,4 @@
-﻿using OrdersManager.ConsoleUI.MenuServiceComponents;
-using OrdersManager.ConsoleUI.OptionsMenuComponents;
+﻿using OrdersManager.ConsoleUI.MenuComponents;
 using OrdersManager.Core.Data;
 using OrdersManager.Core.Extensions;
 using OrdersManager.Core.Filtering;
@@ -8,14 +7,14 @@ using OrdersManager.Core.Sorting;
 using System.Collections.Generic;
 using static System.Console;
 
-namespace OrdersManager.ConsoleUI.MenuComponents
+namespace OrdersManager.ConsoleUI.MenuItems
 {
-    public class ProductsList : IMenuComponent
+    public class ProductsList : IMenuItem
     {
         private readonly IFilteringService _filtersService;
         private readonly IRequestProvider _requestProvider;
         private readonly OptionsMenu _optionsMenu;
-        public MenuItem Component { get; }
+        public MenuItem Item { get; }
 
         private Dictionary<string, int> _products;
         private string _filterName;
@@ -27,7 +26,7 @@ namespace OrdersManager.ConsoleUI.MenuComponents
 
             _optionsMenu = new OptionsMenu();
             LoadOptionsMenuItems();
-            Component = new MenuItem("Products list", GenerateReport);
+            Item = new MenuItem("Products list", GenerateReport);
         }
 
         private void LoadOptionsMenuItems()

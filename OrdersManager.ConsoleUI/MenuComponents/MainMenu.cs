@@ -2,26 +2,26 @@
 using System.Collections.Generic;
 using static System.Console;
 
-namespace OrdersManager.ConsoleUI.MenuServiceComponents
+namespace OrdersManager.ConsoleUI.MenuComponents
 {
-    public class MenuService : IMenuService
+    public class MainMenu : IMainMenu
     {
         private int _index = 1;
-        private readonly IEnumerable<IMenuComponent> _menuComponents;
+        private readonly IEnumerable<IMenuItem> _menuItems;
         private readonly Dictionary<int, MenuItem> _executable;
 
-        public MenuService(IEnumerable<IMenuComponent> menuComponents)
+        public MainMenu(IEnumerable<IMenuItem> menuItems)
         {
-            _menuComponents = menuComponents;
+            _menuItems = menuItems;
             _executable = new Dictionary<int, MenuItem>();
             LoadComponents();
         }
 
         private void LoadComponents()
         {
-            foreach (var component in _menuComponents)
+            foreach (var component in _menuItems)
             {
-                _executable.Add(_index++, component.Component);
+                _executable.Add(_index++, component.Item);
             }
         }
 

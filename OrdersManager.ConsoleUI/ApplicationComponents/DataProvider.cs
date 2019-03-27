@@ -28,18 +28,17 @@ namespace OrdersManager.ConsoleUI.ApplicationComponents
         public void Initialize()
         {
             LoadDirectory();
-            Deserialize();
-
+            DeserializeAndSave();
         }
 
-        private void Deserialize()
+        private void DeserializeAndSave()
         {
             Clear();
             var requests = _deserializeService.DeserializeAllFiles();
-            WriteLine("All found files:");
+            WriteLine("All logs for found files:\n");
             _logger.PrintLogs();
 
-            WriteLine("Press any key to continue");
+            WriteLine("\nPress any key to continue.");
             ReadKey();
             requests.ToList().ForEach(r => _provider.Add(r));
         }
@@ -52,10 +51,10 @@ namespace OrdersManager.ConsoleUI.ApplicationComponents
                 {
                     Clear();
                     WriteLine($"To begin, enter the directory path that contains the files to be processed.\n" +
-                        $"Supported file extensions: \"{string.Join(", ", _filesReader.SupportedExtensions)}\"\n");
+                        $"Supported files extensions: \"{string.Join(", ", _filesReader.SupportedExtensions)}\"\n");
 
                     Write("Path: ");
-                    var dirPath = ReadLine();                   
+                    var dirPath = ReadLine();
                     _filesReader.ReadFiles(dirPath, SearchOption.AllDirectories);
                     break;
                 }

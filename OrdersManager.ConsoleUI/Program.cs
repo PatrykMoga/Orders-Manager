@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using OrdersManager.ConsoleUI.MenuServiceComponents;
+using OrdersManager.ConsoleUI.ApplicationComponents;
 
 namespace OrdersManager.ConsoleUI
 {
@@ -10,7 +10,7 @@ namespace OrdersManager.ConsoleUI
             var container = Container.Configure();
             using (var scope = container.BeginLifetimeScope())
             {
-                var app = scope.Resolve<Application>();
+                var app = scope.Resolve<IApplication>();
                 app.Start();
             }
         }
