@@ -32,10 +32,7 @@ namespace OrdersManager.ConsoleUI.MenuComponents
         {          
             SetUp(out _count, out _filterName);
             Print(_count, _filterName);
-            while (true)
-            {
-                _optionsMenu.PrintMenu();
-            }
+             _optionsMenu.PrintMenu();
         }
 
         private void SetUp(out int count, out string filterName)
@@ -44,7 +41,7 @@ namespace OrdersManager.ConsoleUI.MenuComponents
             WriteLine("Select filter for orders count\n");
             var filterPattern = _filtersService.GetFilter();
             count = _requestProvider.CountWhere(filterPattern.Filter);
-            var searchPattern = filterPattern.ContainsPattern ? _filtersService.SearchPattern : "";
+            var searchPattern = filterPattern.ContainsPattern ? _filtersService.SearchPattern : string.Empty;
             filterName = filterPattern.Name + searchPattern;
         }
 

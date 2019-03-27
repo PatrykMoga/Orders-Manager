@@ -33,13 +33,9 @@ namespace OrdersManager.ConsoleUI.MenuComponents
 
         private void GenerateReport()
         {
-
             SetUp(out _amount, out _filterName);
             Print(_amount, _filterName);
-            while (true)
-            {
-                _optionsMenu.PrintMenu();
-            }
+            _optionsMenu.PrintMenu();
         }
 
         private void SetUp(out decimal amount, out string filterName)
@@ -48,7 +44,7 @@ namespace OrdersManager.ConsoleUI.MenuComponents
             WriteLine("Select filter for total orders amount\n");
             var filterPattern = _filtersService.GetFilter();
             amount = _requestProvider.TotalAmountWhere(filterPattern.Filter);
-            var searchPattern = filterPattern.ContainsPattern ? _filtersService.SearchPattern : "";
+            var searchPattern = filterPattern.ContainsPattern ? _filtersService.SearchPattern : string.Empty;
             filterName = filterPattern.Name + searchPattern;
         }
 

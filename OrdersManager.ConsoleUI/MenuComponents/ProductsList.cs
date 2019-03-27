@@ -30,14 +30,10 @@ namespace OrdersManager.ConsoleUI.MenuComponents
         }
 
         private void GenerateReport()
-        {
-            
+        {           
             SetUp(out _products, out _filterName);
             Print(_products, _filterName);
-            while (true)
-            {
-                _optionsMenu.PrintMenu();
-            }
+            _optionsMenu.PrintMenu();
         }
 
         private void SetUp(out Dictionary<string, int> products, out string filterName)
@@ -46,7 +42,7 @@ namespace OrdersManager.ConsoleUI.MenuComponents
             WriteLine("Select filter for products list\n");
             var filterPattern = _filtersService.GetFilter();
             products = _requestProvider.ProductRequestWhere(filterPattern.Filter);
-            var searchPattern = filterPattern.ContainsPattern ? _filtersService.SearchPattern : "";
+            var searchPattern = filterPattern.ContainsPattern ? _filtersService.SearchPattern : string.Empty;
             filterName = filterPattern.Name + searchPattern;
         }
 

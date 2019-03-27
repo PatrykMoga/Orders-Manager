@@ -36,11 +36,7 @@ namespace OrdersManager.ConsoleUI.MenuComponents
         {
             SetUp(out _min, out _max, out _requests, out _filterName);
             Print(_min, _max, _requests, _filterName);
-            while (true)
-            {
-                _optionsMenu.PrintMenu();
-            }
-            
+            _optionsMenu.PrintMenu();
         }
 
         private void SetUp(out decimal min, out decimal max, out IList<IRequest> requests, out string filterName)
@@ -52,7 +48,7 @@ namespace OrdersManager.ConsoleUI.MenuComponents
             min = Helper.ParseToDecimal("Enter minimum price: ");
             max = Helper.ParseToDecimal("Enter maximum price: ");
             requests = _requestProvider.RequestsInRangeWhere(filterPattern.Filter, min, max);
-            var searchPattern = filterPattern.ContainsPattern ? _filtersService.SearchPattern : "";
+            var searchPattern = filterPattern.ContainsPattern ? _filtersService.SearchPattern : string.Empty;
             filterName = filterPattern.Name + searchPattern;
         }
 

@@ -29,23 +29,18 @@ namespace OrdersManager.ConsoleUI.MenuComponents
 
         private void GenerateReport()
         {
-
             SetUp(out _average, out _filterName);
             Print(_average, _filterName);
-            while (true)
-            {
-                _optionsMenu.PrintMenu();
-            }
+            _optionsMenu.PrintMenu();
         }
 
         private void SetUp(out decimal average, out string filterName)
         {
             Clear();
             WriteLine("Select filter for orders average value\n");
-
             var filterPattern = _filtersService.GetFilter();
             average = _requestProvider.AverageAmountWhere(filterPattern.Filter);
-            var searchPattern = filterPattern.ContainsPattern ? _filtersService.SearchPattern : "";
+            var searchPattern = filterPattern.ContainsPattern ? _filtersService.SearchPattern : string.Empty;
             filterName = filterPattern.Name + searchPattern;
         }
 

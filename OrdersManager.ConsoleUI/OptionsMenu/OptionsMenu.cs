@@ -21,24 +21,33 @@ namespace OrdersManager.ConsoleUI.OptionsMenuComponents
 
         public void PrintMenu()
         {
-            foreach (var item in _items)
-            {
-                WriteLine($"{item.Key}: {item.Value.Name}");
-            }
             WriteLine();
-
+            WriteLine("0: Return");
             while (true)
             {
-                var input = ReadLine();
-                ExecuteComponent(input);
-                break;
-            }
+                foreach (var item in _items)
+                {
+                    WriteLine($"{item.Key}: {item.Value.Name}");
+                }
+                WriteLine();
+
+                while (true)
+                {
+                    var input = ReadLine();
+                    if (input == "0")
+                    {
+                        return;
+                    }
+                    ExecuteComponent(input);
+                    break;
+                }
+            }            
         }
 
         public void ExecuteComponent(string actionKey)
         {
             if (int.TryParse(actionKey, out int key))
-            {
+            {               
                 if (_items.ContainsKey(key))
                 {
                     _items[key].Action();

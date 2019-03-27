@@ -31,14 +31,10 @@ namespace OrdersManager.ConsoleUI.MenuComponents
         }
        
         private void GenerateReport()
-        {
-            
+        {          
             SetUp(out _requests, out _filterName);
             Print(_requests, _filterName);
-            while (true)
-            {
-                _optionsMenu.PrintMenu();
-            }
+            _optionsMenu.PrintMenu();
         }
 
         private void SetUp(out IOrderedEnumerable<IRequest> requests, out string filterName)
@@ -47,7 +43,7 @@ namespace OrdersManager.ConsoleUI.MenuComponents
             WriteLine("Select filter for orders list\n");
             var filterPattern = _filtersService.GetFilter();
             requests = _requestProvider.GetWhere(filterPattern.Filter).OrderBy(r => r.ClientId).ThenBy(r => r.RequestId);
-            var searchPattern = filterPattern.ContainsPattern ? _filtersService.SearchPattern : "";
+            var searchPattern = filterPattern.ContainsPattern ? _filtersService.SearchPattern : string.Empty;
             filterName = filterPattern.Name + searchPattern;
         }
 
