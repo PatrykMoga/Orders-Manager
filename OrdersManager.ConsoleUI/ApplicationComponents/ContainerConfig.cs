@@ -10,7 +10,7 @@ using OrdersManager.Core.Repository;
 
 namespace OrdersManager.ConsoleUI.ApplicationComponents
 {
-    public static class Container
+    public static class ContainerConfig
     {
         public static IContainer Configure()
         {

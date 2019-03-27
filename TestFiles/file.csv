@@ -1,0 +1,7 @@
+Client_Id,Request_id,Name,Quantity,Price
+AD1,1,Bułka,1,10.00
+CD1,1,Chleb,2,15.00
+ACD1,1,Rogal,3,20.00
+AS5,1,7,65.00
+AD1,2,Chleb,5,15.00
+TY2,1,Rogal,1,20.00

@@ -7,7 +7,7 @@ namespace OrdersManager.ConsoleUI
     {
         private static void Main()
         {
-            var container = Container.Configure();
+            var container = ContainerConfig.Configure();
             using (var scope = container.BeginLifetimeScope())
             {
                 var app = scope.Resolve<IApplication>();

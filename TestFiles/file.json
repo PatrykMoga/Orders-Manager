@@ -1,0 +1,39 @@
+{
+    "requests": [
+        {
+            "clientId": "CU1",
+            "requestId": "1",
+            "name": "Rogal",
+            "quantity": "6",
+            "price": "20.00"
+        },
+        {
+            "clientId": "ACU1",
+            "requestId": "1",
+            "name": "Rogal",
+            "quantity": "7",
+            "price": "20.00"
+        },
+        {
+            "clientId": "BH1",
+            "requestId": "1",
+            "name": "Chleb",
+            "quantity": "4",
+            "price": "15.00"
+        },
+        {
+            "clientId": "GB3",
+            "requestId": "1",
+            "name": "Chleb",
+            "quantity": "7",
+            "price": "15.00"
+        },
+        {
+            "clientId": "NV1",
+            "requestId": "1",
+            "name": "Rogal",
+            "quantity": "1",
+            "price": "20.00"
+        }
+    ]
+}

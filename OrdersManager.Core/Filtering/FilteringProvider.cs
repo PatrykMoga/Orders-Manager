@@ -32,7 +32,7 @@ namespace OrdersManager.Core.Filtering
             while (true)
             {
                 Clear();
-                WriteLine("Available client Ids:");
+                WriteLine("Available clients Ids:");
                 var ids = string.Join(", ", ClientIds);
                 WriteLine(ids.PrintInLines('-'));
                 Write("Enter Client Id: ");

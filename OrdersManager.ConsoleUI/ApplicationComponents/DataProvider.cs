@@ -1,9 +1,9 @@
 ﻿using OrdersManager.Core.Data;
 using OrdersManager.Core.Deserializers;
-using OrdersManager.Core.Extensions;
 using OrdersManager.Core.FilesProcessing;
 using OrdersManager.Core.Logs;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using static System.Console;
@@ -29,19 +29,22 @@ namespace OrdersManager.ConsoleUI.ApplicationComponents
         public void Initialize()
         {
             LoadDirectory();
-            DeserializeAndSave();
+            var requests = _deserializeService.DeserializeAllFiles();
+            PrintLogs();
+            SaveRequestsToMemory(requests);
         }
 
-        private void DeserializeAndSave()
+        private void PrintLogs()
         {
             Clear();
-            var requests = _deserializeService.DeserializeAllFiles();
             WriteLine("Logs for all found files:");
-            WriteLine(90.PrintLines('='));
             _logger.PrintLogs();
-            WriteLine(90.PrintLines('='));
             WriteLine("Press any key to continue.");
             ReadKey();
+        }
+
+        private void SaveRequestsToMemory(IList<IRequest> requests)
+        {
             requests.ToList().ForEach(r => _provider.Add(r));
         }
 
@@ -52,13 +55,20 @@ namespace OrdersManager.ConsoleUI.ApplicationComponents
                 try
                 {
                     Clear();
-                    WriteLine($"To begin, enter the directory path that contains the files to be processed.\n" +
-                        $"Supported files extensions: \"{string.Join(", ", _filesReader.SupportedExtensions)}\"");
-                    WriteLine(75.PrintLines('-'));
+                    WriteLine("To begin, enter the directory path that contains the files to be processed.\n" +
+                        $"Supported files extensions: \"{string.Join(", ", _filesReader.SupportedExtensions)}\".\n");
                     Write("Path: ");
                     var dirPath = ReadLine();
                     _filesReader.ReadFiles(dirPath, SearchOption.AllDirectories);
-                    break;
+                    if (!_filesReader.Files.Any())
+                    {
+                        WriteLine("The directory did not contain any supported files. Try again or choose different directory.");
+                        ReadKey();
+                    }
+                    else
+                    {
+                        break;
+                    }
                 }
                 catch (Exception ex)
                 {
