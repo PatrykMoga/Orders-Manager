@@ -26,7 +26,7 @@ namespace OrdersManager.ConsoleUI.MenuComponents
         private void ShowOrders()
         {
             Clear();
-            WriteLine("Orders List\n");
+            WriteLine("Select filter for orders list\n");
             
             var filter = _filtersService.GetFilter();
             var requests = _requestProvider.GetWhere(filter.Filter).OrderBy(r => r.ClientId).ThenBy(r => r.RequestId);

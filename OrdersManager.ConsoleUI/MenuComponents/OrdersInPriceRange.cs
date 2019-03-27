@@ -25,21 +25,16 @@ namespace OrdersManager.ConsoleUI.MenuComponents
         private void Show()
         {
             Clear();
-            WriteLine("Orders in price range\n");
+            WriteLine("Select filter for orders in price range\n");
 
             var filter = _filtersService.GetFilter();
-            //Console.WriteLine("Min");
-            //var input = ReadLine();
-            var min = 12;
-            //Console.WriteLine("Max");
-            //input = ReadLine();
-            var max = 20;
+            var min = Helper.ParseToDecimal("Enter minimum price: ");
+            var max = Helper.ParseToDecimal("Enter maximum price: ");
             var requests = _requestProvider.RequestsInRangeWhere(filter.Filter, min, max);
 
-            var range = $"{min}-{max}";
             Clear();
             var searchPattern = filter.ContainsPattern ? _filtersService.SearchPattern : "";
-            WriteLine($"Orders in price range \"{range}\" for \"{filter.Name}{searchPattern}\"\n");
+            WriteLine($"Orders in price range \"{min:C2}-{max:C2}\" for \"{filter.Name}{searchPattern}\"\n");
 
             if (requests.Count > 0)
             {
@@ -72,7 +67,7 @@ namespace OrdersManager.ConsoleUI.MenuComponents
                     Price = request.Price,
                     Quantity = request.Quantity,
                     TotalPrice = request.Price * request.Quantity,
-                    Range = range
+                    Range = $"{min}-{max}"
                 });
             }
 

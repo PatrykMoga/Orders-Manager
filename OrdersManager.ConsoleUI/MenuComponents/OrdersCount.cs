@@ -23,7 +23,7 @@ namespace OrdersManager.ConsoleUI.MenuComponents
         private void Show()
         {
             Clear();
-            WriteLine("Orders count\n");
+            WriteLine("Select filter for orders count\n");
 
             var filter = _filtersService.GetFilter();
             var count = _requestProvider.CountWhere(filter.Filter);

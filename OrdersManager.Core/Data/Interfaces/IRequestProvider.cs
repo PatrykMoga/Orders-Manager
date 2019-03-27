@@ -10,7 +10,7 @@ namespace OrdersManager.Core.Data
         int CountWhere(Func<IRequest, bool> filter);
         decimal TotalAmountWhere(Func<IRequest, bool> filter);
         decimal AverageAmountWhere(Func<IRequest, bool> filter);
-        IList<IRequest> RequestsInRangeWhere(Func<IRequest, bool> filter, int min, int max);
+        IList<IRequest> RequestsInRangeWhere(Func<IRequest, bool> filter, decimal min, decimal max);
         Dictionary<string, int> ProductRequestWhere(Func<IRequest, bool> filter);
         //Test
         Dictionary<string, IEnumerable<(string name, int? quantity, decimal? price)>> OrdersWhere(Func<IRequest, bool> filter);

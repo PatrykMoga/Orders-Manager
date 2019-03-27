@@ -26,7 +26,7 @@ namespace OrdersManager.ConsoleUI.MenuComponents
         private void ShowOrders()
         {
             Clear();
-            WriteLine("Products list\n");
+            WriteLine("Select filter for products list\n");
 
             var filter = _filtersService.GetFilter();
             var products = _requestProvider.ProductRequestWhere(filter.Filter);

@@ -72,7 +72,7 @@ namespace OrdersManager.Core.Data
 
         public decimal AverageAmountWhere(Func<IRequest, bool> filter) => TotalAmountWhere(filter) / CountWhere(filter);
 
-        public IList<IRequest> RequestsInRangeWhere(Func<IRequest, bool> filter, int min, int max) =>
+        public IList<IRequest> RequestsInRangeWhere(Func<IRequest, bool> filter, decimal min, decimal max) =>
             _repository.GetWhere(filter)
             .Where(r => (r.Price * r.Quantity) >= min && (r.Price * r.Quantity) <= max)
             .ToList();

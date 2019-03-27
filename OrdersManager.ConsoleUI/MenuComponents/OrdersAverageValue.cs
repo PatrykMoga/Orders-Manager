@@ -23,7 +23,7 @@ namespace OrdersManager.ConsoleUI.MenuComponents
         private void Show()
         {
             Clear();
-            WriteLine("Orders average value\n");
+            WriteLine("Select filter for orders average value\n");
 
             var filter = _filtersService.GetFilter();
             var average = _requestProvider.AverageAmountWhere(filter.Filter);
