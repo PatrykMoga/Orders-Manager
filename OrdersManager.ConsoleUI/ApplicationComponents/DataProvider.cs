@@ -1,5 +1,6 @@
 ﻿using OrdersManager.Core.Data;
 using OrdersManager.Core.Deserializers;
+using OrdersManager.Core.Extensions;
 using OrdersManager.Core.FilesProcessing;
 using OrdersManager.Core.Logs;
 using System;
@@ -35,10 +36,11 @@ namespace OrdersManager.ConsoleUI.ApplicationComponents
         {
             Clear();
             var requests = _deserializeService.DeserializeAllFiles();
-            WriteLine("All logs for found files:\n");
+            WriteLine("Logs for all found files:");
+            WriteLine(90.PrintLines('='));
             _logger.PrintLogs();
-
-            WriteLine("\nPress any key to continue.");
+            WriteLine(90.PrintLines('='));
+            WriteLine("Press any key to continue.");
             ReadKey();
             requests.ToList().ForEach(r => _provider.Add(r));
         }
@@ -51,8 +53,8 @@ namespace OrdersManager.ConsoleUI.ApplicationComponents
                 {
                     Clear();
                     WriteLine($"To begin, enter the directory path that contains the files to be processed.\n" +
-                        $"Supported files extensions: \"{string.Join(", ", _filesReader.SupportedExtensions)}\"\n");
-
+                        $"Supported files extensions: \"{string.Join(", ", _filesReader.SupportedExtensions)}\"");
+                    WriteLine(75.PrintLines('-'));
                     Write("Path: ");
                     var dirPath = ReadLine();
                     _filesReader.ReadFiles(dirPath, SearchOption.AllDirectories);

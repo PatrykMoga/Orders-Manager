@@ -2,33 +2,39 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using static System.Console;
 
 namespace OrdersManager.Core.Serializers
 {
     public static class CsvSerializer
     {
-        private static int index = 1;
-
         public static void Serialize(IEnumerable<object> records)
         {
             try
             {
-                var file = ReadFileDirectory();
+                var file = ReadPath();
                 using (var writer = new StreamWriter(file))
                 using (var csv = new CsvWriter(writer))
                 {
                     csv.WriteRecords(records);
                 }
+                WriteLine($"File has been saved in: {Path.GetDirectoryName(file)} as {Path.GetFileName(file)}");
+                ReadLine();
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                WriteLine(ex.Message);
+                ReadLine();
             }
         }
 
-        private static string ReadFileDirectory()
+        private static string ReadPath()
         {
-            return $@"d:\testfolder\ser\file{index++}.csv";
+            WriteLine("Enter the directory path:");
+            var path = ReadLine();
+            WriteLine("Enter file name:");
+            var name = ReadLine();
+            return $"{path.Trim()}\\{name.Trim()}.csv";
         }
     }
 }
