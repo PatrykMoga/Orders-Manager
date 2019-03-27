@@ -5,7 +5,6 @@ using System.Linq;
 
 namespace OrdersManager.Core.FilesProcessing
 {
-
     public class FilesReader : IFilesReader
     {
         public IEnumerable<string> Files { get; protected set; }
@@ -29,7 +28,7 @@ namespace OrdersManager.Core.FilesProcessing
             catch (Exception)
             {
                 throw;
-            }  
-        }        
+            }
+        }
     }
 }

@@ -13,7 +13,7 @@ namespace OrdersManager.Core.Deserializers
         public DeserializeService(IFilesReader filesReader, IEnumerable<IDeserializer> deserializers)
         {
             _filesReader = filesReader;
-            _deserializers = deserializers;          
+            _deserializers = deserializers;
         }
 
         public IList<IRequest> DeserializeAllFiles()

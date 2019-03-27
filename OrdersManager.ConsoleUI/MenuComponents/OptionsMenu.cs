@@ -43,8 +43,8 @@ namespace OrdersManager.ConsoleUI.MenuComponents
                 {
                     ExecuteComponent(input);
                     break;
-                }              
-            }          
+                }
+            }
         }
 
         public void ExecuteComponent(string actionKey)
@@ -54,7 +54,6 @@ namespace OrdersManager.ConsoleUI.MenuComponents
                 if (_items.ContainsKey(key))
                 {
                     _items[key].Action();
-
                 }
                 else
                 {

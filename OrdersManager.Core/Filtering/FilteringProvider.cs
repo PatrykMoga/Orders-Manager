@@ -1,10 +1,8 @@
-﻿using OrdersManager.Core.Data;
+﻿using OrdersManager.Core.Extensions;
 using OrdersManager.Core.Repository;
-using System;
 using System.Collections.Generic;
-using static System.Console;
 using System.Linq;
-using OrdersManager.Core.Extensions;
+using static System.Console;
 
 namespace OrdersManager.Core.Filtering
 {
@@ -18,9 +16,11 @@ namespace OrdersManager.Core.Filtering
         {
             _repository = repository;
 
-            _filters = new Dictionary<int, RequestFilter>();
-            _filters.Add(1, new RequestFilter("All", r => true));
-            _filters.Add(2, new RequestFilter("Client-Id:", r => r.ClientId == SerachPattern, ValidateClientId));
+            _filters = new Dictionary<int, RequestFilter>
+            {
+                { 1, new RequestFilter("All", r => true) },
+                { 2, new RequestFilter("Client-Id:", r => r.ClientId == SerachPattern, ValidateClientId) }
+            };
         }
 
         public Dictionary<int, RequestFilter> GetFilters() => _filters;

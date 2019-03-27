@@ -6,9 +6,9 @@ using System.Text;
 namespace OrdersManager.Core.Filtering
 {
     public class RequestFilter
-    {      
+    {
         public string Name { get; }
-        public Func<IRequest,bool> Filter { get; }
+        public Func<IRequest, bool> Filter { get; }
         public bool ContainsPattern { get; }
         public Action ValidatePattern { get; }
 
@@ -25,6 +25,5 @@ namespace OrdersManager.Core.Filtering
             ContainsPattern = true;
             ValidatePattern = validatePattern;
         }
-
     }
 }

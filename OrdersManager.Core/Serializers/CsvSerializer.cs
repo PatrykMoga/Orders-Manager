@@ -2,15 +2,15 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace OrdersManager.Core.Serializers
 {
     public static class CsvSerializer
     {
         private static int index = 1;
+
         public static void Serialize(IEnumerable<object> records)
-        {           
+        {
             try
             {
                 var file = ReadFileDirectory();
@@ -23,7 +23,7 @@ namespace OrdersManager.Core.Serializers
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-            }           
+            }
         }
 
         private static string ReadFileDirectory()

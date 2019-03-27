@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using OrdersManager.Core.Data;
+﻿using OrdersManager.Core.Data;
+using System.Collections.Generic;
 
 namespace OrdersManager.Core.Deserializers
 {

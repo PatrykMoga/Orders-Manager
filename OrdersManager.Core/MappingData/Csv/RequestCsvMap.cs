@@ -3,7 +3,7 @@ using OrdersManager.Core.Data;
 
 namespace OrdersManager.Core.MappingData.Csv
 {
-    sealed class RequestCsvMap : ClassMap<Request>
+    public class RequestCsvMap : ClassMap<Request>
     {
         public RequestCsvMap()
         {

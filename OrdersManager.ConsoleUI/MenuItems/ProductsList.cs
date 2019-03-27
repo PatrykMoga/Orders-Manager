@@ -33,13 +33,13 @@ namespace OrdersManager.ConsoleUI.MenuItems
         {
             _optionsMenu.AddItem(new MenuItem("Serialize report", () => Serialize(_products, _filterName)));
 
-            _optionsMenu.AddItem(new MenuItem("Sort by name", () => SortingService.SortDictionaryByKey(ref _products)));
+            _optionsMenu.AddItem(new MenuItem("Sort by name", () => SortingProvider.SortDictionaryByKey(ref _products)));
             _optionsMenu.AddItem(new MenuItem("Sort by name descending",
-                () => SortingService.SortDictionaryByKeyDescending(ref _products)));
+                () => SortingProvider.SortDictionaryByKeyDescending(ref _products)));
 
-            _optionsMenu.AddItem(new MenuItem("Sort by quantity", () => SortingService.SortDictionaryByValue(ref _products)));
+            _optionsMenu.AddItem(new MenuItem("Sort by quantity", () => SortingProvider.SortDictionaryByValue(ref _products)));
             _optionsMenu.AddItem(new MenuItem("Sort by quantity descending",
-                () => SortingService.SortDictionaryByValueDescending(ref _products)));
+                () => SortingProvider.SortDictionaryByValueDescending(ref _products)));
         }
 
         private void GenerateReport()
@@ -69,7 +69,6 @@ namespace OrdersManager.ConsoleUI.MenuItems
             var titleRow = string.Format("{0,0} {1,12}",
                 "Name", "Quantity");
             WriteLine(titleRow);
-
 
             WriteLine(titleRow.Length.PrintLines('-'));
             foreach (var product in products)

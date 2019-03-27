@@ -45,7 +45,7 @@ namespace OrdersManager.Core.Deserializers
                         if (request != null)
                         {
                             requests.Add(request);
-                        }    
+                        }
                     }
                     catch (Exception)
                     {

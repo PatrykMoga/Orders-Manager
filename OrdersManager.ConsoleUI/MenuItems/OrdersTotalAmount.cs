@@ -12,10 +12,11 @@ namespace OrdersManager.ConsoleUI.MenuItems
         private readonly IRequestProvider _requestProvider;
         private readonly IFilteringService _filtersService;
         private readonly OptionsMenu _optionsMenu;
-        public MenuItem Item { get; }
 
         private decimal _amount;
         private string _filterName;
+
+        public MenuItem Item { get; }
 
         public OrdersTotalAmount(IRequestProvider requestProvider, IFilteringService filtersService)
         {
@@ -24,6 +25,7 @@ namespace OrdersManager.ConsoleUI.MenuItems
 
             _optionsMenu = new OptionsMenu();
             _optionsMenu.AddItem(new MenuItem("Serialize report", () => Serialize(_amount, _filterName)));
+
             Item = new MenuItem("Total Orders Amount", GenerateReport);
         }
 

@@ -1,8 +1,4 @@
-﻿using OrdersManager.Core.Data;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using static System.Console;
+﻿using static System.Console;
 
 namespace OrdersManager.Core.Filtering
 {
@@ -30,7 +26,7 @@ namespace OrdersManager.Core.Filtering
         {
             PrintFilters();
             while (true)
-            {               
+            {
                 Write("Enter command key: ");
                 var filterKey = ReadLine();
 
@@ -53,7 +49,7 @@ namespace OrdersManager.Core.Filtering
                 else
                 {
                     WriteLine("Command error, try again!");
-                }               
+                }
             }
         }
     }

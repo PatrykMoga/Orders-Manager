@@ -12,17 +12,20 @@ namespace OrdersManager.ConsoleUI.MenuItems
         private readonly IRequestProvider _requestProvider;
         private readonly IFilteringService _filtersService;
         private readonly OptionsMenu _optionsMenu;
-        public MenuItem Item { get; }
 
         private decimal _average;
         private string _filterName;
+
+        public MenuItem Item { get; }
 
         public OrdersAverageValue(IRequestProvider requestProvider, IFilteringService filtersService)
         {
             _requestProvider = requestProvider;
             _filtersService = filtersService;
+
             _optionsMenu = new OptionsMenu();
             _optionsMenu.AddItem(new MenuItem("Serialize report", () => Serialize(_average, _filterName)));
+
             Item = new MenuItem("Orders average value", GenerateReport);
         }
 
@@ -61,6 +64,6 @@ namespace OrdersManager.ConsoleUI.MenuItems
             };
 
             CsvSerializer.Serialize(records);
-        }        
+        }
     }
 }

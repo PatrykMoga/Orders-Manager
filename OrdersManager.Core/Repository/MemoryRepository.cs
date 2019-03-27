@@ -1,5 +1,4 @@
-﻿using OrdersManager.Core.Deserializers;
-using OrdersManager.Core.Data;
+﻿using OrdersManager.Core.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +11,7 @@ namespace OrdersManager.Core.Repository
 
         public MemoryRepository()
         {
-            _requests = new List<IRequest>();     
+            _requests = new List<IRequest>();
         }
 
         public void Insert(IRequest order) => _requests.Add(order);
@@ -22,6 +21,5 @@ namespace OrdersManager.Core.Repository
         public IList<IRequest> GetWhere(Func<IRequest, bool> filter) => _requests.Where(filter).ToList();
 
         public bool Contains(Func<IRequest, bool> filter) => _requests.Any(filter);
-  
     }
 }

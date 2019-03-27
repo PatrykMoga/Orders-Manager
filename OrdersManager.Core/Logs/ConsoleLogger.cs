@@ -19,18 +19,18 @@ namespace OrdersManager.Core.Logs
 
         public void PrintLogs()
         {
-            foreach (var log in _logs)
+            foreach (var (logType, message) in _logs)
             {
-                if (log.logType == "error")
+                if (logType == "error")
                 {
                     ForegroundColor = ConsoleColor.Red;
-                    WriteLine(log.message);                   
+                    WriteLine(message);
                 }
 
-                if (log.logType == "success")
+                if (logType == "success")
                 {
                     ForegroundColor = ConsoleColor.Green;
-                    WriteLine(log.message);
+                    WriteLine(message);
                 }
             }
             ForegroundColor = ConsoleColor.White;

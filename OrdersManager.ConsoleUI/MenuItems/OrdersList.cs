@@ -14,48 +14,50 @@ namespace OrdersManager.ConsoleUI.MenuItems
         private readonly IRequestProvider _requestProvider;
         private readonly IFilteringService _filtersService;
         private readonly OptionsMenu _optionsMenu;
-        public MenuItem Item { get; }
 
         private IList<IRequest> _requests;
         private string _filterName;
+
+        public MenuItem Item { get; }
 
         public OrdersList(IRequestProvider requestProvider, IFilteringService filteringService)
         {
             _requestProvider = requestProvider;
             _filtersService = filteringService;
+
             _optionsMenu = new OptionsMenu();
             LoadOptionsMenuItems();
+
             Item = new MenuItem("Orders List", GenerateReport);
         }
 
         private void LoadOptionsMenuItems()
         {
             _optionsMenu.AddItem(new MenuItem("Serialize report", () => Serialize(_requests, _filterName)));
-           
-            _optionsMenu.AddItem(new MenuItem("Sort by client id", () => SortingService.SortListByClientId(ref _requests)));
-            _optionsMenu.AddItem(new MenuItem("Sort by client id descending", 
-                () => SortingService.SortListByClientIdDescending(ref _requests)));
 
-            _optionsMenu.AddItem(new MenuItem("Sort by request id", () => SortingService.SortListByRequestId(ref _requests)));
+            _optionsMenu.AddItem(new MenuItem("Sort by client id", () => SortingProvider.SortListByClientId(ref _requests)));
+            _optionsMenu.AddItem(new MenuItem("Sort by client id descending",
+                () => SortingProvider.SortListByClientIdDescending(ref _requests)));
+
+            _optionsMenu.AddItem(new MenuItem("Sort by request id", () => SortingProvider.SortListByRequestId(ref _requests)));
             _optionsMenu.AddItem(new MenuItem("Sort by request id descending",
-                () => SortingService.SortListByRequestIdDescending(ref _requests)));
+                () => SortingProvider.SortListByRequestIdDescending(ref _requests)));
 
-            _optionsMenu.AddItem(new MenuItem("Sort by name", () => SortingService.SortListByName(ref _requests)));
+            _optionsMenu.AddItem(new MenuItem("Sort by name", () => SortingProvider.SortListByName(ref _requests)));
             _optionsMenu.AddItem(new MenuItem("Sort by name descending",
-                () => SortingService.SortListByNameDescending(ref _requests)));
+                () => SortingProvider.SortListByNameDescending(ref _requests)));
 
-            _optionsMenu.AddItem(new MenuItem("Sort by price", () => SortingService.SortListByPrice(ref _requests)));
+            _optionsMenu.AddItem(new MenuItem("Sort by price", () => SortingProvider.SortListByPrice(ref _requests)));
             _optionsMenu.AddItem(new MenuItem("Sort by price descending",
-                () => SortingService.SortListByPriceDescending(ref _requests)));
+                () => SortingProvider.SortListByPriceDescending(ref _requests)));
 
-            _optionsMenu.AddItem(new MenuItem("Sort by quantity", () => SortingService.SortListByQuantity(ref _requests)));
+            _optionsMenu.AddItem(new MenuItem("Sort by quantity", () => SortingProvider.SortListByQuantity(ref _requests)));
             _optionsMenu.AddItem(new MenuItem("Sort by quantity descending",
-                () => SortingService.SortListByQuantityDescending(ref _requests)));
+                () => SortingProvider.SortListByQuantityDescending(ref _requests)));
 
-            _optionsMenu.AddItem(new MenuItem("Sort by total price", () => SortingService.SortListByTotalPrice(ref _requests)));
+            _optionsMenu.AddItem(new MenuItem("Sort by total price", () => SortingProvider.SortListByTotalPrice(ref _requests)));
             _optionsMenu.AddItem(new MenuItem("Sort by total price descending",
-                () => SortingService.SortListByTotalPriceDescending(ref _requests)));
-
+                () => SortingProvider.SortListByTotalPriceDescending(ref _requests)));
         }
 
         private void GenerateReport()
@@ -85,7 +87,6 @@ namespace OrdersManager.ConsoleUI.MenuItems
             var titleRow = string.Format("{0,0} {1,0} {2,5} {3,8} {4,10} {5,15}",
                 "RequestId", "ClientId", "Name", "Price", "Quantity", "Total Price");
             WriteLine(titleRow);
-
 
             WriteLine(titleRow.Length.PrintLines('-'));
             foreach (var request in requests)

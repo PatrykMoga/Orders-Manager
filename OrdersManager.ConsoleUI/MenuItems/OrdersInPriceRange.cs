@@ -7,7 +7,6 @@ using OrdersManager.Core.Sorting;
 using System.Collections.Generic;
 using static System.Console;
 
-
 namespace OrdersManager.ConsoleUI.MenuItems
 {
     public class OrdersInPriceRange : IMenuItem
@@ -38,30 +37,29 @@ namespace OrdersManager.ConsoleUI.MenuItems
         {
             _optionsMenu.AddItem(new MenuItem("Serialize report", () => Serialize(_min, _max, _requests, _filterName)));
 
-            _optionsMenu.AddItem(new MenuItem("Sort by client id", () => SortingService.SortListByClientId(ref _requests)));
+            _optionsMenu.AddItem(new MenuItem("Sort by client id", () => SortingProvider.SortListByClientId(ref _requests)));
             _optionsMenu.AddItem(new MenuItem("Sort by client id descending",
-                () => SortingService.SortListByClientIdDescending(ref _requests)));
+                () => SortingProvider.SortListByClientIdDescending(ref _requests)));
 
-            _optionsMenu.AddItem(new MenuItem("Sort by request id", () => SortingService.SortListByRequestId(ref _requests)));
+            _optionsMenu.AddItem(new MenuItem("Sort by request id", () => SortingProvider.SortListByRequestId(ref _requests)));
             _optionsMenu.AddItem(new MenuItem("Sort by request id descending",
-                () => SortingService.SortListByRequestIdDescending(ref _requests)));
+                () => SortingProvider.SortListByRequestIdDescending(ref _requests)));
 
-            _optionsMenu.AddItem(new MenuItem("Sort by name", () => SortingService.SortListByName(ref _requests)));
+            _optionsMenu.AddItem(new MenuItem("Sort by name", () => SortingProvider.SortListByName(ref _requests)));
             _optionsMenu.AddItem(new MenuItem("Sort by name descending",
-                () => SortingService.SortListByNameDescending(ref _requests)));
+                () => SortingProvider.SortListByNameDescending(ref _requests)));
 
-            _optionsMenu.AddItem(new MenuItem("Sort by price", () => SortingService.SortListByPrice(ref _requests)));
+            _optionsMenu.AddItem(new MenuItem("Sort by price", () => SortingProvider.SortListByPrice(ref _requests)));
             _optionsMenu.AddItem(new MenuItem("Sort by price descending",
-                () => SortingService.SortListByPriceDescending(ref _requests)));
+                () => SortingProvider.SortListByPriceDescending(ref _requests)));
 
-            _optionsMenu.AddItem(new MenuItem("Sort by quantity", () => SortingService.SortListByQuantity(ref _requests)));
+            _optionsMenu.AddItem(new MenuItem("Sort by quantity", () => SortingProvider.SortListByQuantity(ref _requests)));
             _optionsMenu.AddItem(new MenuItem("Sort by quantity descending",
-                () => SortingService.SortListByQuantityDescending(ref _requests)));
+                () => SortingProvider.SortListByQuantityDescending(ref _requests)));
 
-            _optionsMenu.AddItem(new MenuItem("Sort by total price", () => SortingService.SortListByTotalPrice(ref _requests)));
+            _optionsMenu.AddItem(new MenuItem("Sort by total price", () => SortingProvider.SortListByTotalPrice(ref _requests)));
             _optionsMenu.AddItem(new MenuItem("Sort by total price descending",
-                () => SortingService.SortListByTotalPriceDescending(ref _requests)));
-
+                () => SortingProvider.SortListByTotalPriceDescending(ref _requests)));
         }
 
         private void GenerateReport()

@@ -1,6 +1,6 @@
-﻿using OrdersManager.Core.Logs;
+﻿using OrdersManager.Core.Data;
+using OrdersManager.Core.Logs;
 using OrdersManager.Core.MappingData.Xml;
-using OrdersManager.Core.Data;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;

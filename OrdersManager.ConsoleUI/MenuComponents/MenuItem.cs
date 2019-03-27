@@ -6,8 +6,8 @@ namespace OrdersManager.ConsoleUI.MenuComponents
     {
         public string Name { get; set; }
         public Action Action { get; set; }
-        
-        public MenuItem(string name, Action action )
+
+        public MenuItem(string name, Action action)
         {
             Name = name;
             Action = action;

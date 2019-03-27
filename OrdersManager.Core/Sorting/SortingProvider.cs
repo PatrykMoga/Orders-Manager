@@ -1,13 +1,11 @@
 ﻿using OrdersManager.Core.Data;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace OrdersManager.Core.Sorting
 {
-    public static class SortingService
-    {      
+    public static class SortingProvider
+    {
         public static void SortListByName(ref IList<IRequest> requests)
         {
             requests = requests.OrderBy(r => r.Name).ToList();
@@ -37,6 +35,7 @@ namespace OrdersManager.Core.Sorting
         {
             requests = requests.OrderByDescending(r => r.RequestId).ToList();
         }
+
         public static void SortListByQuantity(ref IList<IRequest> requests)
         {
             requests = requests.OrderBy(r => r.Quantity).ToList();
@@ -46,6 +45,7 @@ namespace OrdersManager.Core.Sorting
         {
             requests = requests.OrderByDescending(r => r.Quantity).ToList();
         }
+
         public static void SortListByPrice(ref IList<IRequest> requests)
         {
             requests = requests.OrderBy(r => r.Price).ToList();
@@ -66,7 +66,7 @@ namespace OrdersManager.Core.Sorting
             requests = requests.OrderByDescending(r => r.Price * r.Quantity).ToList();
         }
 
-        public static void SortDictionaryByKey(ref Dictionary<string,int> valuePairs)
+        public static void SortDictionaryByKey(ref Dictionary<string, int> valuePairs)
         {
             valuePairs = valuePairs.OrderBy(r => r.Key).ToDictionary(x => x.Key, x => x.Value);
         }
