@@ -9,7 +9,7 @@ using System.Collections.Generic;
 namespace OrdersManager.Tests.DeserializersTests
 {
     [TestFixture]
-    public class DeserializeServiceTests
+    public class DeserializingServiceTests
     {
         private static readonly ILogger logger = new ConsoleLogger();
 
@@ -38,8 +38,8 @@ namespace OrdersManager.Tests.DeserializersTests
 
                 mock.Provide(deserializers);
 
-                var sut = mock.Create<DeserializeService>();
-                var acutal = sut.DeserializeAllFiles();
+                var sut = mock.Create<DeserializingService>();
+                var acutal = sut.InitializeDeserializing();
 
                 var expected = new List<IRequest>
                 {

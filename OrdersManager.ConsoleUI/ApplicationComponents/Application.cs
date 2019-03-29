@@ -15,7 +15,7 @@ namespace OrdersManager.ConsoleUI.ApplicationComponents
 
         public void Start()
         {
-            _dataProvider.Initialize();
+            _dataProvider.GetData();
             while (true)
             {
                 _mainMenu.PrintMenu();

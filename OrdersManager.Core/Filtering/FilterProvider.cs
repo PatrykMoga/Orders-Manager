@@ -6,13 +6,13 @@ using static System.Console;
 
 namespace OrdersManager.Core.Filtering
 {
-    public class FilteringProvider : IFilteringProvider
+    public class FilterProvider : IFilterProvider
     {
         public string SerachPattern { get; private set; }
         private readonly IRepository _repository;
         private readonly Dictionary<int, RequestFilter> _filters;
 
-        public FilteringProvider(IRepository repository)
+        public FilterProvider(IRepository repository)
         {
             _repository = repository;
 

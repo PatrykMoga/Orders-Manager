@@ -2,7 +2,7 @@
 
 namespace OrdersManager.Core.Extensions
 {
-    public static class Helper
+    public static class Parse
     {
         public static decimal ParseToDecimal(string description)
         {

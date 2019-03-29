@@ -12,7 +12,7 @@ namespace OrdersManager.ConsoleUI.MenuItems
     public class OrdersInPriceRange : IMenuItem
     {
         private readonly IRequestProvider _requestProvider;
-        private readonly IFilteringService _filtersService;
+        private readonly IFilterService _filterService;
         private readonly OptionsMenu _optionsMenu;
 
         private decimal _min;
@@ -20,17 +20,17 @@ namespace OrdersManager.ConsoleUI.MenuItems
         private IList<IRequest> _requests;
         private string _filterName;
 
-        public MenuItem Item { get; }
+        public MenuItem MenuItem { get; }
 
-        public OrdersInPriceRange(IRequestProvider requestProvider, IFilteringService filtersService)
+        public OrdersInPriceRange(IRequestProvider requestProvider, IFilterService filterService)
         {
             _requestProvider = requestProvider;
-            _filtersService = filtersService;
+            _filterService = filterService;
 
             _optionsMenu = new OptionsMenu();
             LoadOptionsMenuItems();
 
-            Item = new MenuItem("Orders in price range", GenerateReport);
+            MenuItem = new MenuItem("Orders in price range", GenerateReport);
         }
 
         private void LoadOptionsMenuItems()
@@ -77,11 +77,11 @@ namespace OrdersManager.ConsoleUI.MenuItems
             Clear();
             WriteLine("Select filter for orders in price range\n");
 
-            var filterPattern = _filtersService.GetFilter();
-            min = Helper.ParseToDecimal("Enter minimum price: ");
-            max = Helper.ParseToDecimal("Enter maximum price: ");
+            var filterPattern = _filterService.GetFilter();
+            min = Parse.ParseToDecimal("Enter minimum price: ");
+            max = Parse.ParseToDecimal("Enter maximum price: ");
             requests = _requestProvider.RequestsInRangeWhere(filterPattern.Filter, min, max);
-            var searchPattern = filterPattern.ContainsPattern ? _filtersService.SearchPattern : string.Empty;
+            var searchPattern = filterPattern.ContainsPattern ? _filterService.SearchPattern : string.Empty;
             filterName = filterPattern.Name + searchPattern;
         }
 

@@ -2,20 +2,20 @@
 
 namespace OrdersManager.Core.Filtering
 {
-    public class FilteringService : IFilteringService
+    public class FilterService : IFilterService
     {
-        private readonly IFilteringProvider _filteringProvider;
+        private readonly IFilterProvider _filterProvider;
 
-        public FilteringService(IFilteringProvider filteringProvider)
+        public FilterService(IFilterProvider filterProvider)
         {
-            _filteringProvider = filteringProvider;
+            _filterProvider = filterProvider;
         }
 
-        public string SearchPattern => _filteringProvider.SerachPattern;
+        public string SearchPattern => _filterProvider.SerachPattern;
 
         private void PrintFilters()
         {
-            foreach (var filter in _filteringProvider.GetFilters())
+            foreach (var filter in _filterProvider.GetFilters())
             {
                 WriteLine($"{filter.Key}: {filter.Value.Name}");
             }
@@ -32,14 +32,14 @@ namespace OrdersManager.Core.Filtering
 
                 if (int.TryParse(filterKey, out int key))
                 {
-                    if (_filteringProvider.GetFilters().ContainsKey(key))
+                    if (_filterProvider.GetFilters().ContainsKey(key))
                     {
-                        if (_filteringProvider.GetFilters()[key].ContainsPattern)
+                        if (_filterProvider.GetFilters()[key].ContainsPattern)
                         {
-                            _filteringProvider.GetFilters()[key].ValidatePattern();
-                            return _filteringProvider.GetFilters()[key];
+                            _filterProvider.GetFilters()[key].ValidatePattern();
+                            return _filterProvider.GetFilters()[key];
                         }
-                        return _filteringProvider.GetFilters()[key];
+                        return _filterProvider.GetFilters()[key];
                     }
                     else
                     {

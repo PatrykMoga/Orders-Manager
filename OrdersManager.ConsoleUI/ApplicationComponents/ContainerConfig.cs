@@ -21,14 +21,14 @@ namespace OrdersManager.ConsoleUI.ApplicationComponents
             builder.RegisterType<FilesReader>().As<IFilesReader>().InstancePerLifetimeScope();
             builder.RegisterType<MemoryRepository>().As<IRepository>().SingleInstance();
             builder.RegisterType<ConsoleLogger>().As<ILogger>().SingleInstance();
-            builder.RegisterType<DeserializeService>().As<IDeserializeService>();
+            builder.RegisterType<DeserializingService>().As<IDeserializingService>();
             builder.RegisterType<CsvDeserializer>().As<IDeserializer>().SingleInstance();
             builder.RegisterType<XmlDeserializer>().As<IDeserializer>().SingleInstance();
             builder.RegisterType<JsonDeserializer>().As<IDeserializer>().SingleInstance();
 
             builder.RegisterType<RequestProvider>().As<IRequestProvider>();
-            builder.RegisterType<FilteringProvider>().As<IFilteringProvider>().SingleInstance();
-            builder.RegisterType<FilteringService>().As<IFilteringService>();
+            builder.RegisterType<FilterProvider>().As<IFilterProvider>().SingleInstance();
+            builder.RegisterType<FilterService>().As<IFilterService>();
 
             builder.RegisterType<MainMenu>().As<IMainMenu>();
 

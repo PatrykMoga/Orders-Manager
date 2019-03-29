@@ -41,13 +41,13 @@ namespace OrdersManager.ConsoleUI.MenuComponents
                 }
                 else
                 {
-                    ExecuteComponent(input);
+                    ExecuteMenuItem(input);
                     break;
                 }
             }
         }
 
-        public void ExecuteComponent(string actionKey)
+        public void ExecuteMenuItem(string actionKey)
         {
             if (int.TryParse(actionKey, out int key))
             {

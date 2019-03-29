@@ -10,23 +10,23 @@ namespace OrdersManager.ConsoleUI.MenuItems
     public class OrdersCount : IMenuItem
     {
         private readonly IRequestProvider _requestProvider;
-        private readonly IFilteringService _filtersService;
+        private readonly IFilterService _filterService;
         private readonly OptionsMenu _optionsMenu;
 
         private int _count;
         private string _filterName;
 
-        public MenuItem Item { get; }
+        public MenuItem MenuItem { get; }
 
-        public OrdersCount(IRequestProvider requestProvider, IFilteringService filtersService)
+        public OrdersCount(IRequestProvider requestProvider, IFilterService filterService)
         {
             _requestProvider = requestProvider;
-            _filtersService = filtersService;
+            _filterService = filterService;
 
             _optionsMenu = new OptionsMenu();
             _optionsMenu.AddItem(new MenuItem("Serialize report", () => Serialize(_count, _filterName)));
 
-            Item = new MenuItem("Orders count", GenerateReport);
+            MenuItem = new MenuItem("Orders count", GenerateReport);
         }
 
         private void GenerateReport()
@@ -43,9 +43,9 @@ namespace OrdersManager.ConsoleUI.MenuItems
         {
             Clear();
             WriteLine("Select filter for orders count\n");
-            var filterPattern = _filtersService.GetFilter();
+            var filterPattern = _filterService.GetFilter();
             count = _requestProvider.CountWhere(filterPattern.Filter);
-            var searchPattern = filterPattern.ContainsPattern ? _filtersService.SearchPattern : string.Empty;
+            var searchPattern = filterPattern.ContainsPattern ? _filterService.SearchPattern : string.Empty;
             filterName = filterPattern.Name + searchPattern;
         }
 

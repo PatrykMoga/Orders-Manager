@@ -2,7 +2,7 @@
 
 namespace OrdersManager.Core.Extensions
 {
-    public static class PrintingExtensions
+    public static class Print
     {
         public static string PrintLines(this int length, char c)
         {

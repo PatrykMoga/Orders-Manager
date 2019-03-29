@@ -13,11 +13,11 @@ namespace OrdersManager.ConsoleUI.ApplicationComponents
     public class DataProvider : IDataProvider
     {
         private readonly IFilesReader _filesReader;
-        private readonly IDeserializeService _deserializeService;
+        private readonly IDeserializingService _deserializeService;
         private readonly IRequestProvider _provider;
         private readonly ILogger _logger;
 
-        public DataProvider(IFilesReader filesReader, IDeserializeService deserializeService,
+        public DataProvider(IFilesReader filesReader, IDeserializingService deserializeService,
             IRequestProvider provider, ILogger logger)
         {
             _filesReader = filesReader;
@@ -26,29 +26,15 @@ namespace OrdersManager.ConsoleUI.ApplicationComponents
             _logger = logger;
         }
 
-        public void Initialize()
+        public void GetData()
         {
-            LoadDirectory();
-            var requests = _deserializeService.DeserializeAllFiles();
+            ReadData();
+            var requests = _deserializeService.InitializeDeserializing();
             PrintLogs();
-            SaveRequestsToMemory(requests);
+            SaveToMemory(requests);
         }
 
-        private void PrintLogs()
-        {
-            Clear();
-            WriteLine("Logs for all found files:");
-            _logger.PrintLogs();
-            WriteLine("Press any key to continue.");
-            ReadKey();
-        }
-
-        private void SaveRequestsToMemory(IList<IRequest> requests)
-        {
-            requests.ToList().ForEach(r => _provider.Add(r));
-        }
-
-        private void LoadDirectory()
+        private void ReadData()
         {
             while (true)
             {
@@ -76,6 +62,20 @@ namespace OrdersManager.ConsoleUI.ApplicationComponents
                     ReadKey();
                 }
             }
+        }
+
+        private void PrintLogs()
+        {
+            Clear();
+            WriteLine("Logs for all found files:");
+            _logger.PrintLogs();
+            WriteLine("Press any key to continue.");
+            ReadKey();
+        }
+
+        private void SaveToMemory(IList<IRequest> requests)
+        {
+            requests.ToList().ForEach(r => _provider.Add(r));
         }
     }
 }

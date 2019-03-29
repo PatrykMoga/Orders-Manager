@@ -2,6 +2,6 @@
 {
     public interface IMenuItem
     {
-        MenuItem Item { get; }
+        MenuItem MenuItem { get; }
     }
 }

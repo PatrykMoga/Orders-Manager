@@ -12,23 +12,23 @@ namespace OrdersManager.ConsoleUI.MenuItems
     public class OrdersList : IMenuItem
     {
         private readonly IRequestProvider _requestProvider;
-        private readonly IFilteringService _filtersService;
+        private readonly IFilterService _filterService;
         private readonly OptionsMenu _optionsMenu;
 
         private IList<IRequest> _requests;
         private string _filterName;
 
-        public MenuItem Item { get; }
+        public MenuItem MenuItem { get; }
 
-        public OrdersList(IRequestProvider requestProvider, IFilteringService filteringService)
+        public OrdersList(IRequestProvider requestProvider, IFilterService filterService)
         {
             _requestProvider = requestProvider;
-            _filtersService = filteringService;
+            _filterService = filterService;
 
             _optionsMenu = new OptionsMenu();
             LoadOptionsMenuItems();
 
-            Item = new MenuItem("Orders List", GenerateReport);
+            MenuItem = new MenuItem("Orders List", GenerateReport);
         }
 
         private void LoadOptionsMenuItems()
@@ -74,9 +74,9 @@ namespace OrdersManager.ConsoleUI.MenuItems
         {
             Clear();
             WriteLine("Select filter for orders list\n");
-            var filterPattern = _filtersService.GetFilter();
+            var filterPattern = _filterService.GetFilter();
             requests = _requestProvider.GetWhere(filterPattern.Filter);
-            var searchPattern = filterPattern.ContainsPattern ? _filtersService.SearchPattern : string.Empty;
+            var searchPattern = filterPattern.ContainsPattern ? _filterService.SearchPattern : string.Empty;
             filterName = filterPattern.Name + searchPattern;
         }
 

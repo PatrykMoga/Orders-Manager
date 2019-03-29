@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 namespace OrdersManager.Core.Deserializers
 {
-    public interface IDeserializeService
+    public interface IDeserializingService
     {
-        IList<IRequest> DeserializeAllFiles();
+        IList<IRequest> InitializeDeserializing();
     }
 }

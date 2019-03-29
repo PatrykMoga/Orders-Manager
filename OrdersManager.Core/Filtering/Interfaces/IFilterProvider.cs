@@ -2,7 +2,7 @@
 
 namespace OrdersManager.Core.Filtering
 {
-    public interface IFilteringProvider
+    public interface IFilterProvider
     {
         string SerachPattern { get; }
         Dictionary<int, RequestFilter> GetFilters();

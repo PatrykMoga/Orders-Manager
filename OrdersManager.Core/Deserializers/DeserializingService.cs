@@ -5,18 +5,18 @@ using System.Linq;
 
 namespace OrdersManager.Core.Deserializers
 {
-    public class DeserializeService : IDeserializeService
+    public class DeserializingService : IDeserializingService
     {
         private readonly IFilesReader _filesReader;
         private readonly IEnumerable<IDeserializer> _deserializers;
 
-        public DeserializeService(IFilesReader filesReader, IEnumerable<IDeserializer> deserializers)
+        public DeserializingService(IFilesReader filesReader, IEnumerable<IDeserializer> deserializers)
         {
             _filesReader = filesReader;
             _deserializers = deserializers;
         }
 
-        public IList<IRequest> DeserializeAllFiles()
+        public IList<IRequest> InitializeDeserializing()
         {
             var requests = new List<IRequest>();
             foreach (var deserializer in _deserializers)

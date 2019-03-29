@@ -7,20 +7,20 @@ namespace OrdersManager.ConsoleUI.MenuComponents
     {
         private int _index = 1;
         private readonly IEnumerable<IMenuItem> _menuItems;
-        private readonly Dictionary<int, MenuItem> _executable;
+        private readonly Dictionary<int, MenuItem> _executableItems;
 
         public MainMenu(IEnumerable<IMenuItem> menuItems)
         {
             _menuItems = menuItems;
-            _executable = new Dictionary<int, MenuItem>();
-            LoadComponents();
+            _executableItems = new Dictionary<int, MenuItem>();
+            LoadItems();
         }
 
-        private void LoadComponents()
+        private void LoadItems()
         {
-            foreach (var component in _menuItems)
+            foreach (var item in _menuItems)
             {
-                _executable.Add(_index++, component.Item);
+                _executableItems.Add(_index++, item.MenuItem);
             }
         }
 
@@ -28,7 +28,7 @@ namespace OrdersManager.ConsoleUI.MenuComponents
         {
             Clear();
             WriteLine("Select the report to generate:\n");
-            foreach (var item in _executable)
+            foreach (var item in _executableItems)
             {
                 WriteLine($"{item.Key}: {item.Value.Name}");
             }
@@ -37,18 +37,18 @@ namespace OrdersManager.ConsoleUI.MenuComponents
             while (true)
             {
                 var input = ReadLine();
-                ExecuteComponent(input);
+                ExecuteMenuItem(input);
                 break;
             }
         }
 
-        private void ExecuteComponent(string actionKey)
+        private void ExecuteMenuItem(string actionKey)
         {
             if (int.TryParse(actionKey, out int key))
             {
-                if (_executable.ContainsKey(key))
+                if (_executableItems.ContainsKey(key))
                 {
-                    _executable[key].Action();
+                    _executableItems[key].Action();
                 }
                 else
                 {
