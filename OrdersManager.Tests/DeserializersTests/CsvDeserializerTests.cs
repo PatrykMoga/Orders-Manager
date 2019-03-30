@@ -19,7 +19,7 @@ namespace OrdersManager.Tests.DeserializersTests
         public void DeserializeFiles_Scenario_ExpectedBehavior()
         {
             using (var mock = AutoMock.GetLoose())
-            {               
+            {
                 var sut = mock.Create<CsvDeserializer>();
                 var acutal = sut.DeserializeFiles(files);
 

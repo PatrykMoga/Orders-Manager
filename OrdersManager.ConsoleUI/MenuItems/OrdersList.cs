@@ -1,10 +1,9 @@
-﻿using OrdersManager.ConsoleUI.MenuComponents;
+﻿using OrdersManager.ConsoleUI.ApplicationComponents;
+using OrdersManager.ConsoleUI.MenuComponents;
 using OrdersManager.Core.Data;
 using OrdersManager.Core.Extensions;
 using OrdersManager.Core.Filtering;
 using OrdersManager.Core.Serializers;
-using OrdersManager.Core.Sorting;
-using System;
 using System.Collections.Generic;
 using static System.Console;
 
@@ -24,27 +23,27 @@ namespace OrdersManager.ConsoleUI.MenuItems
             _filterService = filterService;
             _report = new Report();
             _optionsMenu = new OptionsMenu();
-            _optionsMenu.AddItem(new MenuItem("Serialize report", Serialize));
-            _optionsMenu.AddRange(RequestSortingOptions());
+            _optionsMenu.AddRange(SortingOptions());
             MenuItem = new MenuItem("Orders List", GenerateReport);
         }
-        
-        private IList<MenuItem> RequestSortingOptions()
+
+        private IList<MenuItem> SortingOptions()
         {
             return new List<MenuItem>()
             {
+                new MenuItem("Serialize report", Serialize),
                 new MenuItem("Sort by client id",
-                () =>  Sorters.OrderListBy( _report.Requests,r => r.ClientId,r =>  _report.Requests = r,true)),
+                () =>  Sorter.OrderListBy( _report.Requests,r => r.ClientId,r =>  _report.Requests = r)),
                 new MenuItem("Sort by request id",
-                () =>  Sorters.OrderListBy( _report.Requests,r => r.RequestId,r =>  _report.Requests = r,true)),
+                () =>  Sorter.OrderListBy( _report.Requests,r => r.RequestId,r =>  _report.Requests = r)),
                 new MenuItem("Sort by name",
-                () =>  Sorters.OrderListBy( _report.Requests,r => r.Name,r =>  _report.Requests = r,true)),
+                () =>  Sorter.OrderListBy( _report.Requests,r => r.Name,r =>  _report.Requests = r)),
                 new MenuItem("Sort by price",
-                () =>  Sorters.OrderListBy( _report.Requests,r => r.Price,r =>  _report.Requests = r,true)),
+                () =>  Sorter.OrderListBy( _report.Requests,r => r.Price,r =>  _report.Requests = r)),
                 new MenuItem("Sort by quantity",
-                () =>  Sorters.OrderListBy( _report.Requests,r => r.Quantity,r =>  _report.Requests = r,true)),
+                () =>  Sorter.OrderListBy( _report.Requests,r => r.Quantity,r =>  _report.Requests = r)),
                 new MenuItem("Sort by total price",
-                () =>  Sorters.OrderListBy( _report.Requests,r => r.Price * r.Quantity,r =>  _report.Requests = r,true)),
+                () =>  Sorter.OrderListBy( _report.Requests,r => r.Price * r.Quantity,r =>  _report.Requests = r)),
             };
         }
 

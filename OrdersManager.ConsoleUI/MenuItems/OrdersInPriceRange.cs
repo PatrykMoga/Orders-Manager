@@ -1,9 +1,9 @@
-﻿using OrdersManager.ConsoleUI.MenuComponents;
+﻿using OrdersManager.ConsoleUI.ApplicationComponents;
+using OrdersManager.ConsoleUI.MenuComponents;
 using OrdersManager.Core.Data;
 using OrdersManager.Core.Extensions;
 using OrdersManager.Core.Filtering;
 using OrdersManager.Core.Serializers;
-using OrdersManager.Core.Sorting;
 using System.Collections.Generic;
 using static System.Console;
 
@@ -23,9 +23,28 @@ namespace OrdersManager.ConsoleUI.MenuItems
             _filterService = filterService;
             _report = new Report();
             _optionsMenu = new OptionsMenu();
-            _optionsMenu.AddItem(new MenuItem("Serialize report", Serialize));
-
+            _optionsMenu.AddRange(SortingOptions());
             MenuItem = new MenuItem("Orders in price range", GenerateReport);
+        }
+
+        private IList<MenuItem> SortingOptions()
+        {
+            return new List<MenuItem>()
+            {
+                new MenuItem("Serialize report", Serialize),
+                new MenuItem("Sort by client id",
+                () =>  Sorter.OrderListBy( _report.Requests,r => r.ClientId,r =>  _report.Requests = r)),
+                new MenuItem("Sort by request id",
+                () =>  Sorter.OrderListBy( _report.Requests,r => r.RequestId,r =>  _report.Requests = r)),
+                new MenuItem("Sort by name",
+                () =>  Sorter.OrderListBy( _report.Requests,r => r.Name,r =>  _report.Requests = r)),
+                new MenuItem("Sort by price",
+                () =>  Sorter.OrderListBy( _report.Requests,r => r.Price,r =>  _report.Requests = r)),
+                new MenuItem("Sort by quantity",
+                () =>  Sorter.OrderListBy( _report.Requests,r => r.Quantity,r =>  _report.Requests = r)),
+                new MenuItem("Sort by total price",
+                () =>  Sorter.OrderListBy( _report.Requests,r => r.Price * r.Quantity,r =>  _report.Requests = r)),
+            };
         }
 
         private void GenerateReport()

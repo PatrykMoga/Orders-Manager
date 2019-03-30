@@ -13,14 +13,14 @@ namespace OrdersManager.Tests.DeserializersTests
     {
         private static readonly ILogger logger = new ConsoleLogger();
 
-        private IEnumerable<string> files = new List<string>
+        private readonly IEnumerable<string> files = new List<string>
         {
             @"..\..\..\TestingFiles\file.csv",
             @"..\..\..\TestingFiles\file.json",
             @"..\..\..\TestingFiles\file.xml"
         };
 
-        private IEnumerable<IDeserializer> deserializers = new List<IDeserializer>
+        private readonly IEnumerable<IDeserializer> deserializers = new List<IDeserializer>
         {
             new CsvDeserializer(logger),
             new JsonDeserializer(logger),
@@ -58,7 +58,6 @@ namespace OrdersManager.Tests.DeserializersTests
                     Assert.That(acutal[i].Price == expected[i].Price);
                     Assert.That(acutal[i].Quantity == expected[i].Quantity);
                     Assert.That(acutal[i].RequestId == expected[i].RequestId);
-
                 }
             }
         }

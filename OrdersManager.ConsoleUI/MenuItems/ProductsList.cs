@@ -1,10 +1,11 @@
-﻿using OrdersManager.ConsoleUI.MenuComponents;
+﻿using OrdersManager.ConsoleUI.ApplicationComponents;
+using OrdersManager.ConsoleUI.MenuComponents;
 using OrdersManager.Core.Data;
 using OrdersManager.Core.Extensions;
 using OrdersManager.Core.Filtering;
 using OrdersManager.Core.Serializers;
-using OrdersManager.Core.Sorting;
 using System.Collections.Generic;
+using System.Linq;
 using static System.Console;
 
 namespace OrdersManager.ConsoleUI.MenuItems
@@ -15,7 +16,7 @@ namespace OrdersManager.ConsoleUI.MenuItems
         private readonly IFilterService _filterService;
         private readonly Report _report;
         private readonly OptionsMenu _optionsMenu;
-        public MenuItem MenuItem { get; }       
+        public MenuItem MenuItem { get; }
 
         public ProductsList(IRequestProvider requestProvider, IFilterService filterService)
         {
@@ -23,21 +24,20 @@ namespace OrdersManager.ConsoleUI.MenuItems
             _filterService = filterService;
             _report = new Report();
             _optionsMenu = new OptionsMenu();
-            LoadOptionsMenuItems();
+            _optionsMenu.AddRange(SortingOptions());
             MenuItem = new MenuItem("Products list", GenerateReport);
         }
 
-        private void LoadOptionsMenuItems()
+        private IList<MenuItem> SortingOptions()
         {
-            _optionsMenu.AddItem(new MenuItem("Serialize report", Serialize));
-
-            //_optionsMenu.AddItem(new MenuItem("Sort by name", () => SortingProvider.SortDictionaryByKey(ref _products)));
-            //_optionsMenu.AddItem(new MenuItem("Sort by name descending",
-            //    () => SortingProvider.SortDictionaryByKeyDescending(ref _products)));
-
-            //_optionsMenu.AddItem(new MenuItem("Sort by quantity", () => SortingProvider.SortDictionaryByValue(ref _products)));
-            //_optionsMenu.AddItem(new MenuItem("Sort by quantity descending",
-            //    () => SortingProvider.SortDictionaryByValueDescending(ref _products)));
+            return new List<MenuItem>()
+            {
+                new MenuItem("Serialize report", Serialize),
+                new MenuItem("Order by name",
+                () => Sorter.OrderDictionaryByKey(_report.Products, p => _report.Products = p)),
+                new MenuItem("Order by quantity",
+                () => Sorter.OrderDictionaryByValue(_report.Products, p => _report.Products = p)),
+            };
         }
 
         private void GenerateReport()
@@ -86,8 +86,8 @@ namespace OrdersManager.ConsoleUI.MenuItems
             {
                 records.Add(new
                 {
-                    Name = product.Key,
-                    Quantity = product.Value,
+                    product.Key,
+                    product.Value,
                     _report.FilteredBy
                 });
             }
@@ -97,7 +97,7 @@ namespace OrdersManager.ConsoleUI.MenuItems
 
         private class Report
         {
-            public Dictionary<string,int> Products { get; set; }
+            public Dictionary<string, int> Products { get; set; }
             public string FilteredBy { get; set; }
         }
     }
