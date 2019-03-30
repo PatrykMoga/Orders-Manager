@@ -57,7 +57,7 @@ namespace OrdersManager.ConsoleUI.MenuItems
         {
             var records = new List<object>
             {
-                new { Average = $"{_report.Average:C2}", Filter = $"{_report.FilteredBy}" }
+                new { Average = $"{_report.Average:C2}", _report.FilteredBy }
             };
 
             CsvSerializer.Serialize(records);
