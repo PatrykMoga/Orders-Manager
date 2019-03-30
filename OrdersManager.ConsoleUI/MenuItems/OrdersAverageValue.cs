@@ -11,59 +11,62 @@ namespace OrdersManager.ConsoleUI.MenuItems
     {
         private readonly IRequestProvider _requestProvider;
         private readonly IFilterService _filterService;
+        private readonly Report _report;
         private readonly OptionsMenu _optionsMenu;
-
-        private decimal _average;
-        private string _filterName;
-
         public MenuItem MenuItem { get; }
 
         public OrdersAverageValue(IRequestProvider requestProvider, IFilterService filterService)
         {
             _requestProvider = requestProvider;
             _filterService = filterService;
-
+            _report = new Report();
             _optionsMenu = new OptionsMenu();
-            _optionsMenu.AddItem(new MenuItem("Serialize report", () => Serialize(_average, _filterName)));
-
+            _optionsMenu.AddItem(new MenuItem("Serialize report", Serialize));
             MenuItem = new MenuItem("Orders average value", GenerateReport);
         }
 
         private void GenerateReport()
         {
-            SetUp(out _average, out _filterName);
+            SetUp();
+
             _optionsMenu.Return = false;
             while (!_optionsMenu.Return)
             {
-                Print(_average, _filterName);
+                Print();
             }
         }
 
-        private void SetUp(out decimal average, out string filterName)
+        private void SetUp()
         {
             Clear();
             WriteLine("Select filter for orders average value\n");
             var filterPattern = _filterService.GetFilter();
-            average = _requestProvider.AverageAmountWhere(filterPattern.Filter);
+            _report.Average = _requestProvider.AverageAmountWhere(filterPattern.Filter);
             var searchPattern = filterPattern.ContainsPattern ? _filterService.SearchPattern : string.Empty;
-            filterName = filterPattern.Name + searchPattern;
+            _report.FilteredBy = filterPattern.Name + searchPattern;
         }
 
-        private void Print(decimal average, string filterName)
+        private void Print()
         {
             Clear();
-            WriteLine($"Average orders value for \"{filterName}\": {average:C2}");
+            WriteLine($"Average orders value for \"{_report.FilteredBy}\": {_report.Average:C2}");
             _optionsMenu.PrintMenu();
         }
 
-        private void Serialize(decimal average, string filterName)
+        private void Serialize()
         {
             var records = new List<object>
             {
-                new { Average = $"{average:C2}", Filter = $"{filterName}" }
+                new { Average = $"{_report.Average:C2}", Filter = $"{_report.FilteredBy}" }
             };
 
             CsvSerializer.Serialize(records);
+        }
+
+        private class Report
+        {
+            public decimal Average { get; set; }
+            public string FilteredBy { get; set; }
         }
     }
 }

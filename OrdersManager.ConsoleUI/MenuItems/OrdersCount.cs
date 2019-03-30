@@ -11,59 +11,61 @@ namespace OrdersManager.ConsoleUI.MenuItems
     {
         private readonly IRequestProvider _requestProvider;
         private readonly IFilterService _filterService;
+        private readonly Report _report;
         private readonly OptionsMenu _optionsMenu;
-
-        private int _count;
-        private string _filterName;
-
         public MenuItem MenuItem { get; }
 
         public OrdersCount(IRequestProvider requestProvider, IFilterService filterService)
         {
             _requestProvider = requestProvider;
             _filterService = filterService;
-
+            _report = new Report();
             _optionsMenu = new OptionsMenu();
-            _optionsMenu.AddItem(new MenuItem("Serialize report", () => Serialize(_count, _filterName)));
-
+            _optionsMenu.AddItem(new MenuItem("Serialize report", () => Serialize()));
             MenuItem = new MenuItem("Orders count", GenerateReport);
         }
 
         private void GenerateReport()
         {
-            SetUp(out _count, out _filterName);
+            SetUp();
             _optionsMenu.Return = false;
             while (!_optionsMenu.Return)
             {
-                Print(_count, _filterName);
+                Print();
             }
         }
 
-        private void SetUp(out int count, out string filterName)
+        private void SetUp()
         {
             Clear();
             WriteLine("Select filter for orders count\n");
             var filterPattern = _filterService.GetFilter();
-            count = _requestProvider.CountWhere(filterPattern.Filter);
+            _report.Count = _requestProvider.CountWhere(filterPattern.Filter);
             var searchPattern = filterPattern.ContainsPattern ? _filterService.SearchPattern : string.Empty;
-            filterName = filterPattern.Name + searchPattern;
+            _report.FilteredBy = filterPattern.Name + searchPattern;
         }
 
-        private void Print(int count, string filterName)
+        private void Print()
         {
             Clear();
-            WriteLine($"Orders count for \"{filterName}\": {count}");
+            WriteLine($"Orders count for \"{_report.FilteredBy}\": {_report.Count}");
             _optionsMenu.PrintMenu();
         }
 
-        private void Serialize(int count, string filterName)
+        private void Serialize()
         {
             var records = new List<object>
             {
-                new { Count = count, Filter = $"{filterName}" }
+                new { _report.Count, _report.FilteredBy }
             };
 
             CsvSerializer.Serialize(records);
+        }
+
+        private class Report
+        {
+            public int Count { get; set; }
+            public string FilteredBy { get; set; }
         }
     }
 }

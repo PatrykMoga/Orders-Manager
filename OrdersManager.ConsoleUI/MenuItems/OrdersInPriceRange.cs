@@ -13,92 +13,58 @@ namespace OrdersManager.ConsoleUI.MenuItems
     {
         private readonly IRequestProvider _requestProvider;
         private readonly IFilterService _filterService;
+        private readonly Report _report;
         private readonly OptionsMenu _optionsMenu;
-
-        private decimal _min;
-        private decimal _max;
-        private IList<IRequest> _requests;
-        private string _filterName;
-
         public MenuItem MenuItem { get; }
 
         public OrdersInPriceRange(IRequestProvider requestProvider, IFilterService filterService)
         {
             _requestProvider = requestProvider;
             _filterService = filterService;
-
+            _report = new Report();
             _optionsMenu = new OptionsMenu();
-            LoadOptionsMenuItems();
+            _optionsMenu.AddItem(new MenuItem("Serialize report", Serialize));
 
             MenuItem = new MenuItem("Orders in price range", GenerateReport);
         }
 
-        private void LoadOptionsMenuItems()
-        {
-            _optionsMenu.AddItem(new MenuItem("Serialize report", () => Serialize(_min, _max, _requests, _filterName)));
-
-            _optionsMenu.AddItem(new MenuItem("Sort by client id", () => SortingProvider.SortListByClientId(ref _requests)));
-            _optionsMenu.AddItem(new MenuItem("Sort by client id descending",
-                () => SortingProvider.SortListByClientIdDescending(ref _requests)));
-
-            _optionsMenu.AddItem(new MenuItem("Sort by request id", () => SortingProvider.SortListByRequestId(ref _requests)));
-            _optionsMenu.AddItem(new MenuItem("Sort by request id descending",
-                () => SortingProvider.SortListByRequestIdDescending(ref _requests)));
-
-            _optionsMenu.AddItem(new MenuItem("Sort by name", () => SortingProvider.SortListByName(ref _requests)));
-            _optionsMenu.AddItem(new MenuItem("Sort by name descending",
-                () => SortingProvider.SortListByNameDescending(ref _requests)));
-
-            _optionsMenu.AddItem(new MenuItem("Sort by price", () => SortingProvider.SortListByPrice(ref _requests)));
-            _optionsMenu.AddItem(new MenuItem("Sort by price descending",
-                () => SortingProvider.SortListByPriceDescending(ref _requests)));
-
-            _optionsMenu.AddItem(new MenuItem("Sort by quantity", () => SortingProvider.SortListByQuantity(ref _requests)));
-            _optionsMenu.AddItem(new MenuItem("Sort by quantity descending",
-                () => SortingProvider.SortListByQuantityDescending(ref _requests)));
-
-            _optionsMenu.AddItem(new MenuItem("Sort by total price", () => SortingProvider.SortListByTotalPrice(ref _requests)));
-            _optionsMenu.AddItem(new MenuItem("Sort by total price descending",
-                () => SortingProvider.SortListByTotalPriceDescending(ref _requests)));
-        }
-
         private void GenerateReport()
         {
-            SetUp(out _min, out _max, out _requests, out _filterName);
+            SetUp();
             _optionsMenu.Return = false;
             while (!_optionsMenu.Return)
             {
-                Print(_min, _max, _requests, _filterName);
+                Print();
             }
         }
 
-        private void SetUp(out decimal min, out decimal max, out IList<IRequest> requests, out string filterName)
+        private void SetUp()
         {
             Clear();
             WriteLine("Select filter for orders in price range\n");
 
             var filterPattern = _filterService.GetFilter();
-            min = Parse.ParseToDecimal("Enter minimum price: ");
-            max = Parse.ParseToDecimal("Enter maximum price: ");
-            requests = _requestProvider.RequestsInRangeWhere(filterPattern.Filter, min, max);
+            _report.MinPrice = Parse.ParseToDecimal("Enter minimum price: ");
+            _report.MaxPrice = Parse.ParseToDecimal("Enter maximum price: ");
+            _report.Requests = _requestProvider.RequestsInRangeWhere(filterPattern.Filter, _report.MinPrice, _report.MaxPrice);
             var searchPattern = filterPattern.ContainsPattern ? _filterService.SearchPattern : string.Empty;
-            filterName = filterPattern.Name + searchPattern;
+            _report.FilteredBy = filterPattern.Name + searchPattern;
         }
 
-        private void Print(decimal min, decimal max, IList<IRequest> requests, string filterName)
+        private void Print()
         {
             Clear();
-            WriteLine($"Orders in price range \"{min:C2}-{max:C2}\" for \"{filterName}\"\n");
+            WriteLine($"Orders in price range \"{_report.MinPrice:C2}-{_report.MaxPrice:C2}\" for \"{_report.FilteredBy}\"\n");
 
-            if (requests.Count > 0)
+            if (_report.Requests.Count > 0)
             {
                 var titleRow = string.Format("{0,0} {1,0} {2,5} {3,8} {4,10} {5,15}",
                 "RequestId", "ClientId", "Name", "Price", "Quantity", "Total Price");
                 WriteLine(titleRow);
                 WriteLine(titleRow.Length.PrintLines('-'));
-                foreach (var request in requests)
+                foreach (var request in _report.Requests)
                 {
-                    var row = string.Format("{0,5} {1,8} {2,10} {3,8:C2} {4,5} {5,15:C2}",
+                    var row = string.Format("{0,5} {1,8} {2,10} {3,8:C2} {4,5} {5,18:C2}",
                         request.RequestId, request.ClientId, request.Name,
                         request.Price, request.Quantity, request.Price * request.Quantity);
                     WriteLine(row);
@@ -114,10 +80,10 @@ namespace OrdersManager.ConsoleUI.MenuItems
             }
         }
 
-        private void Serialize(decimal min, decimal max, IList<IRequest> requests, string filterName)
+        private void Serialize()
         {
             var records = new List<object>();
-            foreach (var request in requests)
+            foreach (var request in _report.Requests)
             {
                 records.Add(new
                 {
@@ -127,12 +93,20 @@ namespace OrdersManager.ConsoleUI.MenuItems
                     request.Price,
                     request.Quantity,
                     TotalPrice = request.Price * request.Quantity,
-                    Filter = filterName,
-                    Range = $"{min}-{max}"
+                    _report.FilteredBy,
+                    PriceRange = $"{_report.MinPrice}-{_report.MaxPrice}"
                 });
             }
 
             CsvSerializer.Serialize(records);
+        }
+
+        private class Report
+        {
+            public decimal MinPrice { get; set; }
+            public decimal MaxPrice { get; set; }
+            public IList<IRequest> Requests { get; set; }
+            public string FilteredBy { get; set; }
         }
     }
 }

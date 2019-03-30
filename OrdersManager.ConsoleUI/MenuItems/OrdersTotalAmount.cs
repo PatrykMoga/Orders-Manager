@@ -11,59 +11,61 @@ namespace OrdersManager.ConsoleUI.MenuItems
     {
         private readonly IRequestProvider _requestProvider;
         private readonly IFilterService _filterService;
+        private readonly Report _report;
         private readonly OptionsMenu _optionsMenu;
-
-        private decimal _amount;
-        private string _filterName;
-
         public MenuItem MenuItem { get; }
 
         public OrdersTotalAmount(IRequestProvider requestProvider, IFilterService filterService)
         {
             _requestProvider = requestProvider;
             _filterService = filterService;
-
+            _report = new Report();
             _optionsMenu = new OptionsMenu();
-            _optionsMenu.AddItem(new MenuItem("Serialize report", () => Serialize(_amount, _filterName)));
-
+            _optionsMenu.AddItem(new MenuItem("Serialize report", Serialize));
             MenuItem = new MenuItem("Total Orders Amount", GenerateReport);
         }
 
         private void GenerateReport()
         {
-            SetUp(out _amount, out _filterName);
+            SetUp();
             _optionsMenu.Return = false;
             while (!_optionsMenu.Return)
             {
-                Print(_amount, _filterName);
+                Print();
             }
         }
 
-        private void SetUp(out decimal amount, out string filterName)
+        private void SetUp()
         {
             Clear();
             WriteLine("Select filter for total orders amount\n");
             var filterPattern = _filterService.GetFilter();
-            amount = _requestProvider.TotalAmountWhere(filterPattern.Filter);
+            _report.Amount = _requestProvider.TotalAmountWhere(filterPattern.Filter);
             var searchPattern = filterPattern.ContainsPattern ? _filterService.SearchPattern : string.Empty;
-            filterName = filterPattern.Name + searchPattern;
+            _report.FilteredBy = filterPattern.Name + searchPattern;
         }
 
-        private void Print(decimal amount, string filterName)
+        private void Print()
         {
             Clear();
-            WriteLine($"Total orders amount for \"{filterName}\": {amount:C2}");
+            WriteLine($"Total orders amount for \"{_report.FilteredBy}\": {_report.Amount:C2}");
             _optionsMenu.PrintMenu();
         }
 
-        private void Serialize(decimal amount, string filterName)
+        private void Serialize()
         {
             var records = new List<object>
             {
-                new { TotalAmount = $"{amount:C2}", Filter = filterName }
+                new { TotalAmount = $"{_report.Amount:C2}", _report.FilteredBy }
             };
 
             CsvSerializer.Serialize(records);
+        }
+
+        private class Report
+        {
+            public decimal Amount { get; set; }
+            public string FilteredBy { get; set; }
         }
     }
 }

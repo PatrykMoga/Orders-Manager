@@ -19,6 +19,14 @@ namespace OrdersManager.ConsoleUI.MenuComponents
             _items.Add(_index++, item);
         }
 
+        public void AddRange(IList<MenuItem> items)
+        {
+            foreach (var item in items)
+            {
+                _items.Add(_index++, item);
+            }
+        }
+
         public void PrintMenu()
         {
             WriteLine();
@@ -47,7 +55,7 @@ namespace OrdersManager.ConsoleUI.MenuComponents
             }
         }
 
-        public void ExecuteMenuItem(string actionKey)
+        private void ExecuteMenuItem(string actionKey)
         {
             if (int.TryParse(actionKey, out int key))
             {

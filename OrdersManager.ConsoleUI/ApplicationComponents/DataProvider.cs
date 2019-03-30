@@ -45,7 +45,7 @@ namespace OrdersManager.ConsoleUI.ApplicationComponents
                         $"Supported files extensions: \"{string.Join(", ", _filesReader.SupportedExtensions)}\".\n");
                     Write("Path: ");
                     var dirPath = ReadLine();
-                    _filesReader.ReadFiles(dirPath, SearchOption.AllDirectories);
+                    _filesReader.ReadFiles(@"d:\testfolder\inner", SearchOption.AllDirectories);
                     if (!_filesReader.Files.Any())
                     {
                         WriteLine("The directory did not contain any supported files. Try again or choose different directory.");
