@@ -28,7 +28,6 @@ namespace OrdersManager.ConsoleUI.MenuItems
         private void GenerateReport()
         {
             SetUp();
-
             _optionsMenu.Return = false;
             while (!_optionsMenu.Return)
             {

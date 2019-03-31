@@ -5,7 +5,6 @@ using OrdersManager.Core.Extensions;
 using OrdersManager.Core.Filtering;
 using OrdersManager.Core.Serializers;
 using System.Collections.Generic;
-using System.Linq;
 using static System.Console;
 
 namespace OrdersManager.ConsoleUI.MenuItems

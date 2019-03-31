@@ -21,7 +21,7 @@ namespace OrdersManager.ConsoleUI.MenuItems
             _filterService = filterService;
             _report = new Report();
             _optionsMenu = new OptionsMenu();
-            _optionsMenu.AddItem(new MenuItem("Serialize report", () => Serialize()));
+            _optionsMenu.AddItem(new MenuItem("Serialize report", Serialize));
             MenuItem = new MenuItem("Orders count", GenerateReport);
         }
 
