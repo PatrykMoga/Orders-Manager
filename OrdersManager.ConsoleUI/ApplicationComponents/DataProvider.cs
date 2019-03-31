@@ -28,10 +28,23 @@ namespace OrdersManager.ConsoleUI.ApplicationComponents
 
         public void GetData()
         {
-            ReadData();
-            var requests = _deserializeService.InitializeDeserializing();
-            PrintLogs();
-            SaveToMemory(requests);
+            while (true)
+            {
+                ReadData();
+                var requests = _deserializeService.InitializeDeserializing();
+                PrintLogs();
+                if (requests.Count != 0)
+                {
+                    SaveToMemory(requests);
+                    break;
+                }
+                else
+                {
+                    Clear();
+                    WriteLine("Files did not contain any data, try again.");
+                    ReadKey();
+                }
+            }
         }
 
         private void ReadData()
